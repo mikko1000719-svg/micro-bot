@@ -3,8 +3,8 @@ import random
 from discord.ext import commands
 from discord import app_commands
 
-class PasswordModal(discord.ui.Modal, title='輸入你要猜的數字'):
-    number = discord.ui.TextInput(label='請輸入數字', style=discord.TextStyle.short)
+class PasswordModal(discord.ui.Modal, title='輸入你要猜的Number'):
+    number = discord.ui.TextInput(label='請輸入Number', style=discord.TextStyle.short)
 
     def __init__(self, view):
         super().__init__()
@@ -29,7 +29,7 @@ class PasswordView(discord.ui.View):
         self.min_val = 1
         self.max_val = 100
 
-    @discord.ui.button(label="🔢 猜數字", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="🔢 猜Number", style=discord.ButtonStyle.primary)
     async def guess_btn(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != self.current:
             await interaction.response.send_message("還沒輪到你！", ephemeral=True)
@@ -38,20 +38,20 @@ class PasswordView(discord.ui.View):
 
     async def process_guess(self, interaction: discord.Interaction, guess: int):
         if guess <= self.min_val or guess >= self.max_val:
-            await interaction.response.send_message(f"請輸入 {self.min_val} 到 {self.max_val} 之間的數字！", ephemeral=True)
+            await interaction.response.send_message(f"請輸入 {self.min_val} 到 {self.max_val} 之間的Number！", ephemeral=True)
             return
 
         if guess == self.target:
             for child in self.children: child.disabled = True
             winner = self.player2 if self.current == self.player1 else self.player1
-            msg = f"💥 **砰！** {self.current.mention} 踩到地雷數字 **{self.target}**！\n[PARTY] 恭喜 {winner.mention} 獲勝！"
+            msg = f"💥 **砰！** {self.current.mention} 踩到地雷Number **{self.target}**！\n[PARTY] 恭喜 {winner.mention} 獲勝！"
             await interaction.response.edit_message(content=msg, view=self)
         else:
             if guess > self.target: self.max_val = guess
             else: self.min_val = guess
             
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"🔢 **終極密碼**\n目前範圍：**{self.min_val} ~ {self.max_val}**\n輪到 {self.current.mention} 猜數字！"
+            msg = f"🔢 **終極密碼**\n目前範圍：**{self.min_val} ~ {self.max_val}**\n輪到 {self.current.mention} 猜Number！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GamePassword(commands.Cog):

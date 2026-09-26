@@ -10,7 +10,7 @@ class SuperWheelView(discord.ui.View):
         self.player2 = player2
         self.results = {player1: None, player2: None}
 
-    @discord.ui.button(label="[STAR] 啟動超級轉輪", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="[STAR] Start超級轉輪", style=discord.ButtonStyle.primary)
     async def spin(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
             await interaction.response.send_message("這不是你的遊戲！", ephemeral=True)
@@ -38,12 +38,12 @@ class SuperWheelView(discord.ui.View):
 class GameSuperWheel(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_superwheel", description="啟動超級轉輪比拼點數！")
+    @app_commands.command(name="play_superwheel", description="Start超級轉輪比拼點數！")
     async def play_superwheel(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
             await interaction.response.send_message("請標記一位真實玩家！", ephemeral=True)
             return
         view = SuperWheelView(interaction.user, opponent)
-        await interaction.response.send_message(f"[STAR] **超級轉輪對決**\n{interaction.user.mention} VS {opponent.mention}\n請雙方啟動轉輪！", view=view)
+        await interaction.response.send_message(f"[STAR] **超級轉輪對決**\n{interaction.user.mention} VS {opponent.mention}\n請雙方Start轉輪！", view=view)
 
 async def setup(bot): await bot.add_cog(GameSuperWheel(bot))

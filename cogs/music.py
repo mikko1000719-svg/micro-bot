@@ -7,10 +7,10 @@ import asyncio
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # 建立一個字典來管理不同伺服器 (Guild) 的播放佇列
+        # 建立一個Dictionary來Manage不同Server (Guild) 的播放Queue
         self.music_queue = {}
 
-    # --- 工具函式 1：解析搜尋結果或歌單 ---
+    # --- 工具函式 1：解析Search結果或歌單 ---
     def fetch_soundcloud_info(self, query: str):
         is_url = query.startswith("http://") or query.startswith("https://")
         ydl_opts = {
@@ -31,7 +31,7 @@ class Music(commands.Cog):
                     return info
                 return None
         except Exception as e:
-            print(f"解析錯誤: {e}")
+            print(f"解析Error: {e}")
             return None
 
     # --- 工具函式 2：取得真實的音訊串流連結 ---
@@ -49,73 +49,73 @@ class Music(commands.Cog):
         guild_id = interaction.guild.id
         voice_client = interaction.guild.voice_client
 
-        # 檢查佇列中是否還有歌曲
+        # CheckQueue中是否還有歌曲
         if guild_id in self.music_queue and len(self.music_queue[guild_id]) > 0:
-            # 拿出佇列中的第一首歌
+            # 拿出Queue中的第一首歌
             next_song = self.music_queue[guild_id].pop(0)
             
             # 解析真實的串流網址
             stream_url = self.get_stream_url(next_song['url'])
             
             if stream_url and voice_client:
-                # 設定 FFmpeg 參數，這能讓網路串流更穩定，避免斷音
+                # Settings FFmpeg Parameter，這能讓Network串流更穩定，避免斷音
                 ffmpeg_options = {
                     'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5',
                     'options': '-vn' # -vn 代表不需要影片，只要音訊
                 }
                 
-                # 播放音訊！播完後自動呼叫自己 (play_next) 播下一首
+                # 播放音訊！播完後Auto呼叫自己 (play_next) 播下一首
                 voice_client.play(
                     discord.FFmpegPCMAudio(stream_url, **ffmpeg_options),
                     after=lambda e: self.play_next(interaction)
                 )
         else:
-            # 如果歌單播完了，我們可以讓機器人離開語音頻道 (可選)
+            # 如果歌單播完了，我們可以讓Bot離開語音Channel (可選)
             # asyncio.run_coroutine_threadsafe(voice_client.disconnect(), self.bot.loop)
             pass
 
-    # --- 斜線指令：/play ---
-    @app_commands.command(name="play", description="在 SoundCloud 搜尋並播放音樂")
+    # --- 斜線Command：/play ---
+    @app_commands.command(name="play", description="在 SoundCloud Search並播放音樂")
     @app_commands.describe(query="請輸入歌曲名稱或 SoundCloud 網址")
     async def play(self, interaction: discord.Interaction, query: str):
         await interaction.response.defer()
 
-        # 1. 檢查使用者狀態
+        # 1. Check使用者狀態
         if not interaction.user.voice:
-            await interaction.followup.send("[ERROR] 你必須先加入一個語音頻道！")
+            await interaction.followup.send("[ERROR] 你必須先加入一個語音Channel！")
             return
 
-        # 2. 機器人加入語音頻道
+        # 2. Bot加入語音Channel
         voice_channel = interaction.user.voice.channel
         voice_client = interaction.guild.voice_client
 
         if not voice_client:
-            # 如果機器人還沒在頻道裡，就連線進去
+            # 如果Bot還沒在Channel裡，就Connection進去
             await voice_channel.connect()
             voice_client = interaction.guild.voice_client
         elif voice_client.channel != voice_channel:
-            # 如果機器人在別的頻道，就移動過來
+            # 如果Bot在別的Channel，就移動過來
             await voice_client.move_to(voice_channel)
 
-        # 3. 搜尋歌曲
+        # 3. Search歌曲
         loop = asyncio.get_event_loop()
         track_info = await loop.run_in_executor(None, self.fetch_soundcloud_info, query)
 
-        # 4. 加入佇列與播放邏輯
+        # 4. 加入Queue與播放邏輯
         if track_info:
             guild_id = interaction.guild.id
             
-            # 如果這個伺服器還沒有佇列，就幫它建立一個空的 List
+            # 如果這個Server還沒有Queue，就幫它建立一個空的 List
             if guild_id not in self.music_queue:
                 self.music_queue[guild_id] = []
                 
-            # 把歌曲加入佇列
+            # 把歌曲加入Queue
             self.music_queue[guild_id].append(track_info)
             
             title = track_info.get('title', '未知歌曲')
-            await interaction.followup.send(f"[MUSIC] 已加入佇列：**{title}**")
+            await interaction.followup.send(f"[MUSIC] 已加入Queue：**{title}**")
 
-            # 如果機器人目前「沒有」在播放音樂，我們就主動觸發播放
+            # 如果Bot目前「沒有」在播放音樂，我們就主動觸發播放
             if not voice_client.is_playing():
                 self.play_next(interaction)
         else:

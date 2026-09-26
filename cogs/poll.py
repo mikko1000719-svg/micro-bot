@@ -20,14 +20,14 @@ class PollReasonModal(discord.ui.Modal, title="請填寫投票原因"):
         user_id = interaction.user.id
         reason = self.reason_input.value if self.reason_input.value else "未提供原因"
 
-        # 記錄或更新使用者的投票與原因
+        # 記錄或Update使用者的投票與原因
         self.view_instance.user_votes[user_id] = {
             "choice": self.vote_type,
             "reason": reason,
             "name": interaction.user.name
         }
 
-        # 重新計算各選項票數
+        # Re-計算各Option票數
         self.view_instance.calculate_votes()
         await self.view_instance.update_poll_message(interaction)
 
@@ -60,7 +60,7 @@ class PollView(discord.ui.View):
 
     async def update_poll_message(self, interaction: discord.Interaction):
         embed = discord.Embed(
-            title="[STAT] 伺服器正式投票",
+            title="[STAT] Server正式投票",
             description=f"**問題：** {self.question}",
             color=discord.Color.blue()
         )
@@ -70,7 +70,7 @@ class PollView(discord.ui.View):
         embed.add_field(name=f"[STOP] 不同意", value=f"**{self.disagree_count}** 票", inline=True)
         embed.add_field(name=f"[WAIT] 棄權", value=f"**{self.abstain_count}** 票", inline=True)
 
-        # 整理最近幾位投票者的原因清單顯示在下方
+        # 整理最近幾位投票者的原因清單Display在下方
         if self.user_votes:
             reasons_text = "\n".join([f"• **{data['name']}** ({data['choice']})：{data['reason']}" for data in list(self.user_votes.values())[-5:]])
             embed.add_field(name="💬 最近投票與原因紀錄", value=reasons_text, inline=False)
@@ -89,7 +89,7 @@ class Poll(commands.Cog):
         view = PollView(question=question)
         
         embed = discord.Embed(
-            title="[STAT] 伺服器正式投票",
+            title="[STAT] Server正式投票",
             description=f"**問題：** {question}",
             color=discord.Color.blue()
         )

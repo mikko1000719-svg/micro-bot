@@ -6,25 +6,25 @@ class ModVCKick(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_vckick", description="將指定成員從語音頻道中踢出")
+    @app_commands.command(name="mod_vckick", description="將指定成員從語音Channel中踢出")
     @app_commands.describe(member="要踢出語音的成員")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vckick(self, interaction: discord.Interaction, member: discord.Member):
         if not member.voice or not member.voice.channel:
-            await interaction.response.send_message("[ERROR] 該成員目前不在任何語音頻道中！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] 該成員目前不在任何語音Channel中！", ephemeral=True)
             return
 
         try:
             await member.move_to(None, reason=f"由 {interaction.user} 踢出語音")
-            await interaction.response.send_message(f"🚪 成功將 {member.mention} 踢出語音頻道！", ephemeral=True)
+            await interaction.response.send_message(f"🚪 Success將 {member.mention} 踢出語音Channel！", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] 踢出語音失敗：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] 踢出語音Failed：{e}", ephemeral=True)
 
     @mod_vckick.error
     async def mod_vckick_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 你需要「管理員」權限才能使用此指令！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] 你需要「Manage員」Permission才能使用此Command！", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModVCKick(bot))

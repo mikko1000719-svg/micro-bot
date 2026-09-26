@@ -11,7 +11,7 @@ class Passport(commands.Cog):
         user = interaction.user
         guild = interaction.guild
         
-        # 根據 User ID 產生專屬護照編號格式
+        # 根據 User ID 產生專屬護照編號Format
         passport_no = f"PASSPORT-{user.id % 1000000:06d}"
         join_date = user.joined_at.strftime("%Y-%m-%d") if isinstance(user, discord.Member) and user.joined_at else "未知"
 
@@ -23,10 +23,10 @@ class Passport(commands.Cog):
         embed.set_thumbnail(url=user.display_avatar.url)
         embed.add_field(name="公民姓名", value=f"**{user.display_name}**", inline=True)
         embed.add_field(name="護照編號", value=f"`{passport_no}`", inline=True)
-        embed.add_field(name="所屬地區/伺服器", value=f"{guild.name if guild else '聯邦直轄區'}", inline=False)
+        embed.add_field(name="所屬地區/Server", value=f"{guild.name if guild else '聯邦直轄區'}", inline=False)
         embed.add_field(name="簽發日期 (加入日)", value=f"`{join_date}`", inline=True)
-        embed.add_field(name="身份狀態", value="[OK] 驗證公民", inline=True)
-        embed.set_footer(text="微國移民與邊境管理署 發行")
+        embed.add_field(name="身份狀態", value="[OK] Verify公民", inline=True)
+        embed.set_footer(text="微國移民與Edge境Manage署 發行")
 
         await interaction.response.send_message(embed=embed)
 

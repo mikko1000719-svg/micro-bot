@@ -38,7 +38,7 @@ class GameReaction(commands.Cog):
         await asyncio.sleep(random.uniform(2.0, 6.0))
         
         view = ReactionView(interaction.user, opponent)
-        # 取得剛才發送的訊息並更新
+        # 取得剛才Send的Message並Update
         msg = await interaction.original_response()
         await msg.edit(content=f"🚨 **就是現在！快按！**\n{interaction.user.mention} VS {opponent.mention}", view=view)
 

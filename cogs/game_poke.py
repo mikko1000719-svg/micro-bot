@@ -27,7 +27,7 @@ class PokeView(discord.ui.View):
         else:
             self.step += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"📦 **戳戳樂對決**\n安全過關！箱子裡是寶物。\n現在輪到 {self.current.mention} 戳箱子！"
+            msg = f"📦 **戳戳樂對決**\nSecurity過關！箱子裡是寶物。\n現在輪到 {self.current.mention} 戳箱子！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GamePoke(commands.Cog):

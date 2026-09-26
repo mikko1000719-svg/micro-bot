@@ -5,14 +5,14 @@ from discord.ext import commands
 from google import genai
 import os
 import traceback
-import asyncio  # 引入非同步控制模組
+import asyncio  # 引入非Sync控制Module
 
 class AIChat(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.client = None
         
-        # 1. 讀取並確認 API Key
+        # 1. Read並Confirm API Key
         api_key = os.getenv("GEMINI_API_KEY", "").strip().strip('"').strip("'")
         
         if api_key:
@@ -23,7 +23,7 @@ class AIChat(commands.Cog):
             return
             
         try:
-            # 2. 初始化 Gemini Client
+            # 2. Initialize Gemini Client
             self.client = genai.Client(api_key=api_key)
             print("[OK] [AI System] Successfully initialized Gemini Client!", flush=True)
 
@@ -34,7 +34,7 @@ class AIChat(commands.Cog):
     @app_commands.command(name="ai", description="與 AI 進行對話")
     @app_commands.describe(prompt="你想對 AI 說的話")
     async def ai_chat(self, interaction: discord.Interaction, prompt: str):
-        # 立即延遲回覆，避免 Discord 發生逾時錯誤
+        # 立即延遲回覆，避免 Discord 發生逾時Error
         await interaction.response.defer(thinking=True)
 
         if not self.client:
@@ -42,8 +42,8 @@ class AIChat(commands.Cog):
             return
 
         try:
-            # 【關鍵修復】使用 asyncio.to_thread 把同步的網路請求丟到背景執行緒
-            # 這樣才不會卡死 Discord 的事件迴圈，避免發生 heartbeat blocked 斷線錯誤
+            # 【關鍵Fix】使用 asyncio.to_thread 把Sync的Network請求丟到BackgroundExecute緒
+            # 這樣才不會卡死 Discord 的事件迴圈，避免發生 heartbeat blocked 斷線Error
             response = await asyncio.to_thread(
                 self.client.models.generate_content,
                 model='gemini-2.5-flash',
@@ -53,9 +53,9 @@ class AIChat(commands.Cog):
             if response and response.text:
                 reply_text = response.text
                 
-                # 防護機制：避免超過 Discord 2000 字元限制
+                # Defense機制：避免超過 Discord 2000 字元Limit
                 if len(reply_text) > 1900:
-                    reply_text = reply_text[:1900] + "\n\n...(字數過長，已自動截斷)"
+                    reply_text = reply_text[:1900] + "\n\n...(字數過長，已Auto截斷)"
                     
                 await interaction.followup.send(f"**問：** {prompt}\n\n**答：**\n{reply_text}")
             else:

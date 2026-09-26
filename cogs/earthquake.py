@@ -7,13 +7,13 @@ from discord.ext import commands
 class Earthquake(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        # 讀取系統環境變數中的 CWA_API_KEY
+        # ReadSystem環境Variable中的 CWA_API_KEY
         self.cwa_key = os.getenv("CWA_API_KEY")
 
         if self.cwa_key:
-            print("[OK] [地震模組] 中央氣象署 API 金鑰設定完成！")
+            print("[OK] [地震Module] 中央氣象署 API 金鑰SettingsComplete！")
         else:
-            print("[WARNING] [地震模組] 未偵測到 CWA_API_KEY 環境變數！")
+            print("[WARNING] [地震Module] 未偵測到 CWA_API_KEY 環境Variable！")
 
     @app_commands.command(name="地震", description="查詢最新顯著有感地震報告")
     async def earthquake_report(self, interaction: discord.Interaction):
@@ -23,9 +23,9 @@ class Earthquake(commands.Cog):
         except discord.errors.NotFound:
             return
 
-        # 2. 檢查 API Key
+        # 2. Check API Key
         if not self.cwa_key:
-            await interaction.followup.send("[ERROR] 伺服器尚未正確設定 `CWA_API_KEY`，請聯繫系統管理員。")
+            await interaction.followup.send("[ERROR] Server尚未正確Settings `CWA_API_KEY`，請聯繫SystemManage員。")
             return
 
         # 3. 請求中央氣象署開放資料 (E-A0015-001 顯著有感地震資料)
@@ -63,9 +63,9 @@ class Earthquake(commands.Cog):
 
                         await interaction.followup.send(embed=embed)
                     else:
-                        await interaction.followup.send(f"[ERROR] 存取氣象署 API 失敗 (HTTP 狀態碼: {resp.status})")
+                        await interaction.followup.send(f"[ERROR] 存取氣象署 API Failed (HTTP 狀態碼: {resp.status})")
         except Exception as e:
-            await interaction.followup.send(f"[ERROR] 查詢地震資料時發生未預期錯誤: {e}")
+            await interaction.followup.send(f"[ERROR] 查詢地震資料時發生未預期Error: {e}")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Earthquake(bot))

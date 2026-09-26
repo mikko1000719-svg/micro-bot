@@ -27,7 +27,7 @@ class Stock(commands.Cog):
         code = code.upper()
         self.stocks[code] = {"name": name, "price": initial_price}
         self.save_data()
-        await interaction.response.send_message(f"[CHART] 成功新增公司 `{code}` ({name})，初始股價: ${initial_price}", ephemeral=True)
+        await interaction.response.send_message(f"[CHART] Success新增公司 `{code}` ({name})，初始股價: ${initial_price}", ephemeral=True)
 
     @app_commands.command(name="下架股票的公司", description="下架指定上市公司")
     @app_commands.checks.has_permissions(administrator=True)
@@ -36,11 +36,11 @@ class Stock(commands.Cog):
         if code in self.stocks:
             del self.stocks[code]
             self.save_data()
-            await interaction.response.send_message(f"[CHART_DOWN] 已成功下架股票公司 `{code}`。", ephemeral=True)
+            await interaction.response.send_message(f"[CHART_DOWN] 已Success下架股票公司 `{code}`。", ephemeral=True)
         else:
             await interaction.response.send_message(f"[ERROR] 找不到股票代號為 `{code}` 的公司！", ephemeral=True)
 
-    @app_commands.command(name="股票系統", description="檢視股市行情或調整漲跌")
+    @app_commands.command(name="股票System", description="檢視股市行情或調整漲跌")
     async def stock_market(self, interaction: discord.Interaction, code: str = None, change_percent: float = None):
         if not code:
             embed = discord.Embed(title="[STAT] 當前股市行情", color=discord.Color.gold())
@@ -56,7 +56,7 @@ class Stock(commands.Cog):
 
         if change_percent is not None:
             if not interaction.user.guild_permissions.administrator:
-                await interaction.response.send_message("[ERROR] 只有管理員可以調整股票漲跌幅！", ephemeral=True)
+                await interaction.response.send_message("[ERROR] 只有Manage員可以調整股票漲跌幅！", ephemeral=True)
                 return
 
             old_price = self.stocks[code]["price"]

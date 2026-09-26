@@ -27,7 +27,7 @@ class LuckyView(discord.ui.View):
         else:
             self.step += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"🍀 **幸運草對決**\n安全過關！目前進行到第 {self.step} 輪。\n現在輪到 {self.current.mention} 拔幸運草！"
+            msg = f"🍀 **幸運草對決**\nSecurity過關！目前進行到第 {self.step} 輪。\n現在輪到 {self.current.mention} 拔幸運草！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameLucky(commands.Cog):

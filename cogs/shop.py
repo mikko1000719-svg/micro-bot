@@ -27,7 +27,7 @@ class Shop(commands.Cog):
         self.shop_data["items"][name] = {"price": price, "image": image_url}
         self.save_data()
 
-        embed = discord.Embed(title="🛍️ 商品上架成功", description=f"**商品名稱**: {name}\n**價格**: ${price}", color=discord.Color.green())
+        embed = discord.Embed(title="🛍️ 商品上架Success", description=f"**商品名稱**: {name}\n**價格**: ${price}", color=discord.Color.green())
         if image_url:
             embed.set_image(url=image_url)
 
@@ -41,7 +41,7 @@ class Shop(commands.Cog):
             return
 
         item = items[name]
-        embed = discord.Embed(title="🛒 購買成功", description=f"你成功購買了 **{name}**！\n扣除金額: ${item['price']}", color=discord.Color.blue())
+        embed = discord.Embed(title="🛒 購買Success", description=f"你Success購買了 **{name}**！\n扣除金額: ${item['price']}", color=discord.Color.blue())
         if item.get("image"):
             embed.set_thumbnail(url=item["image"])
 

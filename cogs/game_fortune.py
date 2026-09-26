@@ -21,7 +21,7 @@ class FortuneView(discord.ui.View):
 
         score = random.randint(1, 100)
         self.scores[interaction.user] = score
-        await interaction.response.send_message(f"測驗完成！幸運指數：**{score}** 分！等待對手...", ephemeral=True)
+        await interaction.response.send_message(f"測驗Complete！幸運指數：**{score}** 分！等待對手...", ephemeral=True)
 
         if self.scores[self.player1] is not None and self.scores[self.player2] is not None:
             button.disabled = True

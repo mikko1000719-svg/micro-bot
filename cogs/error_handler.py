@@ -9,7 +9,7 @@ class ErrorHandler(commands.Cog):
 
     @commands.Cog.listener()
     async def on_app_command_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
-        # 紀錄錯誤訊息至 OwnerDM 模組
+        # 紀錄ErrorMessage至 OwnerDM Module
         owner_cog = self.bot.get_cog("OwnerDM")
         if owner_cog:
             owner_cog.log_error(str(error))

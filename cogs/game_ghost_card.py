@@ -27,7 +27,7 @@ class GhostCardView(discord.ui.View):
         else:
             self.step += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"🃏 **抽鬼牌對決**\n安全過關！抽到安全牌。\n現在輪到 {self.current.mention} 抽牌！"
+            msg = f"🃏 **抽鬼牌對決**\nSecurity過關！抽到Security牌。\n現在輪到 {self.current.mention} 抽牌！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameGhostCard(commands.Cog):

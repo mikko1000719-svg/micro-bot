@@ -6,7 +6,7 @@ class Announce(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="announce", description="發送官方公告至指定頻道")
+    @app_commands.command(name="announce", description="Send官方公告至指定Channel")
     @app_commands.checks.has_permissions(administrator=True)
     async def announce(
         self, 
@@ -16,11 +16,11 @@ class Announce(commands.Cog):
         content: str
     ):
         """
-        channel: 選擇要發送公告的頻道
+        channel: 選擇要Send公告的Channel
         title: 公告標題
         content: 公告內容 (支援 \n 換行)
         """
-        # 換行符號處理
+        # 換行符號Process
         formatted_content = content.replace("\\n", "\n")
 
         embed = discord.Embed(
@@ -33,9 +33,9 @@ class Announce(commands.Cog):
 
         try:
             await channel.send(embed=embed)
-            await interaction.response.send_message(f"[OK] 公告已成功發送至 {channel.mention}！", ephemeral=True)
+            await interaction.response.send_message(f"[OK] 公告已SuccessSend至 {channel.mention}！", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] 公告發送失敗，原因: {e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] 公告SendFailed，原因: {e}", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Announce(bot))

@@ -27,7 +27,7 @@ class BalloonView(discord.ui.View):
         else:
             self.step += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"🎈 **戳氣球對決**\n安全過關！氣球安然無恙。\n現在輪到 {self.current.mention} 戳氣球！"
+            msg = f"🎈 **戳氣球對決**\nSecurity過關！氣球安然無恙。\n現在輪到 {self.current.mention} 戳氣球！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameBalloon(commands.Cog):

@@ -20,7 +20,7 @@ class TemplateView(discord.ui.View):
         if self.ready[self.player1] and self.ready[self.player2]:
             button.disabled = True
             
-            # --- 這裡是你自訂邏輯的地方 ---
+            # --- 這裡是你Custom邏輯的地方 ---
             p1_score = random.randint(1, 10)
             p2_score = random.randint(1, 10)
             
@@ -38,13 +38,13 @@ class GameTemplate(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="play_custom", description="自訂的抽卡/比大小對戰")
+    @app_commands.command(name="play_custom", description="Custom的抽卡/比大小對戰")
     async def play_custom(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
             await interaction.response.send_message("請標記一位真實玩家！", ephemeral=True)
             return
         view = TemplateView(interaction.user, opponent)
-        await interaction.response.send_message(f"⚔️ **自訂對戰**\n{interaction.user.mention} VS {opponent.mention}\n請點擊按鈕！", view=view)
+        await interaction.response.send_message(f"⚔️ **Custom對戰**\n{interaction.user.mention} VS {opponent.mention}\n請點擊按鈕！", view=view)
 
 async def setup(bot):
     await bot.add_cog(GameTemplate(bot))

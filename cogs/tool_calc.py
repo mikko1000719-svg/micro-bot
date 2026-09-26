@@ -10,7 +10,7 @@ class ToolCalc(commands.Cog):
     @app_commands.command(name="calc", description="計算簡單的數學算式（支援 +, -, *, /, 括號）")
     @app_commands.describe(expression="例如: (5 + 3) * 4")
     async def calc(self, interaction: discord.Interaction, expression: str):
-        # 安全解析數學算式的函數
+        # Security解析數學算式的Function
         allowed_operators = {
             ast.Add: lambda a, b: a + b,
             ast.Sub: lambda a, b: a - b,
@@ -38,7 +38,7 @@ class ToolCalc(commands.Cog):
             embed.add_field(name="答案", value=f"**{result}**", inline=False)
             await interaction.response.send_message(embed=embed)
         except Exception:
-            await interaction.response.send_message("[ERROR] 計算失敗！請確認您的數學算式格式是否正確（僅支援基本加減乘除與數字）。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] 計算Failed！請Confirm您的數學算式Format是否正確（僅支援基本加減乘除與Number）。", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ToolCalc(bot))

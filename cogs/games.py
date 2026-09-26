@@ -7,9 +7,9 @@ class GomokuView(discord.ui.View):
         super().__init__(timeout=300)  # 5分鐘超時
         self.p1 = p1  # 🔵 藍方
         self.p2 = p2  # ⬛ 黑方
-        self.current_turn = p1  # 預設藍方先手
+        self.current_turn = p1  # Default藍方先手
         
-        # 初始化 5x5 棋盤 (為了 Discord 畫面排版與按鈕限制，先以 5x5 或 6x6 互動按鈕為主，可自行擴充)
+        # Initialize 5x5 棋盤 (為了 Discord 畫面排版與按鈕Limit，先以 5x5 或 6x6 互動按鈕為主，可自行擴充)
         # 0: 空白, 1: 🔵藍方, 2: ⬛黑方
         self.board = [[0 for _ in range(5)] for _ in range(5)]
         self.game_over = False
@@ -43,12 +43,12 @@ class GomokuView(discord.ui.View):
                 await interaction.response.send_message("遊戲已經結束囉！", ephemeral=True)
                 return
 
-            # 檢查是否輪到該玩家
+            # Check是否輪到該玩家
             if interaction.user != self.current_turn:
                 await interaction.response.send_message("還沒輪到你或是你不是對局玩家！", ephemeral=True)
                 return
 
-            # 檢查格子是否已被佔用
+            # Check格子是否已被佔用
             if self.board[r][c] != 0:
                 await interaction.response.send_message("這裡已經有棋子了！", ephemeral=True)
                 return
@@ -57,7 +57,7 @@ class GomokuView(discord.ui.View):
             player_val = 1 if self.current_turn == self.p1 else 2
             self.board[r][c] = player_val
 
-            # 檢查勝利條件 (簡化的連線判定)
+            # Check勝利Condition (簡化的Connection判定)
             if self.check_win(player_val):
                 self.game_over = True
                 self.update_buttons()
@@ -82,25 +82,25 @@ class GomokuView(discord.ui.View):
         return callback
 
     def check_win(self, val):
-        # 簡單的 3 子或 5 子連線判定邏輯 (以 5x5 為例，連線 4 子或 5 子)
+        # 簡單的 3 子或 5 子Connection判定邏輯 (以 5x5 為例，Connection 4 子或 5 子)
         b = self.board
         n = 5
-        target = 4  # 5x5 棋盤通常連線 4 子即獲勝，可依需求調整
+        target = 4  # 5x5 棋盤通常Connection 4 子即獲勝，可依Requirement調整
         
-        # 檢查橫排、直排、斜排
+        # Check橫排、直排、斜排
         for r in range(n):
             for c in range(n):
                 if b[r][c] == val:
-                    # 檢查右
+                    # Check右
                     if c + target <= n and all(b[r][c+i] == val for i in range(target)):
                         return True
-                    # 檢查下
+                    # Check下
                     if r + target <= n and all(b[r+i][c] == val for i in range(target)):
                         return True
-                    # 檢查右下斜
+                    # Check右下斜
                     if r + target <= n and c + target <= n and all(b[r+i][c+i] == val for i in range(target)):
                         return True
-                    # 檢查右上斜
+                    # Check右上斜
                     if r - target >= -1 and c + target <= n and all(b[r-i][c+i] == val for i in range(target)):
                         return True
         return False
@@ -113,7 +113,7 @@ class Games(commands.Cog):
     @app_commands.describe(opponent="你的對戰對手")
     async def gomoku(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot:
-            await interaction.response.send_message("你不能跟機器人對戰！", ephemeral=True)
+            await interaction.response.send_message("你不能跟Bot對戰！", ephemeral=True)
             return
         if opponent == interaction.user:
             await interaction.response.send_message("你不能自己跟自己對戰！", ephemeral=True)

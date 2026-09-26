@@ -14,7 +14,7 @@ class ToolUserAvatar(commands.Cog):
 
         embed = discord.Embed(title=f"🖼️ {target.display_name} 的大頭貼", color=target.color)
         embed.set_image(url=avatar_url)
-        embed.description = f"[點擊這裡直接開啟大頭貼原圖]({avatar_url})"
+        embed.description = f"[點擊這裡直接開啟大頭貼原Graph]({avatar_url})"
         
         await interaction.response.send_message(embed=embed)
 

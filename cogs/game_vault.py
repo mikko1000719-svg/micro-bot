@@ -23,12 +23,12 @@ class VaultView(discord.ui.View):
         if hit or self.attempts >= 5:
             for child in self.children: child.disabled = True
             winner = self.current
-            msg = f"💥 **喀噠！** {winner.mention} 成功破解了密碼（正確密碼：{self.vault_code}）！\n[PARTY] 金庫開啟，獲得勝利！"
+            msg = f"💥 **喀噠！** {winner.mention} Success破解了密碼（正確密碼：{self.vault_code}）！\n[PARTY] 金庫開啟，獲得勝利！"
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.attempts += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"[LOCKED2] **金庫解鎖中**\n第 {self.attempts} 次嘗試失敗，密庫防禦中...\n輪到 {self.current.mention} 進行嘗試！"
+            msg = f"[LOCKED2] **金庫解鎖中**\n第 {self.attempts} 次嘗試Failed，密庫Defense中...\n輪到 {self.current.mention} 進行嘗試！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameVault(commands.Cog):

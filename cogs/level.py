@@ -12,24 +12,24 @@ class Leveling(commands.Cog):
         self.xp_data = self.load_data()
 
     def load_data(self):
-        """從 JSON 檔案載入經驗值數據"""
+        """從 JSON FileLoad經驗值數據"""
         if os.path.exists(DATA_FILE):
             try:
                 with open(DATA_FILE, "r", encoding="utf-8") as f:
                     return json.load(f)
             except Exception as e:
-                print(f"【等級系統】讀取 levels.json 失敗，初始化空資料: {e}")
+                print(f"【等級System】Read levels.json Failed，Initialize空資料: {e}")
                 return {}
         return {}
 
     def save_data(self):
-        """儲存經驗值數據至 JSON 檔案"""
+        """Save經驗值數據至 JSON File"""
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(self.xp_data, f, indent=4)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
-        # 忽略機器人訊息
+        # 忽略BotMessage
         if message.author.bot:
             return
 
@@ -53,5 +53,5 @@ class Leveling(commands.Cog):
         await interaction.response.send_message(f"[STAT] {interaction.user.name}，你的目前等級是 {level}，經驗值為 {xp}。", ephemeral=True)
 
 async def setup(bot):
-    """標準 Cog 載入入口點"""
+    """標準 Cog Load入口點"""
     await bot.add_cog(Leveling(bot))
