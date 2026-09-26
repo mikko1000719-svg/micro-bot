@@ -9,16 +9,16 @@ from discord.ext import commands, tasks
 class KeepAlive(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        # Read Render Variable；SettingsDefault
+        # Read Render VariableSettingsDefault
         self.site_url = os.getenv("RENDER_EXTERNAL_URL", "https://micro-bot-1.onrender.com")
         # StartBackground Self-Ping 
         self.self_ping_task.start()
 
     def cog_unload(self):
-        # ModuleStop，Memory
+        # ModuleStopMemory
         self.self_ping_task.cancel()
 
-    # Settings 10 AutoExecute， Render  15 Limit
+    # Settings 10 AutoExecute Render  15 Limit
     @tasks.loop(minutes=10)
     async def self_ping_task(self):
         if not self.site_url:
@@ -42,7 +42,7 @@ class KeepAlive(commands.Cog):
 
     @app_commands.command(name="keepalive", description="CheckBot")
     async def keepalive(self, interaction: discord.Interaction):
-        # 1. ， 3 
+        # 1.  3 
         await interaction.response.defer(thinking=True)
 
         is_running = self.self_ping_task.is_running()

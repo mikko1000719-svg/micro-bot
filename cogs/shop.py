@@ -27,7 +27,7 @@ class Shop(commands.Cog):
         self.shop_data["items"][name] = {"price": price, "image": image_url}
         self.save_data()
 
-        embed = discord.Embed(title="🛍️ Success", description=f"****: {name}\n****: ${price}", color=discord.Color.green())
+        embed = discord.Embed(title=" Success", description=f"****: {name}\n****: ${price}", color=discord.Color.green())
         if image_url:
             embed.set_image(url=image_url)
 
@@ -37,11 +37,11 @@ class Shop(commands.Cog):
     async def buy_item(self, interaction: discord.Interaction, name: str):
         items = self.shop_data.get("items", {})
         if name not in items:
-            await interaction.response.send_message(f"[ERROR]  `{name}` ！", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR]  `{name}` ", ephemeral=True)
             return
 
         item = items[name]
-        embed = discord.Embed(title="🛒 Success", description=f"Success **{name}**！\n: ${item['price']}", color=discord.Color.blue())
+        embed = discord.Embed(title=" Success", description=f"Success **{name}**\n: ${item['price']}", color=discord.Color.blue())
         if item.get("image"):
             embed.set_thumbnail(url=item["image"])
 

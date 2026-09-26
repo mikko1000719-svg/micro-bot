@@ -27,14 +27,14 @@ class AntiSpam(commands.Cog):
 
         if data["count"] >= 3:
             try:
-                await message.author.timeout(timedelta(hours=24), reason=" 5.0： 3 ")
-                await message.channel.send(f"🚨 {message.author.mention} Auto 24 。")
+                await message.author.timeout(timedelta(hours=24), reason=" 5.0 3 ")
+                await message.channel.send(f" {message.author.mention} Auto 24 ")
                 data["count"] = 0 # 
             except Exception as e:
                 print(f"Failed: {e}")
                 
         # 2.  (SendMessage)
-        # Requirement， 5  10 
+        # Requirement 5  10 
         data["burst"] += 1
         # Defense...
 

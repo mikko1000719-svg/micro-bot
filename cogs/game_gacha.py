@@ -10,13 +10,13 @@ class GachaView(discord.ui.View):
         self.player2 = player2
         self.cards = {player1: None, player2: None}
 
-    @discord.ui.button(label="🎴 ", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label=" ", style=discord.ButtonStyle.primary)
     async def gacha_draw(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         if self.cards[interaction.user] is not None:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
 
         rarities = ["N", "R", "SR", "SSR"]
@@ -25,29 +25,29 @@ class GachaView(discord.ui.View):
         score_map = {"N": 1, "R": 2, "SR": 3, "SSR": 5}
         
         self.cards[interaction.user] = (drawn, score_map[drawn])
-        await interaction.response.send_message(f"【{drawn}】！...", ephemeral=True)
+        await interaction.response.send_message(f"{drawn}...", ephemeral=True)
 
         if self.cards[self.player1] is not None and self.cards[self.player2] is not None:
             button.disabled = True
             p1_name, p1_val = self.cards[self.player1]
             p2_name, p2_val = self.cards[self.player2]
             
-            res = f"🎴 ****\n{self.player1.mention} ：{p1_name}\n{self.player2.mention} ：{p2_name}\n\n"
-            if p1_val > p2_val: res += f"[PARTY]  {self.player1.mention} ！"
-            elif p2_val > p1_val: res += f"[PARTY]  {self.player2.mention} ！"
-            else: res += "[HANDSHAKE] ，！"
+            res = f" ****\n{self.player1.mention} {p1_name}\n{self.player2.mention} {p2_name}\n\n"
+            if p1_val > p2_val: res += f"[PARTY]  {self.player1.mention} "
+            elif p2_val > p1_val: res += f"[PARTY]  {self.player2.mention} "
+            else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)
 
 class GameGacha(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_gacha", description="！")
+    @app_commands.command(name="play_gacha", description="")
     async def play_gacha(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         view = GachaView(interaction.user, opponent)
-        await interaction.response.send_message(f"🎴 ****\n{interaction.user.mention} VS {opponent.mention}\n！", view=view)
+        await interaction.response.send_message(f" ****\n{interaction.user.mention} VS {opponent.mention}\n", view=view)
 
 async def setup(bot): await bot.add_cog(GameGacha(bot))

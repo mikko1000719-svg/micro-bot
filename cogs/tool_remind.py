@@ -7,25 +7,25 @@ class ToolRemind(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="remind", description="Settings，Bot")
+    @app_commands.command(name="remind", description="SettingsBot")
     @app_commands.describe(minutes="", content="")
     async def remind(self, interaction: discord.Interaction, minutes: int, content: str):
         if minutes < 1 or minutes > 1440:
-            await interaction.response.send_message("[ERROR]  1  1440 （24）！", ephemeral=True)
+            await interaction.response.send_message("[ERROR]  1  1440 24", ephemeral=True)
             return
 
-        await interaction.response.send_message(f"⏰ ！ **{minutes} **：`{content}`", ephemeral=True)
+        await interaction.response.send_message(f"⏰  **{minutes} **`{content}`", ephemeral=True)
 
         # Sync
         await asyncio.sleep(minutes * 60)
 
         try:
-            embed = discord.Embed(title="⏰ ！", description=content, color=discord.Color.gold())
+            embed = discord.Embed(title="⏰ ", description=content, color=discord.Color.gold())
             await interaction.user.send(embed=embed)
         except Exception:
-            # ，Channel
+            # Channel
             try:
-                await interaction.channel.send(f"{interaction.user.mention} ⏰ ：{content}")
+                await interaction.channel.send(f"{interaction.user.mention} ⏰ {content}")
             except Exception:
                 pass
 

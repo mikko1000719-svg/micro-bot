@@ -33,9 +33,9 @@ class Announce(commands.Cog):
 
         try:
             await channel.send(embed=embed)
-            await interaction.response.send_message(f"[OK] SuccessSend {channel.mention}！", ephemeral=True)
+            await interaction.response.send_message(f"[OK] SuccessSend {channel.mention}", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] SendFailed，: {e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] SendFailed: {e}", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Announce(bot))

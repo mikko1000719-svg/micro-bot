@@ -12,19 +12,19 @@ class ModVCKick(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vckick(self, interaction: discord.Interaction, member: discord.Member):
         if not member.voice or not member.voice.channel:
-            await interaction.response.send_message("[ERROR] Channel！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Channel", ephemeral=True)
             return
 
         try:
             await member.move_to(None, reason=f" {interaction.user} ")
-            await interaction.response.send_message(f"🚪 Success {member.mention} Channel！", ephemeral=True)
+            await interaction.response.send_message(f" Success {member.mention} Channel", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Failed：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] Failed{e}", ephemeral=True)
 
     @mod_vckick.error
     async def mod_vckick_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 「Manage」PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModVCKick(bot))

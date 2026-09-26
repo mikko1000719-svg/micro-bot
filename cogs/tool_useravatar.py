@@ -12,7 +12,7 @@ class ToolUserAvatar(commands.Cog):
         target = member or interaction.user
         avatar_url = target.display_avatar.url
 
-        embed = discord.Embed(title=f"🖼️ {target.display_name} ", color=target.color)
+        embed = discord.Embed(title=f" {target.display_name} ", color=target.color)
         embed.set_image(url=avatar_url)
         embed.description = f"[Graph]({avatar_url})"
         

@@ -17,7 +17,7 @@ class Passport(commands.Cog):
 
         embed = discord.Embed(
             title="[NETWORK]  (Federal Passport)",
-            description="。",
+            description="",
             color=discord.Color.gold()
         )
         embed.set_thumbnail(url=user.display_avatar.url)

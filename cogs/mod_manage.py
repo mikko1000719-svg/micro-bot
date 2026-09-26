@@ -13,7 +13,7 @@ class ModManage(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mute(self, interaction: discord.Interaction, member: discord.Member, minutes: int, reason: str = ""):
         if member.top_role >= interaction.user.top_role:
-            await interaction.response.send_message("[ERROR] 。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ", ephemeral=True)
             return
 
         await interaction.response.defer()
@@ -21,13 +21,13 @@ class ModManage(commands.Cog):
             duration = timedelta(minutes=minutes)
             await member.timeout(duration, reason=reason)
             embed = discord.Embed(
-                title="🔇 Success",
-                description=f"Success {member.mention} **{minutes} **。\n：`{reason}`",
+                title=" Success",
+                description=f"Success {member.mention} **{minutes} **\n`{reason}`",
                 color=discord.Color.orange()
             )
             await interaction.followup.send(embed=embed)
         except Exception as e:
-            await interaction.followup.send(f"[ERROR] ExecuteFailed：{e}", ephemeral=True)
+            await interaction.followup.send(f"[ERROR] ExecuteFailed{e}", ephemeral=True)
 
     @app_commands.command(name="unmute", description="")
     @app_commands.describe(member="")
@@ -37,20 +37,20 @@ class ModManage(commands.Cog):
         try:
             await member.timeout(None, reason="")
             embed = discord.Embed(
-                title="🔊 ",
-                description=f"Success {member.mention} Limit。",
+                title=" ",
+                description=f"Success {member.mention} Limit",
                 color=discord.Color.green()
             )
             await interaction.response.send_message(embed=embed)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] ExecuteFailed：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] ExecuteFailed{e}", ephemeral=True)
 
     # ErrorProcess
     @mute.error
     @unmute.error
     async def mod_manage_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 「Manage」PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModManage(bot))

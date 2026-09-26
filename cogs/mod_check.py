@@ -13,7 +13,7 @@ class ModCheck(commands.Cog):
         channel = interaction.channel
         permissions = channel.permissions_for(member)
         
-        embed = discord.Embed(title=f"[SHIELD] PermissionCheck：{member.display_name}", color=discord.Color.blue())
+        embed = discord.Embed(title=f"[SHIELD] PermissionCheck{member.display_name}", color=discord.Color.blue())
         embed.add_field(name="SendMessage", value="[OK] " if permissions.send_messages else "[ERROR] ", inline=True)
         embed.add_field(name="", value="[OK] " if permissions.embed_links else "[ERROR] ", inline=True)
         embed.add_field(name="AdditionalFile", value="[OK] " if permissions.attach_files else "[ERROR] ", inline=True)
@@ -24,7 +24,7 @@ class ModCheck(commands.Cog):
     @mod_check.error
     async def mod_check_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] PermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModCheck(bot))

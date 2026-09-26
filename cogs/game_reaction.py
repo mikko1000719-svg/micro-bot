@@ -10,26 +10,26 @@ class ReactionView(discord.ui.View):
         self.players = [player1, player2]
         self.clicked = False
 
-    @discord.ui.button(label="[BOLT] ！", style=discord.ButtonStyle.danger)
+    @discord.ui.button(label="[BOLT] ", style=discord.ButtonStyle.danger)
     async def click_btn(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in self.players:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
             
         if not self.clicked:
             self.clicked = True
             button.disabled = True
             button.style = discord.ButtonStyle.success
-            await interaction.response.edit_message(content=f"[PARTY] ！\n[BOLT] **{interaction.user.mention}** ，！", view=self)
+            await interaction.response.edit_message(content=f"[PARTY] \n[BOLT] **{interaction.user.mention}** ", view=self)
 
 class GameReaction(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="play_reaction", description="！")
+    @app_commands.command(name="play_reaction", description="")
     async def play_reaction(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
 
         await interaction.response.send_message(f"[BOLT] {interaction.user.mention} VS {opponent.mention}\n**...** ()")
@@ -40,7 +40,7 @@ class GameReaction(commands.Cog):
         view = ReactionView(interaction.user, opponent)
         # SendMessageUpdate
         msg = await interaction.original_response()
-        await msg.edit(content=f"🚨 **！！**\n{interaction.user.mention} VS {opponent.mention}", view=view)
+        await msg.edit(content=f" ****\n{interaction.user.mention} VS {opponent.mention}", view=view)
 
 async def setup(bot):
     await bot.add_cog(GameReaction(bot))

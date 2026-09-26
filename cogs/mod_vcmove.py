@@ -12,23 +12,23 @@ class ModVCMove(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vcmove(self, interaction: discord.Interaction, member: discord.Member, target_channel: discord.VoiceChannel):
         if not member.voice or not member.voice.channel:
-            await interaction.response.send_message("[ERROR] Channel！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Channel", ephemeral=True)
             return
 
         try:
             old_channel = member.voice.channel
             await member.move_to(target_channel, reason=f" {interaction.user} ")
             await interaction.response.send_message(
-                f"🚚 Success {member.mention}  **{old_channel.name}**  **{target_channel.name}**！",
+                f" Success {member.mention}  **{old_channel.name}**  **{target_channel.name}**",
                 ephemeral=True
             )
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Failed：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] Failed{e}", ephemeral=True)
 
     @mod_vcmove.error
     async def mod_vcmove_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 「Manage」PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModVCMove(bot))

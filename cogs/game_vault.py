@@ -15,7 +15,7 @@ class VaultView(discord.ui.View):
     @discord.ui.button(label="[UNLOCK]  (100-999)", style=discord.ButtonStyle.success)
     async def try_vault(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != self.current:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
 
         # 
@@ -23,23 +23,23 @@ class VaultView(discord.ui.View):
         if hit or self.attempts >= 5:
             for child in self.children: child.disabled = True
             winner = self.current
-            msg = f"💥 **！** {winner.mention} Success（：{self.vault_code}）！\n[PARTY] ，！"
+            msg = f" **** {winner.mention} Success{self.vault_code}\n[PARTY] "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.attempts += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"[LOCKED2] ****\n {self.attempts} Failed，Defense...\n {self.current.mention} ！"
+            msg = f"[LOCKED2] ****\n {self.attempts} FailedDefense...\n {self.current.mention} "
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameVault(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_vault", description="！")
+    @app_commands.command(name="play_vault", description="")
     async def play_vault(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         view = VaultView(interaction.user, opponent)
-        await interaction.response.send_message(f"[LOCKED2] ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ！", view=view)
+        await interaction.response.send_message(f"[LOCKED2] ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ", view=view)
 
 async def setup(bot): await bot.add_cog(GameVault(bot))

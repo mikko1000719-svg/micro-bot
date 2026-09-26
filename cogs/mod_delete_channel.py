@@ -15,14 +15,14 @@ class ModDeleteChannel(commands.Cog):
         try:
             channel_name = target_channel.name
             await target_channel.delete(reason=f" {interaction.user} Delete")
-            await interaction.response.send_message(f"[TRASH] SuccessDeleteChannel：`#{channel_name}`", ephemeral=True)
+            await interaction.response.send_message(f"[TRASH] SuccessDeleteChannel`#{channel_name}`", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] DeleteChannelFailed：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] DeleteChannelFailed{e}", ephemeral=True)
 
     @mod_delete_channel.error
     async def mod_delete_channel_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 「Manage」PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModDeleteChannel(bot))

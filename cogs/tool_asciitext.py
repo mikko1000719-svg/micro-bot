@@ -10,16 +10,16 @@ class ToolAsciiText(commands.Cog):
     @app_commands.describe(text="Convert ()")
     async def asciitext(self, interaction: discord.Interaction, text: str):
         if len(text) > 15:
-            await interaction.response.send_message("[ERROR] ，Limit 15 ！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Limit 15 ", ephemeral=True)
             return
 
         # 
         char_map = {
-            'a': '🇦', 'b': '🇧', 'c': '🇨', 'd': '🇩', 'e': '🇪',
-            'f': '🇫', 'g': '🇬', 'h': '🇭', 'i': '🇮', 'j': '🇯',
-            'k': '🇰', 'l': '🇱', 'm': '🇲', 'n': '🇳', 'o': '🇴',
-            'p': '🇵', 'q': '🇶', 'r': '🇷', 's': '🇸', 't': '🇹',
-            'u': '🇺', 'v': '🇻', 'w': '🇼', 'x': '🇽', 'y': '🇾', 'z': '🇿'
+            'a': '', 'b': '', 'c': '', 'd': '', 'e': '',
+            'f': '', 'g': '', 'h': '', 'i': '', 'j': '',
+            'k': '', 'l': '', 'm': '', 'n': '', 'o': '',
+            'p': '', 'q': '', 'r': '', 's': '', 't': '',
+            'u': '', 'v': '', 'w': '', 'x': '', 'y': '', 'z': ''
         }
 
         result = []
@@ -32,7 +32,7 @@ class ToolAsciiText(commands.Cog):
                 result.append(char)
 
         formatted_text = "".join(result)
-        embed = discord.Embed(title="🔤 Convert", description=formatted_text, color=discord.Color.purple())
+        embed = discord.Embed(title=" Convert", description=formatted_text, color=discord.Color.purple())
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):

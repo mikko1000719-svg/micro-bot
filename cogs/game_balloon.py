@@ -12,33 +12,33 @@ class BalloonView(discord.ui.View):
         self.boom_balloon = random.randint(1, 4)
         self.step = 1
 
-    @discord.ui.button(label="🎈 ", style=discord.ButtonStyle.danger)
+    @discord.ui.button(label=" ", style=discord.ButtonStyle.danger)
     async def poke_balloon(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != self.current:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
 
         if self.step == self.boom_balloon:
             for child in self.children: child.disabled = True
             loser = self.current
             winner = self.player2 if loser == self.player1 else self.player1
-            msg = f"💥 **！** {loser.mention} ！\n[PARTY]  {winner.mention} ！"
+            msg = f" **** {loser.mention} \n[PARTY]  {winner.mention} "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.step += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"🎈 ****\nSecurity！。\n {self.current.mention} ！"
+            msg = f" ****\nSecurity\n {self.current.mention} "
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameBalloon(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_balloon", description="，！")
+    @app_commands.command(name="play_balloon", description="")
     async def play_balloon(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         view = BalloonView(interaction.user, opponent)
-        await interaction.response.send_message(f"🎈 ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ！", view=view)
+        await interaction.response.send_message(f" ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ", view=view)
 
 async def setup(bot): await bot.add_cog(GameBalloon(bot))

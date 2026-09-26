@@ -18,7 +18,7 @@ class Leveling(commands.Cog):
                 with open(DATA_FILE, "r", encoding="utf-8") as f:
                     return json.load(f)
             except Exception as e:
-                print(f"【System】Read levels.json Failed，Initialize: {e}")
+                print(f"SystemRead levels.json FailedInitialize: {e}")
                 return {}
         return {}
 
@@ -43,14 +43,14 @@ class Leveling(commands.Cog):
 
         #  25 
         if xp % 25 == 0:
-            await message.channel.send(f"[PARTY]  {message.author.mention} ！：{level} (: {xp})")
+            await message.channel.send(f"[PARTY]  {message.author.mention} {level} (: {xp})")
 
     @app_commands.command(name="rank", description="")
     async def rank(self, interaction: discord.Interaction):
         user_id = str(interaction.user.id)
         xp = self.xp_data.get(user_id, 0)
         level = int(xp**0.5) // 5
-        await interaction.response.send_message(f"[STAT] {interaction.user.name}， {level}， {xp}。", ephemeral=True)
+        await interaction.response.send_message(f"[STAT] {interaction.user.name} {level} {xp}", ephemeral=True)
 
 async def setup(bot):
     """ Cog Load"""

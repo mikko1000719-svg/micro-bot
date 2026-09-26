@@ -8,15 +8,15 @@ class TicketSystem(commands.Cog):
         self.bot = bot
 
     async def notify_owner(self, guild: discord.Guild, user: discord.User, reason: str, channel: discord.TextChannel):
-        """： Ticket ，"""
+        """ Ticket """
         owner_cog = self.bot.get_cog("OwnerDM")
         if owner_cog and owner_cog.owner_id:
             try:
                 owner = await self.bot.fetch_user(owner_cog.owner_id)
                 if owner:
                     embed = discord.Embed(
-                        title="🎫 Error",
-                        description=f"**Server**：{guild.name}\n****：{user.mention} (`{user.id}`)\n****：{reason}\n**Channel**：{channel.mention}",
+                        title=" Error",
+                        description=f"**Server**{guild.name}\n****{user.mention} (`{user.id}`)\n****{reason}\n**Channel**{channel.mention}",
                         color=discord.Color.gold()
                     )
                     await owner.send(embed=embed)
@@ -28,14 +28,14 @@ class TicketSystem(commands.Cog):
         guild = interaction.guild
         user = interaction.user
 
-        # SettingsChannelPermission：Default，Bot
+        # SettingsChannelPermissionDefaultBot
         overwrites = {
             guild.default_role: discord.PermissionOverwrite(read_messages=False),
             user: discord.PermissionOverwrite(read_messages=True, send_messages=True),
             guild.me: discord.PermissionOverwrite(read_messages=True, send_messages=True, manage_channels=True)
         }
 
-        # Manage，Manage
+        # ManageManage
         for role in guild.roles:
             if role.permissions.administrator:
                 overwrites[role] = discord.PermissionOverwrite(read_messages=True, send_messages=True)
@@ -44,12 +44,12 @@ class TicketSystem(commands.Cog):
         ticket_channel = await guild.create_text_channel(name=channel_name, overwrites=overwrites)
 
         embed = discord.Embed(
-            title="🎫 Error",
-            description=f"****：{user.mention}\n****：{reason}\n\n。ProcessComplete `/close_ticket` Channel。",
+            title=" Error",
+            description=f"****{user.mention}\n****{reason}\n\nProcessComplete `/close_ticket` Channel",
             color=discord.Color.orange()
         )
         await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"[OK] Channel：{ticket_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"[OK] Channel{ticket_channel.mention}", ephemeral=True)
 
         # 
         await self.notify_owner(guild, user, reason, ticket_channel)
@@ -61,7 +61,7 @@ class TicketSystem(commands.Cog):
             await asyncio.sleep(5)
             await interaction.channel.delete()
         else:
-            await interaction.response.send_message("[ERROR] Command Ticket Channel！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Command Ticket Channel", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(TicketSystem(bot))

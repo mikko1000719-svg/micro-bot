@@ -104,7 +104,7 @@ class SyncChat(commands.Cog):
         if message.reference and message.reference.resolved:
             ref_msg = message.reference.resolved
             if isinstance(ref_msg, discord.Message) and ref_msg.content:
-                reply_prefix = f"> 💬 Reply to **{ref_msg.author.display_name}**: {ref_msg.content[:30]}...\n\n"
+                reply_prefix = f">  Reply to **{ref_msg.author.display_name}**: {ref_msg.content[:30]}...\n\n"
 
         full_content = reply_prefix + (message.content if message.content else "")
 

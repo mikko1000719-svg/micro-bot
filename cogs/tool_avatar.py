@@ -10,7 +10,7 @@ class ToolAvatar(commands.Cog):
     @app_commands.describe(member=" ()")
     async def avatar(self, interaction: discord.Interaction, member: discord.Member = None):
         target = member or interaction.user
-        embed = discord.Embed(title=f"🖼️ {target.display_name} ", color=target.color)
+        embed = discord.Embed(title=f" {target.display_name} ", color=target.color)
         embed.set_image(url=target.display_avatar.url)
         await interaction.response.send_message(embed=embed)
 

@@ -7,7 +7,7 @@ class ToolCalc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="calc", description="（ +, -, *, /, ）")
+    @app_commands.command(name="calc", description=" +, -, *, /, ")
     @app_commands.describe(expression=": (5 + 3) * 4")
     async def calc(self, interaction: discord.Interaction, expression: str):
         # SecurityFunction
@@ -33,12 +33,12 @@ class ToolCalc(commands.Cog):
             node = ast.parse(expression, mode='eval')
             result = eval_expr(node.body)
             
-            embed = discord.Embed(title="🔢 ", color=discord.Color.blue())
+            embed = discord.Embed(title=" ", color=discord.Color.blue())
             embed.add_field(name="", value=f"`{expression}`", inline=False)
             embed.add_field(name="", value=f"**{result}**", inline=False)
             await interaction.response.send_message(embed=embed)
         except Exception:
-            await interaction.response.send_message("[ERROR] Failed！ConfirmFormat（Number）。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] FailedConfirmFormatNumber", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ToolCalc(bot))

@@ -10,7 +10,7 @@ DATA_FILE = "farewell.json"
 class Farewell(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # BotStart，AutoLoadSaveChannel
+        # BotStartAutoLoadSaveChannel
         self.channels = self.load_data()
 
     def load_data(self):
@@ -26,13 +26,13 @@ class Farewell(commands.Cog):
             json.dump(self.channels, f, indent=4)
 
     # --------------------------------------------------
-    # 1. Command：SettingsChannel (Manage)
+    # 1. CommandSettingsChannel (Manage)
     # --------------------------------------------------
     @app_commands.command(name="set_farewell", description="SettingsSendChannel")
     @app_commands.checks.has_permissions(administrator=True)
     async def set_farewell(self, interaction: discord.Interaction, channel: discord.TextChannel):
         """
-        Parameter：
+        Parameter
         channel: ManageSendMessageChannel
         """
         guild_id = str(interaction.guild.id)
@@ -41,26 +41,26 @@ class Farewell(commands.Cog):
         self.save_data()
         
         # ephemeral=True SuccessSettingsManage
-        await interaction.response.send_message(f"[OK] ChannelSuccessSettings {channel.mention}！", ephemeral=True)
+        await interaction.response.send_message(f"[OK] ChannelSuccessSettings {channel.mention}", ephemeral=True)
 
     # --------------------------------------------------
-    # 2. Command：Manual
+    # 2. CommandManual
     # --------------------------------------------------
     @app_commands.command(name="", description="ServerSpecific")
     async def bye(self, interaction: discord.Interaction, member: discord.Member = None):
         """
-        Parameter：
+        Parameter
         member: () Server
         """
         if member:
-            message = f"👋 {interaction.user.mention}  {member.mention} ！。"
+            message = f" {interaction.user.mention}  {member.mention} "
         else:
-            message = f"👋 {interaction.user.mention} ！。"
+            message = f" {interaction.user.mention} "
             
         await interaction.response.send_message(message)
 
     # --------------------------------------------------
-    # 3. Auto：Server
+    # 3. AutoServer
     # --------------------------------------------------
     @commands.Cog.listener()
     async def on_member_remove(self, member: discord.Member):
@@ -73,8 +73,8 @@ class Farewell(commands.Cog):
             if channel:
                 #  Embed DisplayMessage
                 embed = discord.Embed(
-                    title="🛫 ",
-                    description=f"**{member.name}** Server，。",
+                    title=" ",
+                    description=f"**{member.name}** Server",
                     color=discord.Color.red()
                 )
                 embed.set_thumbnail(url=member.display_avatar.url)

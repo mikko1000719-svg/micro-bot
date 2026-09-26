@@ -4,7 +4,7 @@ from discord.ext import commands
 
 class PollReasonModal(discord.ui.Modal, title=""):
     reason_input = discord.ui.TextInput(
-        label="（）",
+        label="",
         style=discord.TextStyle.paragraph,
         placeholder="...",
         required=False,
@@ -61,7 +61,7 @@ class PollView(discord.ui.View):
     async def update_poll_message(self, interaction: discord.Interaction):
         embed = discord.Embed(
             title="[STAT] Server",
-            description=f"**：** {self.question}",
+            description=f"**** {self.question}",
             color=discord.Color.blue()
         )
         total_votes = len(self.user_votes)
@@ -72,10 +72,10 @@ class PollView(discord.ui.View):
 
         # Display
         if self.user_votes:
-            reasons_text = "\n".join([f"• **{data['name']}** ({data['choice']})：{data['reason']}" for data in list(self.user_votes.values())[-5:]])
-            embed.add_field(name="💬 ", value=reasons_text, inline=False)
+            reasons_text = "\n".join([f"• **{data['name']}** ({data['choice']}){data['reason']}" for data in list(self.user_votes.values())[-5:]])
+            embed.add_field(name=" ", value=reasons_text, inline=False)
 
-        embed.set_footer(text=f"：{total_votes}  ()")
+        embed.set_footer(text=f"{total_votes}  ()")
 
         await interaction.response.edit_message(embed=embed, view=self)
 
@@ -83,20 +83,20 @@ class Poll(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="poll", description="、、")
+    @app_commands.command(name="poll", description="")
     @app_commands.describe(question="/")
     async def poll(self, interaction: discord.Interaction, question: str):
         view = PollView(question=question)
         
         embed = discord.Embed(
             title="[STAT] Server",
-            description=f"**：** {question}",
+            description=f"**** {question}",
             color=discord.Color.blue()
         )
         embed.add_field(name="[OK] ", value="**0** ", inline=True)
         embed.add_field(name="[STOP] ", value="**0** ", inline=True)
         embed.add_field(name="[WAIT] ", value="**0** ", inline=True)
-        embed.set_footer(text=f"：{interaction.user.name} | ：0 ")
+        embed.set_footer(text=f"{interaction.user.name} | 0 ")
 
         await interaction.response.send_message(embed=embed, view=view)
 

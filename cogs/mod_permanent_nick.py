@@ -6,7 +6,7 @@ from discord import app_commands
 
 DATA_FILE = "jose_nicks.json"
 
-# CustomCheck：ConfirmServer
+# CustomCheckConfirmServer
 def is_guild_owner():
     def predicate(interaction: discord.Interaction) -> bool:
         return interaction.guild is not None and interaction.user.id == interaction.guild.owner_id
@@ -37,10 +37,10 @@ class PermanentNick(commands.Cog):
         except Exception as e:
             print(f"[jOSeSystem] SaveFailed: {e}")
 
-    @app_commands.command(name="setpermanentnick", description="[jOSeSystem] SettingsPermanent（）")
+    @app_commands.command(name="setpermanentnick", description="[jOSeSystem] SettingsPermanent")
     @app_commands.describe(member="", nickname="Permanent")
     @app_commands.default_permissions(administrator=True) # HiddenCommand
-    @is_guild_owner() # ：LimitExecute
+    @is_guild_owner() # LimitExecute
     async def setpermanentnick(self, interaction: discord.Interaction, member: discord.Member, nickname: str):
         guild_id = interaction.guild.id
         
@@ -55,20 +55,20 @@ class PermanentNick(commands.Cog):
             
             embed = discord.Embed(
                 title="[LOCK] jOSe System - Permanent",
-                description=f"Success **{member.mention}** ：\n`{nickname}`\n\n*[OK] Write jOSe PermanentDatabase，Bot。*",
+                description=f"Success **{member.mention}** \n`{nickname}`\n\n*[OK] Write jOSe PermanentDatabaseBot*",
                 color=discord.Color.red()
             )
             await interaction.response.send_message(embed=embed)
         except discord.Forbidden:
-            await interaction.response.send_message("[ERROR] Permission！，「Manage」Permission。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] PermissionManagePermission", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Error：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] Error{e}", ephemeral=True)
 
     @setpermanentnick.error
     async def setpermanentnick_error(self, interaction: discord.Interaction, error):
         # CustomCheckError
         if isinstance(error, app_commands.errors.CheckFailure):
-            await interaction.response.send_message("[ERROR] Permission！Command**Server (Owner)** ！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] PermissionCommand**Server (Owner)** ", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
@@ -84,7 +84,7 @@ class PermanentNick(commands.Cog):
         
         if after.display_name != target_nick:
             try:
-                await after.edit(nick=target_nick, reason="[jOSeSystem] Permanent，SystemAuto")
+                await after.edit(nick=target_nick, reason="[jOSeSystem] PermanentSystemAuto")
             except Exception:
                 pass
 

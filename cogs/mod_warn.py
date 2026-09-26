@@ -13,19 +13,19 @@ class ModWarn(commands.Cog):
     async def mod_warn(self, interaction: discord.Interaction, member: discord.Member, reason: str):
         try:
             embed = discord.Embed(title="[WARNING] ServerWarning", color=discord.Color.orange())
-            embed.description = f"Server **{interaction.guild.name}** ManageWarning。"
+            embed.description = f"Server **{interaction.guild.name}** ManageWarning"
             embed.add_field(name="", value=reason)
             await member.send(embed=embed)
-            dm_status = "[OK] Success。"
+            dm_status = "[OK] Success"
         except discord.Forbidden:
-            dm_status = "[WARNING] （Function）。"
+            dm_status = "[WARNING] Function"
 
-        await interaction.response.send_message(f"🚨  {member.mention} Warning。\n****：{reason}\n{dm_status}")
+        await interaction.response.send_message(f"  {member.mention} Warning\n****{reason}\n{dm_status}")
 
     @mod_warn.error
     async def mod_warn_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 「Manage」PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModWarn(bot))

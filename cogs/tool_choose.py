@@ -8,16 +8,16 @@ class ToolChoose(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="choose", description="Option")
-    @app_commands.describe(options="Option，")
+    @app_commands.describe(options="Option")
     async def choose(self, interaction: discord.Interaction, options: str):
-        raw_list = options.replace("，", ",").replace(" ", ",")
+        raw_list = options.replace("", ",").replace(" ", ",")
         choices = [item.strip() for item in raw_list.split(",") if item.strip()]
         if len(choices) < 2:
-            await interaction.response.send_message("[ERROR] Option！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Option", ephemeral=True)
             return
         selected = random.choice(choices)
         embed = discord.Embed(title="[DICE] ", color=discord.Color.purple())
-        embed.add_field(name="Option", value="、".join(choices), inline=False)
+        embed.add_field(name="Option", value="".join(choices), inline=False)
         embed.add_field(name="", value=f"[TARGET] **{selected}**", inline=False)
         await interaction.response.send_message(embed=embed)
 

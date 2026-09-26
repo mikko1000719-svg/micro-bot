@@ -10,12 +10,12 @@ class Info(commands.Cog):
     async def serverinfo(self, interaction: discord.Interaction):
         guild = interaction.guild
         if not guild:
-            await interaction.response.send_message("CommandServer！", ephemeral=True)
+            await interaction.response.send_message("CommandServer", ephemeral=True)
             return
 
         #  Embed 
         embed = discord.Embed(
-            title=f"🏰 {guild.name} ServerInformation",
+            title=f" {guild.name} ServerInformation",
             color=discord.Color.blue()
         )
         

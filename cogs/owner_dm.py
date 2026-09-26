@@ -43,27 +43,27 @@ class OwnerDM(commands.Cog):
         if message.author.bot:
             return
 
-        # Process「 (DMChannel)」
+        # Process (DMChannel)
         if isinstance(message.channel, discord.DMChannel):
             user_id = message.author.id
 
-            # Settings（Settings）
+            # SettingsSettings
             if self.owner_id is None:
                 self.save_owner_id(user_id)
-                await message.channel.send(f"👑 VerifySuccess！ **Bot 5.0** 。")
+                await message.channel.send(f" VerifySuccess **Bot 5.0** ")
                 return
 
             # Send
             if user_id != self.owner_id:
-                await message.channel.send("[ERROR] Bot 5.0 ，。")
+                await message.channel.send("[ERROR] Bot 5.0 ")
                 return
 
-            # === ：SystemServerList ===
-            await message.channel.send("[SWITCH] ReadServer，...")
+            # === SystemServerList ===
+            await message.channel.send("[SWITCH] ReadServer...")
 
             embed = discord.Embed(
                 title="[SHIELD] Bot 5.0 - ",
-                description=f"**System**：{self.latest_error}\n**Connection (Ping)**：`{round(self.bot.latency * 1000)} ms`\n**Server**：`{len(self.bot.guilds)}` ",
+                description=f"**System**{self.latest_error}\n**Connection (Ping)**`{round(self.bot.latency * 1000)} ms`\n**Server**`{len(self.bot.guilds)}` ",
                 color=discord.Color.blue()
             )
 
@@ -71,7 +71,7 @@ class OwnerDM(commands.Cog):
             for guild in self.bot.guilds:
                 invite_url = ""
                 
-                # SendChannel， API Rate Limit (429)
+                # SendChannel API Rate Limit (429)
                 try:
                     for channel in guild.text_channels:
                         if channel.permissions_for(guild.me).create_instant_invite:
@@ -83,14 +83,14 @@ class OwnerDM(commands.Cog):
 
                 guild_info_list.append(f"• **{guild.name}** (ID: `{guild.id}`)\n  : {guild.member_count} | [Server]({invite_url})")
                 
-                # Defense：， API  429 Error
+                # Defense API  429 Error
                 await asyncio.sleep(0.2)
 
-            # Process（ Discord Message 4000 Limit）
+            # Process Discord Message 4000 Limit
             guild_chunks = [guild_info_list[i:i + 5] for i in range(0, len(guild_info_list), 5)]
             
             for index, chunk in enumerate(guild_chunks):
-                field_title = "🏰 ServerList" if index == 0 else f"🏰 ServerList ( {index + 1})"
+                field_title = " ServerList" if index == 0 else f" ServerList ( {index + 1})"
                 embed.add_field(name=field_title, value="\n".join(chunk), inline=False)
 
             await message.channel.send(embed=embed)

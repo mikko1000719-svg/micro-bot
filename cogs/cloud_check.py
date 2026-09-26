@@ -9,22 +9,22 @@ class CloudCheck(commands.Cog):
 
     @app_commands.command(name="", description="CheckBotRun")
     async def env_check(self, interaction: discord.Interaction):
-        #  1：Send， 3 「」
+        #  1Send 3 
         try:
             await interaction.response.defer(thinking=True)
         except discord.errors.NotFound:
             return
 
-        #  2：Variable
+        #  2Variable
         # Render DefaultAuto "RENDER" Variable
         is_render = os.environ.get("RENDER") is not None
         
         if is_render:
-            status_msg = "☁️ ****： Render ServerExecute，！"
+            status_msg = " **** Render ServerExecute"
         else:
-            status_msg = "[COMPUTER] ****：Execute。，。"
+            status_msg = "[COMPUTER] ****Execute"
 
-        #  3：
+        #  3
         try:
             await interaction.followup.send(status_msg)
         except Exception as e:

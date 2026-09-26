@@ -2,10 +2,10 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-# Process「」Class
+# ProcessClass
 class TicTacToeButton(discord.ui.Button):
     def __init__(self, x: int, y: int):
-        # Settings， y 
+        # Settings y 
         super().__init__(style=discord.ButtonStyle.secondary, label='\u200b', row=y)
         self.x = x
         self.y = y
@@ -13,12 +13,12 @@ class TicTacToeButton(discord.ui.Button):
     async def callback(self, interaction: discord.Interaction):
         view: TicTacToeView = self.view
         
-        # 【RuleCheck】Confirm，「」
+        # RuleCheckConfirm
         if interaction.user != view.current_player:
-            await interaction.response.send_message("！。", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
 
-        #  1  2，Graph
+        #  1  2Graph
         if view.current_player == view.player1:
             self.style = discord.ButtonStyle.danger # 
             self.label = 'X'
@@ -35,21 +35,21 @@ class TicTacToeButton(discord.ui.Button):
         # Check
         winner = view.check_winner()
         if winner:
-            # ，
+            # 
             for child in view.children:
                 child.disabled = True
-            content = f"[PARTY] ！ {winner.mention} ！"
+            content = f"[PARTY]  {winner.mention} "
             await interaction.response.edit_message(content=content, view=view)
         # Check
         elif view.is_tie():
-            content = "[HANDSHAKE] ！，！"
+            content = "[HANDSHAKE] "
             await interaction.response.edit_message(content=content, view=view)
         # Continue
         else:
-            content = f"[GAME] ！\n {view.current_player.mention} "
+            content = f"[GAME] \n {view.current_player.mention} "
             await interaction.response.edit_message(content=content, view=view)
 
-# Process「」Class
+# ProcessClass
 class TicTacToeView(discord.ui.View):
     def __init__(self, player1: discord.Member, player2: discord.Member):
         super().__init__(timeout=180) # 3 AutoCancel
@@ -68,7 +68,7 @@ class TicTacToeView(discord.ui.View):
                 self.add_item(TicTacToeButton(x, y))
 
     def check_winner(self):
-        # Check、、Connection
+        # CheckConnection
         b = self.board
         for i in range(3):
             if b[i][0] == b[i][1] == b[i][2] and b[i][0] is not None: return b[i][0]
@@ -88,20 +88,20 @@ class GameTicTacToe(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="play_tictactoe", description="！")
+    @app_commands.command(name="play_tictactoe", description="")
     @app_commands.describe(opponent="")
     async def play_tictactoe(self, interaction: discord.Interaction, opponent: discord.Member):
         # 
         if opponent.bot:
-            await interaction.response.send_message("Bot，！", ephemeral=True)
+            await interaction.response.send_message("Bot", ephemeral=True)
             return
         if opponent == interaction.user:
-            await interaction.response.send_message("！！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         
         # InitializeInterface
         view = TicTacToeView(interaction.user, opponent)
-        content = f"[GAME] ！\n{interaction.user.mention} (X) VS {opponent.mention} (O)\n {interaction.user.mention} ！"
+        content = f"[GAME] \n{interaction.user.mention} (X) VS {opponent.mention} (O)\n {interaction.user.mention} "
         await interaction.response.send_message(content=content, view=view)
 
 # LoadModule

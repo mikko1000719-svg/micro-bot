@@ -14,16 +14,16 @@ class ModNick(commands.Cog):
         try:
             await member.edit(nick=nickname, reason=f" {interaction.user} Command")
             if nickname:
-                await interaction.response.send_message(f"✏️ Success {member.mention}  **{nickname}**！")
+                await interaction.response.send_message(f" Success {member.mention}  **{nickname}**")
             else:
-                await interaction.response.send_message(f"[SWITCH] Success {member.mention} ！")
+                await interaction.response.send_message(f"[SWITCH] Success {member.mention} ")
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Failed（Bot）：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] FailedBot{e}", ephemeral=True)
 
     @mod_nick.error
     async def mod_nick_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 「Manage」PermissionCommand！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModNick(bot))

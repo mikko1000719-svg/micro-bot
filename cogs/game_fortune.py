@@ -10,40 +10,40 @@ class FortuneView(discord.ui.View):
         self.player2 = player2
         self.scores = {player1: None, player2: None}
 
-    @discord.ui.button(label="✨ ", style=discord.ButtonStyle.success)
+    @discord.ui.button(label=" ", style=discord.ButtonStyle.success)
     async def test_fortune(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         if self.scores[interaction.user] is not None:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
 
         score = random.randint(1, 100)
         self.scores[interaction.user] = score
-        await interaction.response.send_message(f"Complete！：**{score}** ！...", ephemeral=True)
+        await interaction.response.send_message(f"Complete**{score}** ...", ephemeral=True)
 
         if self.scores[self.player1] is not None and self.scores[self.player2] is not None:
             button.disabled = True
             p1_s = self.scores[self.player1]
             p2_s = self.scores[self.player2]
             
-            res = f"✨ ****\n{self.player1.mention}：**{p1_s}** \n{self.player2.mention}：**{p2_s}** \n\n"
-            if p1_s > p2_s: res += f"[TROPHY]  {self.player1.mention} ！"
-            elif p2_s > p1_s: res += f"[TROPHY]  {self.player2.mention} ！"
-            else: res += "[HANDSHAKE] ，！"
+            res = f" ****\n{self.player1.mention}**{p1_s}** \n{self.player2.mention}**{p2_s}** \n\n"
+            if p1_s > p2_s: res += f"[TROPHY]  {self.player1.mention} "
+            elif p2_s > p1_s: res += f"[TROPHY]  {self.player2.mention} "
+            else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)
 
 class GameFortune(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_fortune", description="！")
+    @app_commands.command(name="play_fortune", description="")
     async def play_fortune(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("！", ephemeral=True)
+            await interaction.response.send_message("", ephemeral=True)
             return
         view = FortuneView(interaction.user, opponent)
-        await interaction.response.send_message(f"✨ ****\n{interaction.user.mention} VS {opponent.mention}\n！", view=view)
+        await interaction.response.send_message(f" ****\n{interaction.user.mention} VS {opponent.mention}\n", view=view)
 
 async def setup(bot): await bot.add_cog(GameFortune(bot))

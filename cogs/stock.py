@@ -27,7 +27,7 @@ class Stock(commands.Cog):
         code = code.upper()
         self.stocks[code] = {"name": name, "price": initial_price}
         self.save_data()
-        await interaction.response.send_message(f"[CHART] Success `{code}` ({name})，: ${initial_price}", ephemeral=True)
+        await interaction.response.send_message(f"[CHART] Success `{code}` ({name}): ${initial_price}", ephemeral=True)
 
     @app_commands.command(name="", description="")
     @app_commands.checks.has_permissions(administrator=True)
@@ -36,9 +36,9 @@ class Stock(commands.Cog):
         if code in self.stocks:
             del self.stocks[code]
             self.save_data()
-            await interaction.response.send_message(f"[CHART_DOWN] Success `{code}`。", ephemeral=True)
+            await interaction.response.send_message(f"[CHART_DOWN] Success `{code}`", ephemeral=True)
         else:
-            await interaction.response.send_message(f"[ERROR]  `{code}` ！", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR]  `{code}` ", ephemeral=True)
 
     @app_commands.command(name="System", description="")
     async def stock_market(self, interaction: discord.Interaction, code: str = None, change_percent: float = None):
@@ -51,12 +51,12 @@ class Stock(commands.Cog):
 
         code = code.upper()
         if code not in self.stocks:
-            await interaction.response.send_message(f"[ERROR]  `{code}` ！", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR]  `{code}` ", ephemeral=True)
             return
 
         if change_percent is not None:
             if not interaction.user.guild_permissions.administrator:
-                await interaction.response.send_message("[ERROR] Manage！", ephemeral=True)
+                await interaction.response.send_message("[ERROR] Manage", ephemeral=True)
                 return
 
             old_price = self.stocks[code]["price"]
