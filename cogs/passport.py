@@ -6,27 +6,27 @@ class Passport(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="passport", description="查看你的微國公民護照")
+    @app_commands.command(name="passport", description="")
     async def passport(self, interaction: discord.Interaction):
         user = interaction.user
         guild = interaction.guild
         
-        # 根據 User ID 產生專屬護照編號Format
+        #  User ID Format
         passport_no = f"PASSPORT-{user.id % 1000000:06d}"
-        join_date = user.joined_at.strftime("%Y-%m-%d") if isinstance(user, discord.Member) and user.joined_at else "未知"
+        join_date = user.joined_at.strftime("%Y-%m-%d") if isinstance(user, discord.Member) and user.joined_at else ""
 
         embed = discord.Embed(
-            title="[NETWORK] 微國聯邦官方護照 (Federal Passport)",
-            description="本護照證明持有人為本微國之合法公民或入境貴賓。",
+            title="[NETWORK]  (Federal Passport)",
+            description="。",
             color=discord.Color.gold()
         )
         embed.set_thumbnail(url=user.display_avatar.url)
-        embed.add_field(name="公民姓名", value=f"**{user.display_name}**", inline=True)
-        embed.add_field(name="護照編號", value=f"`{passport_no}`", inline=True)
-        embed.add_field(name="所屬地區/Server", value=f"{guild.name if guild else '聯邦直轄區'}", inline=False)
-        embed.add_field(name="簽發日期 (加入日)", value=f"`{join_date}`", inline=True)
-        embed.add_field(name="身份狀態", value="[OK] Verify公民", inline=True)
-        embed.set_footer(text="微國移民與Edge境Manage署 發行")
+        embed.add_field(name="", value=f"**{user.display_name}**", inline=True)
+        embed.add_field(name="", value=f"`{passport_no}`", inline=True)
+        embed.add_field(name="/Server", value=f"{guild.name if guild else ''}", inline=False)
+        embed.add_field(name=" ()", value=f"`{join_date}`", inline=True)
+        embed.add_field(name="", value="[OK] Verify", inline=True)
+        embed.set_footer(text="EdgeManage ")
 
         await interaction.response.send_message(embed=embed)
 

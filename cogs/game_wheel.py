@@ -10,40 +10,40 @@ class WheelView(discord.ui.View):
         self.player2 = player2
         self.spins = {player1: None, player2: None}
 
-    @discord.ui.button(label="🎡 轉動幸運轉輪", style=discord.ButtonStyle.success)
+    @discord.ui.button(label="🎡 ", style=discord.ButtonStyle.success)
     async def spin_wheel(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
-            await interaction.response.send_message("這不是你的遊戲！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
         if self.spins[interaction.user] is not None:
-            await interaction.response.send_message("你已經轉過轉輪了！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
 
         score = random.randint(10, 100)
         self.spins[interaction.user] = score
-        await interaction.response.send_message(f"轉輪結果：獲得 **{score}** 分！等待對手...", ephemeral=True)
+        await interaction.response.send_message(f"： **{score}** ！...", ephemeral=True)
 
         if self.spins[self.player1] is not None and self.spins[self.player2] is not None:
             button.disabled = True
             p1_s = self.spins[self.player1]
             p2_s = self.spins[self.player2]
             
-            res = f"🎡 **轉輪對決結算**\n{self.player1.mention} 分數：**{p1_s}**\n{self.player2.mention} 分數：**{p2_s}**\n\n"
-            if p1_s > p2_s: res += f"[TROPHY] 恭喜 {self.player1.mention} 獲勝！"
-            elif p2_s > p1_s: res += f"[TROPHY] 恭喜 {self.player2.mention} 獲勝！"
-            else: res += "[HANDSHAKE] 雙方分數相同，平手！"
+            res = f"🎡 ****\n{self.player1.mention} ：**{p1_s}**\n{self.player2.mention} ：**{p2_s}**\n\n"
+            if p1_s > p2_s: res += f"[TROPHY]  {self.player1.mention} ！"
+            elif p2_s > p1_s: res += f"[TROPHY]  {self.player2.mention} ！"
+            else: res += "[HANDSHAKE] ，！"
 
             await interaction.message.edit(content=res, view=self)
 
 class GameWheel(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_wheel", description="轉動幸運轉輪比拼分數！")
+    @app_commands.command(name="play_wheel", description="！")
     async def play_wheel(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("請標記一位真實玩家！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
         view = WheelView(interaction.user, opponent)
-        await interaction.response.send_message(f"🎡 **幸運轉輪對決**\n{interaction.user.mention} VS {opponent.mention}\n請雙方轉動轉輪！", view=view)
+        await interaction.response.send_message(f"🎡 ****\n{interaction.user.mention} VS {opponent.mention}\n！", view=view)
 
 async def setup(bot): await bot.add_cog(GameWheel(bot))

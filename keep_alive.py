@@ -1,23 +1,24 @@
+# -*- coding: utf-8 -*-
 import os
 from flask import Flask
 from threading import Thread
 
-# 建立 Flask 應用程式
+# Create Flask application
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    """提供 Render 健康檢查回應的首頁"""
-    return "🟢 微國機器人 5.0 運行中！", 200
+    """Provide Render health check response homepage"""
+    return "[OK] WeiGuo Bot 5.0 is running!", 200
 
 def run():
-    # 讀取 Render 自動分配的 PORT 環境變數，若無則預設為 10000
+    # Read Render automatically assigned PORT environment variable, default to 10000 if not present
     port = int(os.environ.get("PORT", 10000))
-    # 綁定 0.0.0.0 以接收外部網路請求
+    # Bind to 0.0.0.0 to receive external network requests
     app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
-    """使用獨立執行緒啟動 Flask 伺服器，避免阻塞 Discord 機器人"""
+    """Start Flask server using independent thread to avoid blocking Discord bot"""
     t = Thread(target=run)
     t.daemon = True
     t.start()

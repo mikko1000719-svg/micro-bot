@@ -6,11 +6,11 @@ class ModServerUnlock(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_server_unlock", description="【解除】解鎖Server內所有文字Channel")
+    @app_commands.command(name="mod_server_unlock", description="【】ServerChannel")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_server_unlock(self, interaction: discord.Interaction):
-        await interaction.response.send_message("[UNLOCK] **全Server解鎖程序Start中...**", ephemeral=True)
+        await interaction.response.send_message("[UNLOCK] **ServerStart...**", ephemeral=True)
         
         unlocked_count = 0
         for channel in interaction.guild.text_channels:
@@ -18,17 +18,17 @@ class ModServerUnlock(commands.Cog):
             if overwrite.send_messages is False:
                 overwrite.send_messages = None
                 try:
-                    await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite, reason="Manage員解除全Server鎖定")
+                    await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite, reason="ManageServer")
                     unlocked_count += 1
                 except discord.Forbidden:
                     continue
 
-        await interaction.followup.send(f"[OK] 全Server解鎖Complete！已解鎖 **{unlocked_count}** 個文字Channel。")
+        await interaction.followup.send(f"[OK] ServerComplete！ **{unlocked_count}** Channel。")
 
     @mod_server_unlock.error
     async def mod_server_unlock_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] 你需要「Manage員」Permission才能解鎖全Server！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] 「Manage」PermissionServer！", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModServerUnlock(bot))

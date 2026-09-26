@@ -7,10 +7,10 @@ class ToolCalc(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="calc", description="計算簡單的數學算式（支援 +, -, *, /, 括號）")
-    @app_commands.describe(expression="例如: (5 + 3) * 4")
+    @app_commands.command(name="calc", description="（ +, -, *, /, ）")
+    @app_commands.describe(expression=": (5 + 3) * 4")
     async def calc(self, interaction: discord.Interaction, expression: str):
-        # Security解析數學算式的Function
+        # SecurityFunction
         allowed_operators = {
             ast.Add: lambda a, b: a + b,
             ast.Sub: lambda a, b: a - b,
@@ -27,18 +27,18 @@ class ToolCalc(commands.Cog):
             elif isinstance(node, ast.UnaryOp) and type(node.op) in allowed_operators:
                 return allowed_operators[type(node.op)](eval_expr(node.operand))
             else:
-                raise ValueError("不支援的運算式")
+                raise ValueError("")
 
         try:
             node = ast.parse(expression, mode='eval')
             result = eval_expr(node.body)
             
-            embed = discord.Embed(title="🔢 計算結果", color=discord.Color.blue())
-            embed.add_field(name="算式", value=f"`{expression}`", inline=False)
-            embed.add_field(name="答案", value=f"**{result}**", inline=False)
+            embed = discord.Embed(title="🔢 ", color=discord.Color.blue())
+            embed.add_field(name="", value=f"`{expression}`", inline=False)
+            embed.add_field(name="", value=f"**{result}**", inline=False)
             await interaction.response.send_message(embed=embed)
         except Exception:
-            await interaction.response.send_message("[ERROR] 計算Failed！請Confirm您的數學算式Format是否正確（僅支援基本加減乘除與Number）。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Failed！ConfirmFormat（Number）。", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ToolCalc(bot))

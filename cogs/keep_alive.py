@@ -9,16 +9,16 @@ from discord.ext import commands, tasks
 class KeepAlive(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        # Read Render 環境Variable；若未Settings則使用Default網址
+        # Read Render Variable；SettingsDefault
         self.site_url = os.getenv("RENDER_EXTERNAL_URL", "https://micro-bot-1.onrender.com")
-        # StartBackground Self-Ping 任務
+        # StartBackground Self-Ping 
         self.self_ping_task.start()
 
     def cog_unload(self):
-        # 當Module卸載時Stop任務，防止Memory洩漏
+        # ModuleStop，Memory
         self.self_ping_task.cancel()
 
-    # Settings每 10 分鐘AutoExecute一次，低於 Render 的 15 分鐘休眠Limit
+    # Settings 10 AutoExecute， Render  15 Limit
     @tasks.loop(minutes=10)
     async def self_ping_task(self):
         if not self.site_url:
@@ -37,12 +37,12 @@ class KeepAlive(commands.Cog):
 
     @self_ping_task.before_loop
     async def before_self_ping(self):
-        # 等待BotCompleteLogin後再開始任務
+        # BotCompleteLogin
         await self.bot.wait_until_ready()
 
-    @app_commands.command(name="keepalive", description="Check並觸發Bot防休眠保鮮狀態")
+    @app_commands.command(name="keepalive", description="CheckBot")
     async def keepalive(self, interaction: discord.Interaction):
-        # 1. 立即延遲響應，避免 3 秒超時
+        # 1. ， 3 
         await interaction.response.defer(thinking=True)
 
         is_running = self.self_ping_task.is_running()
@@ -50,7 +50,7 @@ class KeepAlive(commands.Cog):
         latency = round(self.bot.latency * 1000)
 
         # 2. ManualSendTestConnection
-        http_status = "未Test"
+        http_status = "Test"
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.site_url, timeout=5) as resp:
@@ -58,15 +58,15 @@ class KeepAlive(commands.Cog):
         except Exception as e:
             http_status = f"Failed ({e})"
 
-        # 3. 建立Information面板
+        # 3. Information
         embed = discord.Embed(
             title="[SHIELD] Bot 24/7 Anti-Sleep Diagnosis",
             color=discord.Color.green() if is_running else discord.Color.red()
         )
-        embed.add_field(name="保鮮任務狀態", value=status_text, inline=False)
-        embed.add_field(name="監控目標網址", value=f"`{self.site_url}`", inline=False)
-        embed.add_field(name="Real-time網頁Test", value=f"`{http_status}`", inline=True)
-        embed.add_field(name="WebSocket 延遲", value=f"`{latency} ms`", inline=True)
+        embed.add_field(name="", value=status_text, inline=False)
+        embed.add_field(name="", value=f"`{self.site_url}`", inline=False)
+        embed.add_field(name="Real-timeTest", value=f"`{http_status}`", inline=True)
+        embed.add_field(name="WebSocket ", value=f"`{latency} ms`", inline=True)
 
         await interaction.followup.send(embed=embed)
 

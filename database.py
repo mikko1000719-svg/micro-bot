@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import json
 import os
 
@@ -18,7 +19,7 @@ def save_all_settings(data):
 
 def get_guild_config(guild_id: str):
     data = load_all_settings()
-    # 預設各伺服器的防炸群設定
+    # Default anti-spam settings for each server
     default_config = {
         "anti_spam_enabled": True,
         "time_window": 10.0,

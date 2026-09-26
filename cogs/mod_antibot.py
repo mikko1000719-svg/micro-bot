@@ -2,10 +2,10 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-# 建立CustomCheck器：Confirm使用者是否為Server擁有者
+# CustomCheck：ConfirmServer
 def is_guild_owner():
     def predicate(interaction: discord.Interaction) -> bool:
-        # 確保在Server內Execute，且使用者的 ID 等於Server擁有者的 ID
+        # ServerExecute， ID Server ID
         return interaction.guild is not None and interaction.user.id == interaction.guild.owner_id
     return app_commands.check(predicate)
 
@@ -18,28 +18,28 @@ class ModAntiBot(commands.Cog):
     async def on_member_join(self, member: discord.Member):
         if member.bot and self.antibot_enabled.get(member.guild.id, False):
             try:
-                await member.kick(reason="Anti-Bot System已啟用，Auto踢出未經授權的Bot")
+                await member.kick(reason="Anti-Bot System，AutoBot")
             except Exception as e:
-                print(f"防 BOT 踢出Failed: {e}")
+                print(f" BOT Failed: {e}")
 
-    @app_commands.command(name="mod_antibot", description="開關防Bot模式，Auto踢出新加入的 BOT")
-    @app_commands.describe(enable="True 開啟Protection / False 關閉Protection")
-    @app_commands.default_permissions(administrator=True) # 對一般成員HiddenCommand
-    @is_guild_owner() # 核心：Limit只有擁有者可以Execute
+    @app_commands.command(name="mod_antibot", description="Bot，Auto BOT")
+    @app_commands.describe(enable="True Protection / False Protection")
+    @app_commands.default_permissions(administrator=True) # HiddenCommand
+    @is_guild_owner() # ：LimitExecute
     async def mod_antibot(self, interaction: discord.Interaction, enable: bool):
         self.antibot_enabled[interaction.guild.id] = enable
-        status = "[OK] 已開啟" if enable else "[STOP] 已關閉"
-        msg = f"[SHIELD] **防Bot (Anti-Bot) 模式 {status}！**\n"
+        status = "[OK] " if enable else "[STOP] "
+        msg = f"[SHIELD] **Bot (Anti-Bot)  {status}！**\n"
         if enable:
-            msg += "System將會Auto踢出任何新加入Server的Bot。"
+            msg += "SystemAutoServerBot。"
         
         await interaction.response.send_message(msg, ephemeral=True)
 
     @mod_antibot.error
     async def mod_antibot_error(self, interaction: discord.Interaction, error):
-        # 攔截我們的CustomCheckError
+        # CustomCheckError
         if isinstance(error, app_commands.errors.CheckFailure):
-            await interaction.response.send_message("[ERROR] Permission不足！此Command**僅限Server擁有者 (Owner)** 使用！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Permission！Command**Server (Owner)** ！", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModAntiBot(bot))

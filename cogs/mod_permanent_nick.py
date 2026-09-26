@@ -6,7 +6,7 @@ from discord import app_commands
 
 DATA_FILE = "jose_nicks.json"
 
-# 建立CustomCheck器：Confirm使用者是否為Server擁有者
+# CustomCheck：ConfirmServer
 def is_guild_owner():
     def predicate(interaction: discord.Interaction) -> bool:
         return interaction.guild is not None and interaction.user.id == interaction.guild.owner_id
@@ -27,7 +27,7 @@ class PermanentNick(commands.Cog):
                         data[int(g_id)] = {int(u_id): nick for u_id, nick in users.items()}
                     return data
             except Exception as e:
-                print(f"[jOSeSystem] Read資料Failed: {e}")
+                print(f"[jOSeSystem] ReadFailed: {e}")
         return {}
 
     def save_data(self):
@@ -35,12 +35,12 @@ class PermanentNick(commands.Cog):
             with open(DATA_FILE, "w", encoding="utf-8") as f:
                 json.dump(self.locked_nicks, f, ensure_ascii=False, indent=4)
         except Exception as e:
-            print(f"[jOSeSystem] Save資料Failed: {e}")
+            print(f"[jOSeSystem] SaveFailed: {e}")
 
-    @app_commands.command(name="setpermanentnick", description="[jOSeSystem] Settings某成員的Permanent暱稱（支援重啟持久化保存）")
-    @app_commands.describe(member="要鎖定暱稱的成員", nickname="要強制套用的Permanent暱稱")
-    @app_commands.default_permissions(administrator=True) # 對一般成員HiddenCommand
-    @is_guild_owner() # 核心：Limit只有擁有者可以Execute
+    @app_commands.command(name="setpermanentnick", description="[jOSeSystem] SettingsPermanent（）")
+    @app_commands.describe(member="", nickname="Permanent")
+    @app_commands.default_permissions(administrator=True) # HiddenCommand
+    @is_guild_owner() # ：LimitExecute
     async def setpermanentnick(self, interaction: discord.Interaction, member: discord.Member, nickname: str):
         guild_id = interaction.guild.id
         
@@ -51,24 +51,24 @@ class PermanentNick(commands.Cog):
         self.save_data() 
         
         try:
-            await member.edit(nick=nickname, reason=f"由Server擁有者 {interaction.user} 套用 jOSe Permanent暱稱System")
+            await member.edit(nick=nickname, reason=f"Server {interaction.user}  jOSe PermanentSystem")
             
             embed = discord.Embed(
-                title="[LOCK] jOSe System - Permanent暱稱已鎖定",
-                description=f"Success將 **{member.mention}** 的暱稱鎖定為：\n`{nickname}`\n\n*[OK] 此資料已Write jOSe PermanentDatabase，Bot重啟後依然有效。*",
+                title="[LOCK] jOSe System - Permanent",
+                description=f"Success **{member.mention}** ：\n`{nickname}`\n\n*[OK] Write jOSe PermanentDatabase，Bot。*",
                 color=discord.Color.red()
             )
             await interaction.response.send_message(embed=embed)
         except discord.Forbidden:
-            await interaction.response.send_message("[ERROR] Permission不足！我的身份組必須高於該成員，且擁有「Manage暱稱」Permission。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Permission！，「Manage」Permission。", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] 發生Error：{e}", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR] Error：{e}", ephemeral=True)
 
     @setpermanentnick.error
     async def setpermanentnick_error(self, interaction: discord.Interaction, error):
-        # 攔截我們的CustomCheckError
+        # CustomCheckError
         if isinstance(error, app_commands.errors.CheckFailure):
-            await interaction.response.send_message("[ERROR] Permission不足！此Command**僅限Server擁有者 (Owner)** 使用！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Permission！Command**Server (Owner)** ！", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):
@@ -84,7 +84,7 @@ class PermanentNick(commands.Cog):
         
         if after.display_name != target_nick:
             try:
-                await after.edit(nick=target_nick, reason="[jOSeSystem] 偵測到違規更改Permanent暱稱，SystemAuto還原")
+                await after.edit(nick=target_nick, reason="[jOSeSystem] Permanent，SystemAuto")
             except Exception:
                 pass
 

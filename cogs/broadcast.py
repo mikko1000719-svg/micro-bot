@@ -5,21 +5,21 @@ from discord import app_commands
 class Broadcast(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # Save拒收通知的使用者 ID 集合
+        # Save ID 
         self.opt_out_users = set()
 
-    @app_commands.command(name="optout", description="[微國 5.0] 切換是否拒收Bot的全體私訊廣播通知")
+    @app_commands.command(name="optout", description="[ 5.0] Bot")
     async def optout(self, interaction: discord.Interaction):
         user_id = interaction.user.id
         if user_id in self.opt_out_users:
             self.opt_out_users.remove(user_id)
-            await interaction.response.send_message("[OK] 您已**Cancel**拒收通知，未來將可正常Receive微國廣播。", ephemeral=True)
+            await interaction.response.send_message("[OK] **Cancel**，Receive。", ephemeral=True)
         else:
             self.opt_out_users.add(user_id)
-            await interaction.response.send_message("🔕 您已Success加入**拒收清單**，將不再ReceiveBot的全體私訊廣播。", ephemeral=True)
+            await interaction.response.send_message("🔕 Success****，ReceiveBot。", ephemeral=True)
 
-    @app_commands.command(name="broadcast", description="[微國 5.0] Send私訊廣播給Server全體成員（Auto略過拒收者）")
-    @app_commands.describe(message="要廣播的公告內容")
+    @app_commands.command(name="broadcast", description="[ 5.0] SendServer（Auto）")
+    @app_commands.describe(message="")
     @app_commands.checks.has_permissions(administrator=True)
     async def broadcast(self, interaction: discord.Interaction, message: str):
         await interaction.response.defer(ephemeral=True)
@@ -29,11 +29,11 @@ class Broadcast(commands.Cog):
         skip_count = 0
 
         embed = discord.Embed(
-            title="[SPEAKER] 【微國Bot 5.0】全體公告廣播",
+            title="[SPEAKER] 【Bot 5.0】",
             description=message,
             color=discord.Color.gold()
         )
-        embed.set_footer(text=f"來自Server：{guild.name}")
+        embed.set_footer(text=f"Server：{guild.name}")
 
         for member in guild.members:
             if member.bot:
@@ -46,18 +46,18 @@ class Broadcast(commands.Cog):
                 await member.send(embed=embed)
                 success_count += 1
             except Exception:
-                # 使用者可能關閉了私訊Function
+                # Function
                 skip_count += 1
 
         await interaction.followup.send(
-            f"[OK] 廣播Send完畢！\n- SuccessSend人數：**{success_count}**\n- 略過/未送達人數：**{skip_count}**", 
+            f"[OK] Send！\n- SuccessSend：**{success_count}**\n- /：**{skip_count}**", 
             ephemeral=True
         )
 
     @broadcast.error
     async def broadcast_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] Permission不足！只有Manage員可以Execute全體廣播。", ephemeral=True)
+            await interaction.response.send_message("[ERROR] Permission！ManageExecute。", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Broadcast(bot))

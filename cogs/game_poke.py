@@ -12,33 +12,33 @@ class PokeView(discord.ui.View):
         self.trap_box = random.randint(1, 4)
         self.step = 1
 
-    @discord.ui.button(label="📦 戳一個幸運箱", style=discord.ButtonStyle.danger)
+    @discord.ui.button(label="📦 ", style=discord.ButtonStyle.danger)
     async def poke_box(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != self.current:
-            await interaction.response.send_message("還沒輪到你戳箱子！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
 
         if self.step == self.trap_box:
             for child in self.children: child.disabled = True
             loser = self.current
             winner = self.player2 if loser == self.player1 else self.player1
-            msg = f"💥 **踩到炸彈箱！** {loser.mention} 戳到了陷阱箱！\n[PARTY] 恭喜 {winner.mention} 獲得勝利！"
+            msg = f"💥 **！** {loser.mention} ！\n[PARTY]  {winner.mention} ！"
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.step += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"📦 **戳戳樂對決**\nSecurity過關！箱子裡是寶物。\n現在輪到 {self.current.mention} 戳箱子！"
+            msg = f"📦 ****\nSecurity！。\n {self.current.mention} ！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GamePoke(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_poke", description="輪流戳幸運箱，看誰會踩到炸彈！")
+    @app_commands.command(name="play_poke", description="，！")
     async def play_poke(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("請標記一位真實玩家！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
         view = PokeView(interaction.user, opponent)
-        await interaction.response.send_message(f"📦 **終極戳戳樂開始**\n{interaction.user.mention} VS {opponent.mention}\n由 {interaction.user.mention} 先戳！", view=view)
+        await interaction.response.send_message(f"📦 ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ！", view=view)
 
 async def setup(bot): await bot.add_cog(GamePoke(bot))

@@ -6,7 +6,7 @@ from collections import defaultdict
 class AntiSpam(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        # 紀錄Format: {user_id: {"content": 內容, "count": 重複次數, "burst": Message爆發量}}
+        # Format: {user_id: {"content": , "count": , "burst": Message}}
         self.user_data = defaultdict(lambda: {"content": "", "count": 0, "burst": 0})
 
     @commands.Cog.listener()
@@ -18,7 +18,7 @@ class AntiSpam(commands.Cog):
         content = message.content.strip()
         data = self.user_data[user_id]
 
-        # 1. 偵測重複言論 (三次禁言)
+        # 1.  ()
         if data["content"] == content:
             data["count"] += 1
         else:
@@ -27,16 +27,16 @@ class AntiSpam(commands.Cog):
 
         if data["count"] >= 3:
             try:
-                await message.author.timeout(timedelta(hours=24), reason="微國 5.0：重複洗頻達 3 次")
-                await message.channel.send(f"🚨 {message.author.mention} 因為洗頻已被Auto禁言 24 小時。")
-                data["count"] = 0 # 重置紀錄
+                await message.author.timeout(timedelta(hours=24), reason=" 5.0： 3 ")
+                await message.channel.send(f"🚨 {message.author.mention} Auto 24 。")
+                data["count"] = 0 # 
             except Exception as e:
-                print(f"禁言Failed: {e}")
+                print(f"Failed: {e}")
                 
-        # 2. 偵測炸群行為 (例如短時間內Send過多Message)
-        # 這裡您可以依據Requirement調整閾值，例如 5 秒內發超過 10 則
+        # 2.  (SendMessage)
+        # Requirement， 5  10 
         data["burst"] += 1
-        # 您可以在此加入對應的炸群Defense邏輯...
+        # Defense...
 
 async def setup(bot):
     await bot.add_cog(AntiSpam(bot))

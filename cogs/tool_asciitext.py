@@ -6,14 +6,14 @@ class ToolAsciiText(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="asciitext", description="將英文字母Convert為醒目的粗體方塊藝術字")
-    @app_commands.describe(text="要Convert的英文短句 (限英文)")
+    @app_commands.command(name="asciitext", description="Convert")
+    @app_commands.describe(text="Convert ()")
     async def asciitext(self, interaction: discord.Interaction, text: str):
         if len(text) > 15:
-            await interaction.response.send_message("[ERROR] 為了版面整潔，文字長度請Limit在 15 個字元之內！", ephemeral=True)
+            await interaction.response.send_message("[ERROR] ，Limit 15 ！", ephemeral=True)
             return
 
-        # 簡單的英文轉方塊字對應表
+        # 
         char_map = {
             'a': '🇦', 'b': '🇧', 'c': '🇨', 'd': '🇩', 'e': '🇪',
             'f': '🇫', 'g': '🇬', 'h': '🇭', 'i': '🇮', 'j': '🇯',
@@ -32,7 +32,7 @@ class ToolAsciiText(commands.Cog):
                 result.append(char)
 
         formatted_text = "".join(result)
-        embed = discord.Embed(title="🔤 藝術字Convert結果", description=formatted_text, color=discord.Color.purple())
+        embed = discord.Embed(title="🔤 Convert", description=formatted_text, color=discord.Color.purple())
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):

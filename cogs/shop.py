@@ -21,27 +21,27 @@ class Shop(commands.Cog):
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(self.shop_data, f, indent=4)
 
-    @app_commands.command(name="上架東西", description="上架新商品至商店")
+    @app_commands.command(name="", description="")
     @app_commands.checks.has_permissions(administrator=True)
     async def add_item(self, interaction: discord.Interaction, name: str, price: int, image_url: str = None):
         self.shop_data["items"][name] = {"price": price, "image": image_url}
         self.save_data()
 
-        embed = discord.Embed(title="🛍️ 商品上架Success", description=f"**商品名稱**: {name}\n**價格**: ${price}", color=discord.Color.green())
+        embed = discord.Embed(title="🛍️ Success", description=f"****: {name}\n****: ${price}", color=discord.Color.green())
         if image_url:
             embed.set_image(url=image_url)
 
         await interaction.response.send_message(embed=embed)
 
-    @app_commands.command(name="購買東西", description="購買商店中的商品")
+    @app_commands.command(name="", description="")
     async def buy_item(self, interaction: discord.Interaction, name: str):
         items = self.shop_data.get("items", {})
         if name not in items:
-            await interaction.response.send_message(f"[ERROR] 找不到名為 `{name}` 的商品！", ephemeral=True)
+            await interaction.response.send_message(f"[ERROR]  `{name}` ！", ephemeral=True)
             return
 
         item = items[name]
-        embed = discord.Embed(title="🛒 購買Success", description=f"你Success購買了 **{name}**！\n扣除金額: ${item['price']}", color=discord.Color.blue())
+        embed = discord.Embed(title="🛒 Success", description=f"Success **{name}**！\n: ${item['price']}", color=discord.Color.blue())
         if item.get("image"):
             embed.set_thumbnail(url=item["image"])
 

@@ -12,34 +12,34 @@ class VaultView(discord.ui.View):
         self.vault_code = random.randint(100, 999)
         self.attempts = 0
 
-    @discord.ui.button(label="[UNLOCK] 嘗試解鎖金庫 (100-999)", style=discord.ButtonStyle.success)
+    @discord.ui.button(label="[UNLOCK]  (100-999)", style=discord.ButtonStyle.success)
     async def try_vault(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != self.current:
-            await interaction.response.send_message("還沒輪到你解鎖！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
 
-        # 這裡簡化為隨機猜測判定
-        hit = random.random() < 0.25 # 25% 機會直接解開
+        # 
+        hit = random.random() < 0.25 # 25% 
         if hit or self.attempts >= 5:
             for child in self.children: child.disabled = True
             winner = self.current
-            msg = f"💥 **喀噠！** {winner.mention} Success破解了密碼（正確密碼：{self.vault_code}）！\n[PARTY] 金庫開啟，獲得勝利！"
+            msg = f"💥 **！** {winner.mention} Success（：{self.vault_code}）！\n[PARTY] ，！"
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.attempts += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"[LOCKED2] **金庫解鎖中**\n第 {self.attempts} 次嘗試Failed，密庫Defense中...\n輪到 {self.current.mention} 進行嘗試！"
+            msg = f"[LOCKED2] ****\n {self.attempts} Failed，Defense...\n {self.current.mention} ！"
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameVault(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_vault", description="輪流嘗試破解金庫密碼！")
+    @app_commands.command(name="play_vault", description="！")
     async def play_vault(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
-            await interaction.response.send_message("請標記一位真實玩家！", ephemeral=True)
+            await interaction.response.send_message("！", ephemeral=True)
             return
         view = VaultView(interaction.user, opponent)
-        await interaction.response.send_message(f"[LOCKED2] **金庫密碼戰**\n{interaction.user.mention} VS {opponent.mention}\n由 {interaction.user.mention} 先開始！", view=view)
+        await interaction.response.send_message(f"[LOCKED2] ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ！", view=view)
 
 async def setup(bot): await bot.add_cog(GameVault(bot))
