@@ -1,0 +1,47 @@
+import yt_dlp
+
+def get_youtube_stream(url: str):
+    # 設定 yt-dlp 參數
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'quiet': False,
+        'no_warnings': False,
+        
+        # 核心修復：排除網頁端，強制使用行動端 API 以繞過 Bot 檢測
+        'extractor_args': {
+            'youtube': {
+                # 只允許使用 Android 和 iOS 客戶端
+                'player_client': ['android', 'ios'],
+                # 略過網頁版的驗證流程
+                'player_skip': ['web', 'webpage']
+            }
+        },
+        
+        # 標頭偽裝：讓請求看起來像是來自真實的手機瀏覽器
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1',
+            'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+        }
+    }
+
+    # 如果你本地端已經有 cookies.txt，可以取消下方註解讓程式讀取
+    # ydl_opts['cookiefile'] = 'cookies.txt'
+
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            print(f"🚀 正在嘗試解析影片：{url}")
+            # download=False 代表我們只抓取串流網址，不下載實體檔案
+            info = ydl.extract_info(url, download=False)
+            stream_url = info.get('url')
+            
+            print(f"🎉 成功取得音訊！影片名稱：{info.get('title')}")
+            return stream_url
+            
+    except Exception as e:
+        print(f"❌ 發生錯誤：{e}")
+        return None
+
+# --- 測試執行區塊 ---
+if __name__ == "__main__":
+    test_url = "https://www.youtube.com/watch?v=Wv62cy179Wk"
+    get_youtube_stream(test_url)

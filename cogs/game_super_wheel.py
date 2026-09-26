@@ -1,0 +1,49 @@
+import discord
+import random
+from discord.ext import commands
+from discord import app_commands
+
+class SuperWheelView(discord.ui.View):
+    def __init__(self, player1: discord.Member, player2: discord.Member):
+        super().__init__(timeout=120)
+        self.player1 = player1
+        self.player2 = player2
+        self.results = {player1: None, player2: None}
+
+    @discord.ui.button(label="[STAR] 啟動超級轉輪", style=discord.ButtonStyle.primary)
+    async def spin(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if interaction.user not in [self.player1, self.player2]:
+            await interaction.response.send_message("這不是你的遊戲！", ephemeral=True)
+            return
+        if self.results[interaction.user] is not None:
+            await interaction.response.send_message("你已經轉過了！", ephemeral=True)
+            return
+
+        val = random.randint(50, 500)
+        self.results[interaction.user] = val
+        await interaction.response.send_message(f"轉輪停在：**{val}** 點！等待對手...", ephemeral=True)
+
+        if self.results[self.player1] is not None and self.results[self.player2] is not None:
+            button.disabled = True
+            p1_v = self.results[self.player1]
+            p2_v = self.results[self.player2]
+            
+            res = f"[STAR] **超級轉輪結算**\n{self.player1.mention} 獲得：**{p1_v}** 點\n{self.player2.mention} 獲得：**{p2_v}** 點\n\n"
+            if p1_v > p2_v: res += f"[PARTY] 恭喜 {self.player1.mention} 獲勝！"
+            elif p2_v > p1_v: res += f"[PARTY] 恭喜 {self.player2.mention} 獲勝！"
+            else: res += "[HANDSHAKE] 雙方同分，平手！"
+
+            await interaction.message.edit(content=res, view=self)
+
+class GameSuperWheel(commands.Cog):
+    def __init__(self, bot): self.bot = bot
+
+    @app_commands.command(name="play_superwheel", description="啟動超級轉輪比拼點數！")
+    async def play_superwheel(self, interaction: discord.Interaction, opponent: discord.Member):
+        if opponent.bot or opponent == interaction.user:
+            await interaction.response.send_message("請標記一位真實玩家！", ephemeral=True)
+            return
+        view = SuperWheelView(interaction.user, opponent)
+        await interaction.response.send_message(f"[STAR] **超級轉輪對決**\n{interaction.user.mention} VS {opponent.mention}\n請雙方啟動轉輪！", view=view)
+
+async def setup(bot): await bot.add_cog(GameSuperWheel(bot))
