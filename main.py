@@ -97,13 +97,8 @@ keep_alive.keep_alive()
 if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
     if TOKEN:
-        import time
-
-        # Add delay to avoid rate limiting
-        print("[System] Waiting 30 seconds before Discord login to avoid rate limiting...")
-        time.sleep(30)
-
         # Let Discord.py handle reconnection and retry logic
+        # Removed delay to avoid triggering rate limits further
         bot.run(TOKEN)
     else:
         print("[ERROR] DISCORD_TOKEN environment variable not found!")
