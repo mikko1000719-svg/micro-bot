@@ -19,10 +19,10 @@ class AIMentionChat(commands.Cog):
         self.clients = []
         self.current_index = 0
 
-        # [BOT] Bot anti-infinite conversation counter {channel_id: {"count": int, "last_time": float}}
+        # 🤖 Bot anti-infinite conversation counter {channel_id: {"count": int, "last_time": float}}
         self.bot_interaction_tracker = {}
 
-        # [SAVE] Initialize SQLite permanent memory and settings database
+        # 💾 Initialize SQLite permanent memory and settings database
         self.db_path = "chat_memory.db"
         self._init_db()
 
@@ -35,16 +35,16 @@ class AIMentionChat(commands.Cog):
                 try:
                     client = genai.Client(api_key=api_key)
                     self.clients.append((name, client))
-                    print(f"[OK] [Multi-Key System] Successfully loaded {name}", flush=True)
+                    print(f"✅ [Multi-Key System] Successfully loaded {name}", flush=True)
                 except Exception as e:
-                    print(f"[ERROR] [Multi-Key System] {name} initialization failed: {e}", flush=True)
+                    print(f"❌ [Multi-Key System] {name} initialization failed: {e}", flush=True)
             else:
                 print(f"[WARNING] [Multi-Key System] Environment variable {name} not found", flush=True)
 
         if not self.clients:
-            print("[ERROR] [Multi-Key System] Warning: No API Keys successfully loaded!", flush=True)
+            print("❌ [Multi-Key System] Warning: No API Keys successfully loaded!", flush=True)
 
-        print("[OK] [Multi-Key System] Initialization complete", flush=True)
+        print("✅ [Multi-Key System] Initialization complete", flush=True)
 
     def _init_db(self):
         """Create SQLite database (conversation history + bot persona settings)"""
@@ -152,12 +152,12 @@ class AIMentionChat(commands.Cog):
             return
 
         if not self.clients:
-            await message.reply("[ERROR] AI client not initialized, please check Render environment variables (GEMINI_API_KEY2 to 11)!")
+            await message.reply("❌ AI client not initialized, please check Render environment variables (GEMINI_API_KEY2 to 11)!")
             return
 
         channel_id = message.channel.id
 
-        # 3. [SHIELD] Bot conversation "anti-infinite ping-pong loop" mechanism
+        # 3. 🛡️ Bot conversation "anti-infinite ping-pong loop" mechanism
         if message.author.bot:
             now = time.time()
             tracker = self.bot_interaction_tracker.get(channel_id, {"count": 0, "last_time": 0})
@@ -170,7 +170,7 @@ class AIMentionChat(commands.Cog):
             self.bot_interaction_tracker[channel_id] = tracker
 
             if tracker["count"] > 5:
-                print(f"[STOP] [Channel {channel_id}] Detected bot continuous conversation reached 5 limit, activating protection pause.", flush=True)
+                print(f"🛑 [Channel {channel_id}] Detected bot continuous conversation reached 5 limit, activating protection pause.", flush=True)
                 return
 
         async with message.channel.typing():
@@ -188,11 +188,11 @@ class AIMentionChat(commands.Cog):
                     new_persona_text = clean_content[len(matched_prefix):].strip()
                     if new_persona_text:
                         self.set_persona(new_persona_text)
-                        await message.reply(f"[OK] **[Identity Set Successfully]** New AI personality written to permanent database!\n\n[INFO] **Current Identity:**\n>>> {new_persona_text}")
+                        await message.reply(f"✅ **[Identity Set Successfully]** New AI personality written to permanent database!\n\nℹ️ **Current Identity:**\n>>> {new_persona_text}")
                         return
                     else:
                         current_p = self.get_persona()
-                        await message.reply(f"[INFO] **[Current AI Identity]:**\n>>> {current_p}\n\n[TIP] *To set identity in chat, use `@bot !setpersona your personality and background description`*")
+                        await message.reply(f"ℹ️ **[Current AI Identity]:**\n>>> {current_p}\n\n[TIP] *To set identity in chat, use `@bot !setpersona your personality and background description`*")
                         return
 
                 # Normal conversation processing
@@ -245,7 +245,7 @@ class AIMentionChat(commands.Cog):
                             print(f"[WARNING] {key_name} triggered 429 quota limit", flush=True)
                             attempts += 1
                             if attempts >= max_attempts:
-                                print("[ERROR] [Multi-Key System] All 10 API keys quota exhausted for today!", flush=True)
+                                print("❌ [Multi-Key System] All 10 API keys quota exhausted for today!", flush=True)
                                 await message.reply("[WARNING] **[Quota Exhausted]** All 10 Gemini API free quotas have been used up today!")
                                 return
                             self.rotate_to_next_client()
@@ -265,7 +265,7 @@ class AIMentionChat(commands.Cog):
                     if len(reply_text) > 1900:
                         reply_text = reply_text[:1900] + "\n\n...(text too long, automatically truncated)"
 
-                    # [SAVE] Write permanent conversation record
+                    # 💾 Write permanent conversation record
                     self.save_chat_memory(channel_id, f"User ({message.author.display_name})", clean_content)
                     self.save_chat_memory(channel_id, "AI", reply_text)
 
@@ -275,12 +275,12 @@ class AIMentionChat(commands.Cog):
                         allowed_mentions=discord.AllowedMentions(users=True, roles=False, replied_user=True)
                     )
                 else:
-                    await message.reply("[ERROR] AI currently has no response, please try again later.")
+                    await message.reply("❌ AI currently has no response, please try again later.")
 
             except Exception as e:
-                print(f"[ERROR] Error processing mention conversation:", flush=True)
+                print(f"❌ Error processing mention conversation:", flush=True)
                 traceback.print_exc()
-                await message.reply(f"[ERROR] Error occurred: `{e}`")
+                await message.reply(f"❌ Error occurred: `{e}`")
 
 async def setup(bot):
     await bot.add_cog(AIMentionChat(bot))

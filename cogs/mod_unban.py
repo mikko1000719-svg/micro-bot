@@ -14,16 +14,16 @@ class ModUnban(commands.Cog):
         try:
             user_obj = await self.bot.fetch_user(int(user_id))
             await interaction.guild.unban(user_obj, reason=reason)
-            await interaction.response.send_message(f"[OK] Success `{user_obj.name}` ")
+            await interaction.response.send_message(f"✅ Success `{user_obj.name}` ")
         except ValueError:
-            await interaction.response.send_message("[ERROR] Number User ID", ephemeral=True)
+            await interaction.response.send_message("❌ Number User ID", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] FailedUser{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ FailedUser{e}", ephemeral=True)
 
     @mod_unban.error
     async def mod_unban_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModUnban(bot))

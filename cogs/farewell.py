@@ -28,25 +28,25 @@ class Farewell(commands.Cog):
     # --------------------------------------------------
     # 1. CommandSettingsChannel (Manage)
     # --------------------------------------------------
-    @app_commands.command(name="set_farewell", description="SettingsSendChannel")
+    @app_commands.command(name="set_farewell", description="Set farewell channel")
     @app_commands.checks.has_permissions(administrator=True)
     async def set_farewell(self, interaction: discord.Interaction, channel: discord.TextChannel):
         """
         Parameter
-        channel: ManageSendMessageChannel
+        channel: Channel to send farewell messages
         """
         guild_id = str(interaction.guild.id)
-        # Server ID Channel ID 
+        # Server ID Channel ID save
         self.channels[guild_id] = channel.id
         self.save_data()
-        
-        # ephemeral=True SuccessSettingsManage
-        await interaction.response.send_message(f"[OK] ChannelSuccessSettings {channel.mention}", ephemeral=True)
+
+        # ephemeral=True Success settings
+        await interaction.response.send_message(f"✅ Channel successfully set to {channel.mention}", ephemeral=True)
 
     # --------------------------------------------------
     # 2. CommandManual
     # --------------------------------------------------
-    @app_commands.command(name="Parameter description", description="ServerSpecific")
+    @app_commands.command(name="test_farewell", description="Test farewell message")
     async def bye(self, interaction: discord.Interaction, member: discord.Member = None):
         """
         Parameter

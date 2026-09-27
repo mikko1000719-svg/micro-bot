@@ -38,7 +38,7 @@ class AIChat(commands.Cog):
         await interaction.response.defer(thinking=True)
 
         if not self.client:
-            await interaction.followup.send("[ERROR] AI client not initialized: Please check API Key settings in Render!")
+            await interaction.followup.send("❌ AI client not initialized: Please check API Key settings in Render!")
             return
 
         try:
@@ -59,12 +59,12 @@ class AIChat(commands.Cog):
 
                 await interaction.followup.send(f"**Question:** {prompt}\n\n**Answer:**\n{reply_text}")
             else:
-                await interaction.followup.send("[ERROR] AI currently has no response, please try again later.")
+                await interaction.followup.send("❌ AI currently has no response, please try again later.")
 
         except Exception as e:
-            print("[ERROR] [AI System] Error generating response:", flush=True)
+            print("❌ [AI System] Error generating response:", flush=True)
             traceback.print_exc()
-            await interaction.followup.send(f"[ERROR] Error calling AI: `{e}`")
+            await interaction.followup.send(f"❌ Error calling AI: `{e}`")
 
 async def setup(bot):
     await bot.add_cog(AIChat(bot))

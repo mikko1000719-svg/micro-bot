@@ -23,12 +23,12 @@ class ModServerLock(commands.Cog):
                 except discord.Forbidden:
                     continue 
 
-        await interaction.followup.send(f"[LOCK] ServerComplete **{locked_count}** Channel")
+        await interaction.followup.send(f"🔒 ServerComplete **{locked_count}** Channel")
 
     @mod_server_lock.error
     async def mod_server_lock_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] CommandManagePermission", ephemeral=True)
+            await interaction.response.send_message("❌ CommandManagePermission", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModServerLock(bot))

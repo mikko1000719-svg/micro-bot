@@ -24,7 +24,7 @@ class RangeGuessView(discord.ui.View):
             for child in self.children: child.disabled = True
             loser = self.current
             winner = self.player2 if loser == self.player1 else self.player1
-            msg = f" **** {loser.mention} Number **{self.target}**\n[PARTY]  {winner.mention} "
+            msg = f" **** {loser.mention} Number **{self.target}**\n🎉  {winner.mention} "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             if guess_val > self.target: self.max_v = guess_val

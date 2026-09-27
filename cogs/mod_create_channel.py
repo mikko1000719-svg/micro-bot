@@ -14,14 +14,14 @@ class ModCreateChannel(commands.Cog):
         try:
             guild = interaction.guild
             new_channel = await guild.create_text_channel(name=name, reason=f" {interaction.user} ")
-            await interaction.response.send_message(f"[FOLDER] SuccessChannel {new_channel.mention}", ephemeral=True)
+            await interaction.response.send_message(f"📁 SuccessChannel {new_channel.mention}", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] ChannelFailed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ ChannelFailed{e}", ephemeral=True)
 
     @mod_create_channel.error
     async def mod_create_channel_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModCreateChannel(bot))

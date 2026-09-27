@@ -38,7 +38,7 @@ class TicTacToeButton(discord.ui.Button):
             # 
             for child in view.children:
                 child.disabled = True
-            content = f"[PARTY]  {winner.mention} "
+            content = f"🎉  {winner.mention} "
             await interaction.response.edit_message(content=content, view=view)
         # Check
         elif view.is_tie():
@@ -46,7 +46,7 @@ class TicTacToeButton(discord.ui.Button):
             await interaction.response.edit_message(content=content, view=view)
         # Continue
         else:
-            content = f"[GAME] \n {view.current_player.mention} "
+            content = f"🎮 \n {view.current_player.mention} "
             await interaction.response.edit_message(content=content, view=view)
 
 # ProcessClass
@@ -101,7 +101,7 @@ class GameTicTacToe(commands.Cog):
         
         # InitializeInterface
         view = TicTacToeView(interaction.user, opponent)
-        content = f"[GAME] \n{interaction.user.mention} (X) VS {opponent.mention} (O)\n {interaction.user.mention} "
+        content = f"🎮 \n{interaction.user.mention} (X) VS {opponent.mention} (O)\n {interaction.user.mention} "
         await interaction.response.send_message(content=content, view=view)
 
 # LoadModule

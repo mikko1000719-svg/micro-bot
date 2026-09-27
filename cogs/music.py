@@ -82,7 +82,7 @@ class Music(commands.Cog):
 
         # 1. Check
         if not interaction.user.voice:
-            await interaction.followup.send("[ERROR] Channel")
+            await interaction.followup.send("❌ Channel")
             return
 
         # 2. BotChannel
@@ -113,13 +113,13 @@ class Music(commands.Cog):
             self.music_queue[guild_id].append(track_info)
             
             title = track_info.get('title', '')
-            await interaction.followup.send(f"[MUSIC] Queue**{title}**")
+            await interaction.followup.send(f"🎵 Queue**{title}**")
 
             # Bot
             if not voice_client.is_playing():
                 self.play_next(interaction)
         else:
-            await interaction.followup.send(f"[ERROR] {query}")
+            await interaction.followup.send(f"❌ {query}")
 
 async def setup(bot):
     await bot.add_cog(Music(bot))

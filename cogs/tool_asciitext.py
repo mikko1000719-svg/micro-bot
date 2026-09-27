@@ -10,7 +10,7 @@ class ToolAsciiText(commands.Cog):
     @app_commands.describe(text="Convert ()")
     async def asciitext(self, interaction: discord.Interaction, text: str):
         if len(text) > 15:
-            await interaction.response.send_message("[ERROR] Limit 15 ", ephemeral=True)
+            await interaction.response.send_message("❌ Limit 15 ", ephemeral=True)
             return
 
         # 

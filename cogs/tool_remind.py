@@ -11,7 +11,7 @@ class ToolRemind(commands.Cog):
     @app_commands.describe(minutes="Parameter description", content="Parameter description")
     async def remind(self, interaction: discord.Interaction, minutes: int, content: str):
         if minutes < 1 or minutes > 1440:
-            await interaction.response.send_message("[ERROR]  1  1440 24", ephemeral=True)
+            await interaction.response.send_message("❌  1  1440 24", ephemeral=True)
             return
 
         await interaction.response.send_message(f"⏰  **{minutes} **`{content}`", ephemeral=True)

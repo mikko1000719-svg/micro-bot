@@ -10,7 +10,7 @@ class OwnerDM(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.owner_id = self.load_owner_id()
-        self.latest_error = "[OK] SystemError" # SystemError
+        self.latest_error = "✅ SystemError" # SystemError
 
     def load_owner_id(self):
         """ JSON FileLoad ID"""
@@ -35,7 +35,7 @@ class OwnerDM(commands.Cog):
 
     def log_error(self, error_msg: str):
         """Error"""
-        self.latest_error = f"[STOP] Error: {error_msg}"
+        self.latest_error = f"🛑 Error: {error_msg}"
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -55,14 +55,14 @@ class OwnerDM(commands.Cog):
 
             # Send
             if user_id != self.owner_id:
-                await message.channel.send("[ERROR] Bot 5.0 ")
+                await message.channel.send("❌ Bot 5.0 ")
                 return
 
             # === SystemServerList ===
             await message.channel.send("[SWITCH] ReadServer...")
 
             embed = discord.Embed(
-                title="[SHIELD] Bot 5.0 - ",
+                title="🛡️ Bot 5.0 - ",
                 description=f"**System**{self.latest_error}\n**Connection (Ping)**`{round(self.bot.latency * 1000)} ms`\n**Server**`{len(self.bot.guilds)}` ",
                 color=discord.Color.blue()
             )

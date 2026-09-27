@@ -27,7 +27,7 @@ class Welcome(commands.Cog):
         guild_id = str(interaction.guild.id)
         self.channels[guild_id] = channel.id
         self.save_data()
-        await interaction.response.send_message(f"[OK] AutoChannelSuccessSettings {channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"✅ AutoChannelSuccessSettings {channel.mention}", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_member_join(self, member: discord.Member):
@@ -36,7 +36,7 @@ class Welcome(commands.Cog):
             channel = self.bot.get_channel(self.channels[guild_id])
             if channel:
                 embed = discord.Embed(
-                    title="[PARTY] ",
+                    title="🎉 ",
                     description=f" {member.mention}  **{member.guild.name}**",
                     color=discord.Color.green()
                 )

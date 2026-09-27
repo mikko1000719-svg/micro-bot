@@ -33,25 +33,25 @@ class GomokuView(discord.ui.View):
 
     def get_label(self, val):
         if val == 1:
-            return "[BLUE]"
+            return "🔵"
         elif val == 2:
-            return "[BLACK]"
-        return "[ ]"
+            return "⬛"
+        return "·"
 
     def make_callback(self, r, c):
         async def callback(interaction: discord.Interaction):
             if self.game_over:
-                await interaction.response.send_message("[ERROR] Game is already over!", ephemeral=True)
+                await interaction.response.send_message("❌ Game is already over!", ephemeral=True)
                 return
 
             # Check turn
             if interaction.user != self.current_turn:
-                await interaction.response.send_message("[ERROR] Not your turn!", ephemeral=True)
+                await interaction.response.send_message("❌ Not your turn!", ephemeral=True)
                 return
 
             # Check cell
             if self.board[r][c] != 0:
-                await interaction.response.send_message("[ERROR] Cell already occupied!", ephemeral=True)
+                await interaction.response.send_message("❌ Cell already occupied!", ephemeral=True)
                 return
 
             # Place piece
@@ -63,9 +63,9 @@ class GomokuView(discord.ui.View):
                 self.game_over = True
                 self.update_buttons()
                 winner_name = self.p1.name if player_val == 1 else self.p2.name
-                winner_icon = "[BLUE]" if player_val == 1 else "[BLACK]"
+                winner_icon = "🔵" if player_val == 1 else "⬛"
                 await interaction.response.edit_message(
-                    content=f"[WINNER] {winner_icon} ({winner_name}) wins!",
+                    content=f"🎉 Winner! {winner_icon} ({winner_name}) wins! 🎉",
                     view=self
                 )
                 return
@@ -74,9 +74,9 @@ class GomokuView(discord.ui.View):
             self.current_turn = self.p2 if self.current_turn == self.p1 else self.p1
             self.update_buttons()
 
-            turn_icon = "[BLUE]" if self.current_turn == self.p1 else "[BLACK]"
+            turn_icon = "🔵" if self.current_turn == self.p1 else "⬛"
             await interaction.response.edit_message(
-                content=f"[GAME] Current turn: {turn_icon} ({self.current_turn.mention})",
+                content=f"🎮 Current turn: {turn_icon} ({self.current_turn.mention})",
                 view=self
             )
 
@@ -114,15 +114,15 @@ class Games(commands.Cog):
     @app_commands.describe(opponent="Choose your opponent")
     async def gomoku(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot:
-            await interaction.response.send_message("[ERROR] Cannot play against bots!", ephemeral=True)
+            await interaction.response.send_message("❌ Cannot play against bots!", ephemeral=True)
             return
         if opponent == interaction.user:
-            await interaction.response.send_message("[ERROR] Cannot play against yourself!", ephemeral=True)
+            await interaction.response.send_message("❌ Cannot play against yourself!", ephemeral=True)
             return
 
         view = GomokuView(p1=interaction.user, p2=opponent)
         await interaction.response.send_message(
-            f"[GAME START] Gomoku Match!\n[BLUE]: {interaction.user.mention} vs [BLACK]: {opponent.mention}\n[BLUE] goes first!",
+            f"⚔️ Gomoku Match!\n🔵: {interaction.user.mention} vs ⬛: {opponent.mention}\n🔵 goes first!",
             view=view
         )
 

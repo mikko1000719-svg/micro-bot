@@ -16,14 +16,14 @@ class ModUnlock(commands.Cog):
         
         try:
             await channel.set_permissions(interaction.guild.default_role, overwrite=overwrite, reason=f" {interaction.user} Channel")
-            await interaction.response.send_message("[UNLOCK] Channel")
+            await interaction.response.send_message("🔓 Channel")
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] ChannelFailed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ ChannelFailed{e}", ephemeral=True)
 
     @mod_unlock.error
     async def mod_unlock_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModUnlock(bot))

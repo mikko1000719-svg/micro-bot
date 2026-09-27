@@ -10,7 +10,7 @@ class SuperWheelView(discord.ui.View):
         self.player2 = player2
         self.results = {player1: None, player2: None}
 
-    @discord.ui.button(label="[STAR] Start", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="⭐ Start", style=discord.ButtonStyle.primary)
     async def spin(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
             await interaction.response.send_message("", ephemeral=True)
@@ -28,9 +28,9 @@ class SuperWheelView(discord.ui.View):
             p1_v = self.results[self.player1]
             p2_v = self.results[self.player2]
             
-            res = f"[STAR] ****\n{self.player1.mention} **{p1_v}** \n{self.player2.mention} **{p2_v}** \n\n"
-            if p1_v > p2_v: res += f"[PARTY]  {self.player1.mention} "
-            elif p2_v > p1_v: res += f"[PARTY]  {self.player2.mention} "
+            res = f"⭐ ****\n{self.player1.mention} **{p1_v}** \n{self.player2.mention} **{p2_v}** \n\n"
+            if p1_v > p2_v: res += f"🎉  {self.player1.mention} "
+            elif p2_v > p1_v: res += f"🎉  {self.player2.mention} "
             else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)
@@ -44,6 +44,6 @@ class GameSuperWheel(commands.Cog):
             await interaction.response.send_message("", ephemeral=True)
             return
         view = SuperWheelView(interaction.user, opponent)
-        await interaction.response.send_message(f"[STAR] ****\n{interaction.user.mention} VS {opponent.mention}\nStart", view=view)
+        await interaction.response.send_message(f"⭐ ****\n{interaction.user.mention} VS {opponent.mention}\nStart", view=view)
 
 async def setup(bot): await bot.add_cog(GameSuperWheel(bot))

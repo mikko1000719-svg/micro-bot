@@ -12,7 +12,7 @@ class VaultView(discord.ui.View):
         self.vault_code = random.randint(100, 999)
         self.attempts = 0
 
-    @discord.ui.button(label="[UNLOCK]  (100-999)", style=discord.ButtonStyle.success)
+    @discord.ui.button(label="🔓  (100-999)", style=discord.ButtonStyle.success)
     async def try_vault(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user != self.current:
             await interaction.response.send_message("", ephemeral=True)
@@ -23,12 +23,12 @@ class VaultView(discord.ui.View):
         if hit or self.attempts >= 5:
             for child in self.children: child.disabled = True
             winner = self.current
-            msg = f" **** {winner.mention} Success{self.vault_code}\n[PARTY] "
+            msg = f" **** {winner.mention} Success{self.vault_code}\n🎉 "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.attempts += 1
             self.current = self.player2 if self.current == self.player1 else self.player1
-            msg = f"[LOCKED2] ****\n {self.attempts} FailedDefense...\n {self.current.mention} "
+            msg = f"🔐 ****\n {self.attempts} FailedDefense...\n {self.current.mention} "
             await interaction.response.edit_message(content=msg, view=self)
 
 class GameVault(commands.Cog):
@@ -40,6 +40,6 @@ class GameVault(commands.Cog):
             await interaction.response.send_message("", ephemeral=True)
             return
         view = VaultView(interaction.user, opponent)
-        await interaction.response.send_message(f"[LOCKED2] ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ", view=view)
+        await interaction.response.send_message(f"🔐 ****\n{interaction.user.mention} VS {opponent.mention}\n {interaction.user.mention} ", view=view)
 
 async def setup(bot): await bot.add_cog(GameVault(bot))

@@ -16,12 +16,12 @@ class ModCreateRole(commands.Cog):
             new_role = await guild.create_role(name=name, reason=f" {interaction.user} ")
             await interaction.response.send_message(f" Success {new_role.mention}", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Failed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ Failed{e}", ephemeral=True)
 
     @mod_create_role.error
     async def mod_create_role_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModCreateRole(bot))

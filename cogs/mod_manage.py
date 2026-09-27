@@ -13,7 +13,7 @@ class ModManage(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mute(self, interaction: discord.Interaction, member: discord.Member, minutes: int, reason: str = ""):
         if member.top_role >= interaction.user.top_role:
-            await interaction.response.send_message("[ERROR] ", ephemeral=True)
+            await interaction.response.send_message("❌ ", ephemeral=True)
             return
 
         await interaction.response.defer()
@@ -27,7 +27,7 @@ class ModManage(commands.Cog):
             )
             await interaction.followup.send(embed=embed)
         except Exception as e:
-            await interaction.followup.send(f"[ERROR] ExecuteFailed{e}", ephemeral=True)
+            await interaction.followup.send(f"❌ ExecuteFailed{e}", ephemeral=True)
 
     @app_commands.command(name="unmute", description="Command description")
     @app_commands.describe(member="Parameter description")
@@ -43,14 +43,14 @@ class ModManage(commands.Cog):
             )
             await interaction.response.send_message(embed=embed)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] ExecuteFailed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ ExecuteFailed{e}", ephemeral=True)
 
     # ErrorProcess
     @mute.error
     @unmute.error
     async def mod_manage_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModManage(bot))

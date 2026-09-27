@@ -43,14 +43,14 @@ class Leveling(commands.Cog):
 
         #  25 
         if xp % 25 == 0:
-            await message.channel.send(f"[PARTY]  {message.author.mention} {level} (: {xp})")
+            await message.channel.send(f"🎉  {message.author.mention} {level} (: {xp})")
 
     @app_commands.command(name="rank", description="Command description")
     async def rank(self, interaction: discord.Interaction):
         user_id = str(interaction.user.id)
         xp = self.xp_data.get(user_id, 0)
         level = int(xp**0.5) // 5
-        await interaction.response.send_message(f"[STAT] {interaction.user.name} {level} {xp}", ephemeral=True)
+        await interaction.response.send_message(f"📊 {interaction.user.name} {level} {xp}", ephemeral=True)
 
 async def setup(bot):
     """ Cog Load"""

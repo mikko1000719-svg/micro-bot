@@ -15,9 +15,9 @@ class ErrorHandler(commands.Cog):
             owner_cog.log_error(str(error))
 
         if isinstance(error, app_commands.errors.CommandOnCooldown):
-            await interaction.response.send_message(f"[TIME] Command on cooldown, please wait {round(error.retry_after, 1)} seconds.", ephemeral=True)
+            await interaction.response.send_message(f"⏰ Command on cooldown, please wait {round(error.retry_after, 1)} seconds.", ephemeral=True)
         elif isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] You don't have permission to execute this command!", ephemeral=True)
+            await interaction.response.send_message("❌ You don't have permission to execute this command!", ephemeral=True)
         else:
             print(f"[AppCommand Error] {error}")
 

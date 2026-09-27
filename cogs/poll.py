@@ -60,14 +60,14 @@ class PollView(discord.ui.View):
 
     async def update_poll_message(self, interaction: discord.Interaction):
         embed = discord.Embed(
-            title="[STAT] Server",
+            title="📊 Server",
             description=f"**** {self.question}",
             color=discord.Color.blue()
         )
         total_votes = len(self.user_votes)
         
-        embed.add_field(name=f"[OK] ", value=f"**{self.agree_count}** ", inline=True)
-        embed.add_field(name=f"[STOP] ", value=f"**{self.disagree_count}** ", inline=True)
+        embed.add_field(name=f"✅ ", value=f"**{self.agree_count}** ", inline=True)
+        embed.add_field(name=f"🛑 ", value=f"**{self.disagree_count}** ", inline=True)
         embed.add_field(name=f"[WAIT] ", value=f"**{self.abstain_count}** ", inline=True)
 
         # Display
@@ -89,12 +89,12 @@ class Poll(commands.Cog):
         view = PollView(question=question)
         
         embed = discord.Embed(
-            title="[STAT] Server",
+            title="📊 Server",
             description=f"**** {question}",
             color=discord.Color.blue()
         )
-        embed.add_field(name="[OK] ", value="**0** ", inline=True)
-        embed.add_field(name="[STOP] ", value="**0** ", inline=True)
+        embed.add_field(name="✅ ", value="**0** ", inline=True)
+        embed.add_field(name="🛑 ", value="**0** ", inline=True)
         embed.add_field(name="[WAIT] ", value="**0** ", inline=True)
         embed.set_footer(text=f"{interaction.user.name} | 0 ")
 

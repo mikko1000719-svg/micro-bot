@@ -10,7 +10,7 @@ class TemplateView(discord.ui.View):
         self.player2 = player2
         self.ready = {player1: False, player2: False}
 
-    @discord.ui.button(label="[DICE] ", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="🎲 ", style=discord.ButtonStyle.primary)
     async def action_btn(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
             return
@@ -32,7 +32,7 @@ class TemplateView(discord.ui.View):
             
             await interaction.response.edit_message(content=res, view=self)
         else:
-            await interaction.response.edit_message(content=f"[OK] {interaction.user.mention} ...")
+            await interaction.response.edit_message(content=f"✅ {interaction.user.mention} ...")
 
 class GameTemplate(commands.Cog):
     def __init__(self, bot):

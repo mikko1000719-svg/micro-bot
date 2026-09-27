@@ -50,7 +50,7 @@ class SyncChat(commands.Cog):
     @app_commands.checks.has_permissions(manage_channels=True)
     async def linkgroup(self, interaction: discord.Interaction, group_id: int):
         if group_id < 1 or group_id > 10:
-            await interaction.response.send_message("[ERROR] Cross-server group number must be between **1 to 10**!", ephemeral=True)
+            await interaction.response.send_message("❌ Cross-server group number must be between **1 to 10**!", ephemeral=True)
             return
 
         if group_id not in self.networks:
@@ -62,7 +62,7 @@ class SyncChat(commands.Cog):
         await self.get_or_create_webhook(interaction.channel)
 
         embed = discord.Embed(
-            title="[LINK] Cross-server network group join successful",
+            title="🔗 Cross-server network group join successful",
             description=f"This channel has successfully connected to WeiGuo 5.0 **Group {group_id} cross-server group**!",
             color=discord.Color.green()
         )
@@ -77,7 +77,7 @@ class SyncChat(commands.Cog):
             self.save_data() # Update save
             await interaction.response.send_message(f"[UNLINK] Successfully exited Group {group_id} cross-server network group.", ephemeral=True)
         else:
-            await interaction.response.send_message("[ERROR] This channel is not in that cross-server group.", ephemeral=True)
+            await interaction.response.send_message("❌ This channel is not in that cross-server group.", ephemeral=True)
 
     # --- Core message synchronization block ---
     @commands.Cog.listener()

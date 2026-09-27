@@ -16,7 +16,7 @@ class ModWarn(commands.Cog):
             embed.description = f"Server **{interaction.guild.name}** ManageWarning"
             embed.add_field(name="Parameter description", value=reason)
             await member.send(embed=embed)
-            dm_status = "[OK] Success"
+            dm_status = "✅ Success"
         except discord.Forbidden:
             dm_status = "[WARNING] Function"
 
@@ -25,7 +25,7 @@ class ModWarn(commands.Cog):
     @mod_warn.error
     async def mod_warn_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModWarn(bot))

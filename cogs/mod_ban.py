@@ -19,12 +19,12 @@ class ModBan(commands.Cog):
             await member.ban(reason=reason)
             await interaction.response.send_message(f"  {member.mention} Success\n{reason}")
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Failed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ Failed{e}", ephemeral=True)
 
     @mod_ban.error
     async def mod_ban_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModBan(bot))

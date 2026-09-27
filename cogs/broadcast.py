@@ -13,10 +13,10 @@ class Broadcast(commands.Cog):
         user_id = interaction.user.id
         if user_id in self.opt_out_users:
             self.opt_out_users.remove(user_id)
-            await interaction.response.send_message("[OK] You will now receive bot broadcasts", ephemeral=True)
+            await interaction.response.send_message("✅ You will now receive bot broadcasts", ephemeral=True)
         else:
             self.opt_out_users.add(user_id)
-            await interaction.response.send_message("[SUCCESS] You will no longer receive bot broadcasts", ephemeral=True)
+            await interaction.response.send_message("✅ You will no longer receive bot broadcasts", ephemeral=True)
 
     @app_commands.command(name="broadcast", description="[ 5.0] SendServerAuto")
     @app_commands.describe(message="Parameter description")
@@ -29,7 +29,7 @@ class Broadcast(commands.Cog):
         skip_count = 0
 
         embed = discord.Embed(
-            title="[SPEAKER] Bot 5.0",
+            title="📢 Bot 5.0",
             description=message,
             color=discord.Color.gold()
         )
@@ -50,14 +50,14 @@ class Broadcast(commands.Cog):
                 skip_count += 1
 
         await interaction.followup.send(
-            f"[OK] Send\n- SuccessSend**{success_count}**\n- /**{skip_count}**", 
+            f"✅ Send\n- SuccessSend**{success_count}**\n- /**{skip_count}**", 
             ephemeral=True
         )
 
     @broadcast.error
     async def broadcast_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] PermissionManageExecute", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionManageExecute", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Broadcast(bot))

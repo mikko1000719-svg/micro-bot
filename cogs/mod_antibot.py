@@ -28,8 +28,8 @@ class ModAntiBot(commands.Cog):
     @is_guild_owner() # LimitExecute
     async def mod_antibot(self, interaction: discord.Interaction, enable: bool):
         self.antibot_enabled[interaction.guild.id] = enable
-        status = "[OK] " if enable else "[STOP] "
-        msg = f"[SHIELD] **Bot (Anti-Bot)  {status}**\n"
+        status = "✅ " if enable else "🛑 "
+        msg = f"🛡️ **Bot (Anti-Bot)  {status}**\n"
         if enable:
             msg += "SystemAutoServerBot"
         
@@ -39,7 +39,7 @@ class ModAntiBot(commands.Cog):
     async def mod_antibot_error(self, interaction: discord.Interaction, error):
         # CustomCheckError
         if isinstance(error, app_commands.errors.CheckFailure):
-            await interaction.response.send_message("[ERROR] PermissionCommand**Server (Owner)** ", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionCommand**Server (Owner)** ", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModAntiBot(bot))

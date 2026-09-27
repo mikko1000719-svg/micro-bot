@@ -14,15 +14,15 @@ class ServerStats(commands.Cog):
 
         # ChannelFormat
         stats_names = {
-            "total": f"[STAT] {total_members} ",
+            "total": f"📊 {total_members} ",
             "human": f" {human_count} ",
-            "bot": f"[BOT] Bot{bot_count} "
+            "bot": f"🤖 Bot{bot_count} "
         }
 
         # ChannelUpdateChannel
         for channel in guild.voice_channels:
             for key, new_name in stats_names.items():
-                if key == "total" and channel.name.startswith("[STAT] "):
+                if key == "total" and channel.name.startswith("📊 "):
                     if channel.name != new_name:
                         await channel.edit(name=new_name, reason="ServerStats AutoUpdate")
                         return
@@ -30,7 +30,7 @@ class ServerStats(commands.Cog):
                     if channel.name != new_name:
                         await channel.edit(name=new_name, reason="ServerStats AutoUpdate")
                         return
-                elif key == "bot" and channel.name.startswith("[BOT] Bot"):
+                elif key == "bot" and channel.name.startswith("🤖 Bot"):
                     if channel.name != new_name:
                         await channel.edit(name=new_name, reason="ServerStats AutoUpdateBot")
                         return
@@ -62,17 +62,17 @@ class ServerStats(commands.Cog):
         human_count = total_members - bot_count
 
         # Channel
-        await guild.create_voice_channel(f"[STAT] {total_members} ", overwrites=overwrites, reason="Channel")
+        await guild.create_voice_channel(f"📊 {total_members} ", overwrites=overwrites, reason="Channel")
         await guild.create_voice_channel(f" {human_count} ", overwrites=overwrites, reason="Channel")
-        await guild.create_voice_channel(f"[BOT] Bot{bot_count} ", overwrites=overwrites, reason="BotChannel")
+        await guild.create_voice_channel(f"🤖 Bot{bot_count} ", overwrites=overwrites, reason="BotChannel")
 
         #  followup SendComplete
-        await interaction.followup.send("[OK] ServerStats ChannelCompleteAutoReal-timeUpdate", ephemeral=True)
+        await interaction.followup.send("✅ ServerStats ChannelCompleteAutoReal-timeUpdate", ephemeral=True)
 
     @setupstats.error
     async def setupstats_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManageChannelPermissionExecuteCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManageChannelPermissionExecuteCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ServerStats(bot))

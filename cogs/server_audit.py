@@ -18,10 +18,10 @@ class ServerAudit(commands.Cog):
             cat_id = int(category_id)
             category = guild.get_channel(cat_id)
             if not isinstance(category, discord.CategoryChannel):
-                await interaction.response.send_message("[ERROR] ClassConfirmClass (Category)ID", ephemeral=True)
+                await interaction.response.send_message("❌ ClassConfirmClass (Category)ID", ephemeral=True)
                 return
         except ValueError:
-            await interaction.response.send_message("[ERROR] Class ID Number", ephemeral=True)
+            await interaction.response.send_message("❌ Class ID Number", ephemeral=True)
             return
 
         await interaction.response.send_message(" ServerChannelChannel...", ephemeral=True)
@@ -55,7 +55,7 @@ class ServerAudit(commands.Cog):
             except Exception as e:
                 print(f"Channel {log_channel_name} Failed: {e}")
 
-        await interaction.followup.send(f"[OK] CompleteSuccessClass `{category.name}`  **{created_count}** ChannelBot", ephemeral=True)
+        await interaction.followup.send(f"✅ CompleteSuccessClass `{category.name}`  **{created_count}** ChannelBot", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_message(self, message: discord.Message):
@@ -70,7 +70,7 @@ class ServerAudit(commands.Cog):
             if log_channel:
                 # 
                 content = (
-                    f"[PIN] **Channel**{message.channel.mention}\n"
+                    f"📌 **Channel**{message.channel.mention}\n"
                     f" **Send**{message.author} (`{message.author.id}`)\n"
                     f" **Message**\n{message.content}"
                 )
@@ -89,7 +89,7 @@ class ServerAudit(commands.Cog):
     async def setupaudit_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
             #  awa  it  await
-            await interaction.response.send_message("[ERROR] PermissionManageChannelManagePermissionExecuteCommand", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionManageChannelManagePermissionExecuteCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ServerAudit(bot))

@@ -13,10 +13,10 @@ class ToolChoose(commands.Cog):
         raw_list = options.replace("", ",").replace(" ", ",")
         choices = [item.strip() for item in raw_list.split(",") if item.strip()]
         if len(choices) < 2:
-            await interaction.response.send_message("[ERROR] Option", ephemeral=True)
+            await interaction.response.send_message("❌ Option", ephemeral=True)
             return
         selected = random.choice(choices)
-        embed = discord.Embed(title="[DICE] ", color=discord.Color.purple())
+        embed = discord.Embed(title="🎲 ", color=discord.Color.purple())
         embed.add_field(name="Option", value="Parameter description".join(choices), inline=False)
         embed.add_field(name="Parameter description", value=f"[TARGET] **{selected}**", inline=False)
         await interaction.response.send_message(embed=embed)

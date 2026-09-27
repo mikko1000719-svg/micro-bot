@@ -11,12 +11,12 @@ class ModChannel(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_setchannel(self, interaction: discord.Interaction, channel: discord.TextChannel = None):
         target_channel = channel or interaction.channel
-        await interaction.response.send_message(f"[SPEAKER] SuccessChannel {target_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"📢 SuccessChannel {target_channel.mention}", ephemeral=True)
 
     @mod_setchannel.error
     async def mod_setchannel_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModChannel(bot))

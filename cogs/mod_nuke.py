@@ -34,7 +34,7 @@ class ModNuke(commands.Cog):
     async def mod_nuke_error(self, interaction: discord.Interaction, error):
         # CustomCheckError
         if isinstance(error, app_commands.errors.CheckFailure):
-            await interaction.response.send_message("[ERROR] PermissionCommand**Server (Owner)** ", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionCommand**Server (Owner)** ", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModNuke(bot))

@@ -25,12 +25,12 @@ class CmdEmbed(commands.Cog):
         embed.set_footer(text=f"{interaction.user.display_name}", icon_url=interaction.user.display_avatar.url)
 
         await interaction.channel.send(embed=embed)
-        await interaction.response.send_message("[OK] Embed sent successfully", ephemeral=True)
+        await interaction.response.send_message("✅ Embed sent successfully", ephemeral=True)
 
     @custom_embed.error
     async def embed_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManageMessagePermission Embed ", ephemeral=True)
+            await interaction.response.send_message("❌ ManageMessagePermission Embed ", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(CmdEmbed(bot))

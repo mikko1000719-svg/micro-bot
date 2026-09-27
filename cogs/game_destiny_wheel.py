@@ -29,8 +29,8 @@ class DestinyWheelView(discord.ui.View):
             p2_p = self.points[self.player2]
             
             res = f" ****\n{self.player1.mention} **{p1_p}** \n{self.player2.mention} **{p2_p}** \n\n"
-            if p1_p > p2_p: res += f"[PARTY]  {self.player1.mention} "
-            elif p2_p > p1_p: res += f"[PARTY]  {self.player2.mention} "
+            if p1_p > p2_p: res += f"🎉  {self.player1.mention} "
+            elif p2_p > p1_p: res += f"🎉  {self.player2.mention} "
             else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)

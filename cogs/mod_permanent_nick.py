@@ -54,21 +54,21 @@ class PermanentNick(commands.Cog):
             await member.edit(nick=nickname, reason=f"Server {interaction.user}  jOSe PermanentSystem")
             
             embed = discord.Embed(
-                title="[LOCK] jOSe System - Permanent",
-                description=f"Success **{member.mention}** \n`{nickname}`\n\n*[OK] Write jOSe PermanentDatabaseBot*",
+                title="🔒 jOSe System - Permanent",
+                description=f"Success **{member.mention}** \n`{nickname}`\n\n*✅ Write jOSe PermanentDatabaseBot*",
                 color=discord.Color.red()
             )
             await interaction.response.send_message(embed=embed)
         except discord.Forbidden:
-            await interaction.response.send_message("[ERROR] PermissionManagePermission", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionManagePermission", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Error{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ Error{e}", ephemeral=True)
 
     @setpermanentnick.error
     async def setpermanentnick_error(self, interaction: discord.Interaction, error):
         # CustomCheckError
         if isinstance(error, app_commands.errors.CheckFailure):
-            await interaction.response.send_message("[ERROR] PermissionCommand**Server (Owner)** ", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionCommand**Server (Owner)** ", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_member_update(self, before: discord.Member, after: discord.Member):

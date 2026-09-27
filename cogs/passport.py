@@ -16,7 +16,7 @@ class Passport(commands.Cog):
         join_date = user.joined_at.strftime("%Y-%m-%d") if isinstance(user, discord.Member) and user.joined_at else ""
 
         embed = discord.Embed(
-            title="[NETWORK]  (Federal Passport)",
+            title="🌐  (Federal Passport)",
             description="Command description",
             color=discord.Color.gold()
         )
@@ -25,7 +25,7 @@ class Passport(commands.Cog):
         embed.add_field(name="Parameter description", value=f"`{passport_no}`", inline=True)
         embed.add_field(name="/Server", value=f"{guild.name if guild else ''}", inline=False)
         embed.add_field(name=" ()", value=f"`{join_date}`", inline=True)
-        embed.add_field(name="Parameter description", value="[OK] Verify", inline=True)
+        embed.add_field(name="Parameter description", value="✅ Verify", inline=True)
         embed.set_footer(text="EdgeManage ")
 
         await interaction.response.send_message(embed=embed)

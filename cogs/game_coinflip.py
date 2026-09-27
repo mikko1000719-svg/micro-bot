@@ -34,7 +34,7 @@ class CoinFlipView(discord.ui.View):
                 winner = self.player2
 
             if winner:
-                res_msg += f"[PARTY]  {winner.mention} "
+                res_msg += f"🎉  {winner.mention} "
             else:
                 res_msg += "[HANDSHAKE] "
 

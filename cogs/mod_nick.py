@@ -18,12 +18,12 @@ class ModNick(commands.Cog):
             else:
                 await interaction.response.send_message(f"[SWITCH] Success {member.mention} ")
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] FailedBot{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ FailedBot{e}", ephemeral=True)
 
     @mod_nick.error
     async def mod_nick_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModNick(bot))

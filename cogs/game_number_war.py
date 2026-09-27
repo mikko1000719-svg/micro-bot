@@ -29,8 +29,8 @@ class NumberWarView(discord.ui.View):
             p2_s = self.scores[self.player2]
             
             res = f" **Number**\n{self.player1.mention}**{p1_s}** \n{self.player2.mention}**{p2_s}** \n\n"
-            if p1_s > p2_s: res += f"[PARTY]  {self.player1.mention} "
-            elif p2_s > p1_s: res += f"[PARTY]  {self.player2.mention} "
+            if p1_s > p2_s: res += f"🎉  {self.player1.mention} "
+            elif p2_s > p1_s: res += f"🎉  {self.player2.mention} "
             else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)

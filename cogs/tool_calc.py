@@ -38,7 +38,7 @@ class ToolCalc(commands.Cog):
             embed.add_field(name="Parameter description", value=f"**{result}**", inline=False)
             await interaction.response.send_message(embed=embed)
         except Exception:
-            await interaction.response.send_message("[ERROR] FailedConfirmFormatNumber", ephemeral=True)
+            await interaction.response.send_message("❌ FailedConfirmFormatNumber", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ToolCalc(bot))

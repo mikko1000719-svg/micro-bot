@@ -12,7 +12,7 @@ class ModSlowmode(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_slowmode(self, interaction: discord.Interaction, seconds: int):
         if seconds < 0 or seconds > 21600:
-            await interaction.response.send_message("[ERROR]  0  21600 ", ephemeral=True)
+            await interaction.response.send_message("❌  0  21600 ", ephemeral=True)
             return
 
         try:
@@ -22,12 +22,12 @@ class ModSlowmode(commands.Cog):
             else:
                 await interaction.response.send_message(f"⏱ Channel **{seconds}** ")
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] SettingsFailed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ SettingsFailed{e}", ephemeral=True)
 
     @mod_slowmode.error
     async def mod_slowmode_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModSlowmode(bot))

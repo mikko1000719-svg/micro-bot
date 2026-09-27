@@ -11,7 +11,7 @@ class CmdSlowmode(commands.Cog):
     @app_commands.checks.has_permissions(manage_channels=True)
     async def slowmode(self, interaction: discord.Interaction, seconds: int):
         if seconds < 0 or seconds > 21600:
-            await interaction.response.send_message("[ERROR]  0  21600 ", ephemeral=True)
+            await interaction.response.send_message("❌  0  21600 ", ephemeral=True)
             return
             
         await interaction.channel.edit(slowmode_delay=seconds, reason=f"Manage {interaction.user} ")
@@ -26,7 +26,7 @@ class CmdSlowmode(commands.Cog):
     @slowmode.error
     async def slowmode_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManageChannelPermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManageChannelPermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(CmdSlowmode(bot))

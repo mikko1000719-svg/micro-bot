@@ -28,7 +28,7 @@ class Stock(commands.Cog):
         code = code.upper()
         self.stocks[code] = {"name": name, "price": initial_price}
         self.save_data()
-        await interaction.response.send_message(f"[SUCCESS] Added `{code}` ({name}): ${initial_price}", ephemeral=True)
+        await interaction.response.send_message(f"✅ Added `{code}` ({name}): ${initial_price}", ephemeral=True)
 
     @app_commands.command(name="remove_stock", description="Remove a company from stock market")
     @app_commands.describe(code="Stock code to remove")
@@ -38,15 +38,15 @@ class Stock(commands.Cog):
         if code in self.stocks:
             del self.stocks[code]
             self.save_data()
-            await interaction.response.send_message(f"[SUCCESS] Removed `{code}`", ephemeral=True)
+            await interaction.response.send_message(f"✅ Removed `{code}`", ephemeral=True)
         else:
-            await interaction.response.send_message(f"[ERROR] Stock `{code}` not found", ephemeral=True)
+            await interaction.response.send_message(f"❌ Stock `{code}` not found", ephemeral=True)
 
     @app_commands.command(name="stock_market", description="View stock market")
     @app_commands.describe(code="Stock code (optional)", change_percent="Price change percentage (admin only)")
     async def stock_market(self, interaction: discord.Interaction, code: str = None, change_percent: float = None):
         if not code:
-            embed = discord.Embed(title="[STAT] Stock Market", color=discord.Color.gold())
+            embed = discord.Embed(title="📊 Stock Market", color=discord.Color.gold())
             for c, info in self.stocks.items():
                 embed.add_field(name=f"{info['name']} (`{c}`)", value=f"Price: ${info['price']:.2f}", inline=False)
             await interaction.response.send_message(embed=embed)
@@ -54,12 +54,12 @@ class Stock(commands.Cog):
 
         code = code.upper()
         if code not in self.stocks:
-            await interaction.response.send_message(f"[ERROR] Stock `{code}` not found", ephemeral=True)
+            await interaction.response.send_message(f"❌ Stock `{code}` not found", ephemeral=True)
             return
 
         if change_percent is not None:
             if not interaction.user.guild_permissions.administrator:
-                await interaction.response.send_message("[ERROR] Administrator permission required", ephemeral=True)
+                await interaction.response.send_message("❌ Administrator permission required", ephemeral=True)
                 return
 
             old_price = self.stocks[code]["price"]
@@ -67,14 +67,14 @@ class Stock(commands.Cog):
             self.stocks[code]["price"] = new_price
             self.save_data()
 
-            status = "[UP] " if change_percent > 0 else "[DOWN] "
+            status = "📈 " if change_percent > 0 else "📉 "
             await interaction.response.send_message(
                 f"{status} **{self.stocks[code]['name']}** (`{code}`) changed by {change_percent}%\n"
                 f"Price: ${old_price} -> **Price: ${new_price}**"
             )
         else:
             info = self.stocks[code]
-            await interaction.response.send_message(f"[INFO] **{info['name']}** (`{code}`)\nPrice: ${info['price']:.2f}")
+            await interaction.response.send_message(f"ℹ️ **{info['name']}** (`{code}`)\nPrice: ${info['price']:.2f}")
 
 async def setup(bot):
     await bot.add_cog(Stock(bot))

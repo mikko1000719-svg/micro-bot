@@ -11,7 +11,7 @@ class Earthquake(commands.Cog):
         self.cwa_key = os.getenv("CWA_API_KEY")
 
         if self.cwa_key:
-            print("[OK] [Module]  API SettingsComplete")
+            print("✅ [Module]  API SettingsComplete")
         else:
             print("[WARNING] [Module]  CWA_API_KEY Variable")
 
@@ -25,7 +25,7 @@ class Earthquake(commands.Cog):
 
         # 2. Check API Key
         if not self.cwa_key:
-            await interaction.followup.send("[ERROR] ServerSettings `CWA_API_KEY`SystemManage")
+            await interaction.followup.send("❌ ServerSettings `CWA_API_KEY`SystemManage")
             return
 
         # 3.  (E-A0015-001 )
@@ -39,7 +39,7 @@ class Earthquake(commands.Cog):
                         earthquakes = data.get("records", {}).get("Earthquake", [])
 
                         if not earthquakes:
-                            await interaction.followup.send("[INFO] ")
+                            await interaction.followup.send("ℹ️ ")
                             return
 
                         # 
@@ -56,16 +56,16 @@ class Earthquake(commands.Cog):
                             url=web_url
                         )
                         embed.add_field(name=" ", value=info.get("OriginTime", ""), inline=False)
-                        embed.add_field(name="[LOCATION] ", value=info.get("Epicenter", {}).get("Location", ""), inline=True)
+                        embed.add_field(name="📍 ", value=info.get("Epicenter", {}).get("Location", ""), inline=True)
                         embed.add_field(name=" ", value=f"M_L {info.get('EarthquakeMagnitude', {}).get('MagnitudeValue', '')}", inline=True)
                         embed.add_field(name=" ", value=f"{info.get('Depth', {}).get('Value', '')} ", inline=True)
                         embed.set_footer(text="Parameter description")
 
                         await interaction.followup.send(embed=embed)
                     else:
-                        await interaction.followup.send(f"[ERROR]  API Failed (HTTP : {resp.status})")
+                        await interaction.followup.send(f"❌  API Failed (HTTP : {resp.status})")
         except Exception as e:
-            await interaction.followup.send(f"[ERROR] Error: {e}")
+            await interaction.followup.send(f"❌ Error: {e}")
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Earthquake(bot))

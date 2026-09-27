@@ -21,7 +21,7 @@ class UtilityTools(commands.Cog):
     async def dice_command(self, interaction: discord.Interaction):
         import random
         result = random.randint(1, 6)
-        await interaction.response.send_message(f"[DICE] {result}")
+        await interaction.response.send_message(f"🎲 {result}")
 
     # (Continue @utility_group.command  20 Command...)
 

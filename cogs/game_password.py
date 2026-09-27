@@ -44,7 +44,7 @@ class PasswordView(discord.ui.View):
         if guess == self.target:
             for child in self.children: child.disabled = True
             winner = self.player2 if self.current == self.player1 else self.player1
-            msg = f" **** {self.current.mention} Number **{self.target}**\n[PARTY]  {winner.mention} "
+            msg = f" **** {self.current.mention} Number **{self.target}**\n🎉  {winner.mention} "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             if guess > self.target: self.max_val = guess

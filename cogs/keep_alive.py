@@ -29,11 +29,11 @@ class KeepAlive(commands.Cog):
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.site_url, timeout=10) as resp:
                     if resp.status == 200:
-                        logging.info(f"[OK] [KeepAlive] Successfully sent keep-alive request to {self.site_url} (HTTP 200)")
+                        logging.info(f"✅ [KeepAlive] Successfully sent keep-alive request to {self.site_url} (HTTP 200)")
                     else:
                         logging.warning(f"[WARNING] [KeepAlive] Keep-alive request response abnormal: HTTP {resp.status}")
         except Exception as e:
-            logging.error(f"[ERROR] [KeepAlive] Failed to send keep-alive request: {e}")
+            logging.error(f"❌ [KeepAlive] Failed to send keep-alive request: {e}")
 
     @self_ping_task.before_loop
     async def before_self_ping(self):
@@ -46,7 +46,7 @@ class KeepAlive(commands.Cog):
         await interaction.response.defer(thinking=True)
 
         is_running = self.self_ping_task.is_running()
-        status_text = "[OK] Keep-alive background task running" if is_running else "[STOP] Keep-alive background task stopped"
+        status_text = "✅ Keep-alive background task running" if is_running else "🛑 Keep-alive background task stopped"
         latency = round(self.bot.latency * 1000)
 
         # 2. ManualSendTestConnection
@@ -60,7 +60,7 @@ class KeepAlive(commands.Cog):
 
         # 3. Information
         embed = discord.Embed(
-            title="[SHIELD] Bot 24/7 Anti-Sleep Diagnosis",
+            title="🛡️ Bot 24/7 Anti-Sleep Diagnosis",
             color=discord.Color.green() if is_running else discord.Color.red()
         )
         embed.add_field(name="Parameter description", value=status_text, inline=False)

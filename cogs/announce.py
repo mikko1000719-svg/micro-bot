@@ -24,7 +24,7 @@ class Announce(commands.Cog):
         formatted_content = content.replace("\\n", "\n")
 
         embed = discord.Embed(
-            title=f"[SPEAKER] {title}",
+            title=f"📢 {title}",
             description=formatted_content,
             color=discord.Color.red()
         )
@@ -33,9 +33,9 @@ class Announce(commands.Cog):
 
         try:
             await channel.send(embed=embed)
-            await interaction.response.send_message(f"[OK] SuccessSend {channel.mention}", ephemeral=True)
+            await interaction.response.send_message(f"✅ SuccessSend {channel.mention}", ephemeral=True)
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] SendFailed: {e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ SendFailed: {e}", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(Announce(bot))

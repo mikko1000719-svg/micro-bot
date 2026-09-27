@@ -39,9 +39,9 @@ class FistWheelView(discord.ui.View):
             elif (p1_move == "" and p2_move == "") or \
                  (p1_move == "" and p2_move == "") or \
                  (p1_move == "" and p2_move == ""):
-                res += f"[PARTY]  {self.player1.mention} "
+                res += f"🎉  {self.player1.mention} "
             else:
-                res += f"[PARTY]  {self.player2.mention} "
+                res += f"🎉  {self.player2.mention} "
 
             await interaction.message.edit(content=res, view=self)
 

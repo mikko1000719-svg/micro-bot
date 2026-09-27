@@ -22,7 +22,7 @@ class BalloonView(discord.ui.View):
             for child in self.children: child.disabled = True
             loser = self.current
             winner = self.player2 if loser == self.player1 else self.player1
-            msg = f" **** {loser.mention} \n[PARTY]  {winner.mention} "
+            msg = f" **** {loser.mention} \n🎉  {winner.mention} "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.step += 1

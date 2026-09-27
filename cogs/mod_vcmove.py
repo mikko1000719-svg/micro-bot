@@ -12,7 +12,7 @@ class ModVCMove(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vcmove(self, interaction: discord.Interaction, member: discord.Member, target_channel: discord.VoiceChannel):
         if not member.voice or not member.voice.channel:
-            await interaction.response.send_message("[ERROR] Channel", ephemeral=True)
+            await interaction.response.send_message("❌ Channel", ephemeral=True)
             return
 
         try:
@@ -23,12 +23,12 @@ class ModVCMove(commands.Cog):
                 ephemeral=True
             )
         except Exception as e:
-            await interaction.response.send_message(f"[ERROR] Failed{e}", ephemeral=True)
+            await interaction.response.send_message(f"❌ Failed{e}", ephemeral=True)
 
     @mod_vcmove.error
     async def mod_vcmove_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionCommand", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionCommand", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModVCMove(bot))

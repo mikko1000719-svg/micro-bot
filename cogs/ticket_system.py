@@ -49,7 +49,7 @@ class TicketSystem(commands.Cog):
             color=discord.Color.orange()
         )
         await ticket_channel.send(embed=embed)
-        await interaction.response.send_message(f"[OK] Channel{ticket_channel.mention}", ephemeral=True)
+        await interaction.response.send_message(f"✅ Channel{ticket_channel.mention}", ephemeral=True)
 
         # 
         await self.notify_owner(guild, user, reason, ticket_channel)
@@ -57,11 +57,11 @@ class TicketSystem(commands.Cog):
     @app_commands.command(name="close_ticket", description="Channel")
     async def close_ticket(self, interaction: discord.Interaction):
         if "ticket-" in interaction.channel.name:
-            await interaction.response.send_message("[LOCK] Channel 5 Delete...")
+            await interaction.response.send_message("🔒 Channel 5 Delete...")
             await asyncio.sleep(5)
             await interaction.channel.delete()
         else:
-            await interaction.response.send_message("[ERROR] Command Ticket Channel", ephemeral=True)
+            await interaction.response.send_message("❌ Command Ticket Channel", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(TicketSystem(bot))

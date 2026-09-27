@@ -31,8 +31,8 @@ class DrawView(discord.ui.View):
             p2_l, p2_s = self.draws[self.player2]
             
             res = f" ****\n{self.player1.mention} {p1_l}\n{self.player2.mention} {p2_l}\n\n"
-            if p1_s > p2_s: res += f"[PARTY]  {self.player1.mention} "
-            elif p2_s > p1_s: res += f"[PARTY]  {self.player2.mention} "
+            if p1_s > p2_s: res += f"🎉  {self.player1.mention} "
+            elif p2_s > p1_s: res += f"🎉  {self.player2.mention} "
             else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)

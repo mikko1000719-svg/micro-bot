@@ -35,9 +35,9 @@ class RPSView(discord.ui.View):
         if p1_choice == p2_choice:
             result_text += "[HANDSHAKE] ****"
         elif rules[p1_choice] == p2_choice:
-            result_text += f"[PARTY] ** {self.player1.mention} **"
+            result_text += f"🎉 ** {self.player1.mention} **"
         else:
-            result_text += f"[PARTY] ** {self.player2.mention} **"
+            result_text += f"🎉 ** {self.player2.mention} **"
 
         for child in self.children:
             child.disabled = True
@@ -67,7 +67,7 @@ class GameRPS(commands.Cog):
             return
             
         view = RPSView(interaction.user, opponent)
-        await interaction.response.send_message(f"[GAME] ****\n{interaction.user.mention} VS {opponent.mention}\n", view=view)
+        await interaction.response.send_message(f"🎮 ****\n{interaction.user.mention} VS {opponent.mention}\n", view=view)
 
 async def setup(bot):
     await bot.add_cog(GameRPS(bot))

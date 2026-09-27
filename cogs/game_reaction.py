@@ -20,7 +20,7 @@ class ReactionView(discord.ui.View):
             self.clicked = True
             button.disabled = True
             button.style = discord.ButtonStyle.success
-            await interaction.response.edit_message(content=f"[PARTY] \n[BOLT] **{interaction.user.mention}** ", view=self)
+            await interaction.response.edit_message(content=f"🎉 \n[BOLT] **{interaction.user.mention}** ", view=self)
 
 class GameReaction(commands.Cog):
     def __init__(self, bot):

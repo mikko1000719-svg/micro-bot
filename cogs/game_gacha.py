@@ -33,8 +33,8 @@ class GachaView(discord.ui.View):
             p2_name, p2_val = self.cards[self.player2]
             
             res = f" ****\n{self.player1.mention} {p1_name}\n{self.player2.mention} {p2_name}\n\n"
-            if p1_val > p2_val: res += f"[PARTY]  {self.player1.mention} "
-            elif p2_val > p1_val: res += f"[PARTY]  {self.player2.mention} "
+            if p1_val > p2_val: res += f"🎉  {self.player1.mention} "
+            elif p2_val > p1_val: res += f"🎉  {self.player2.mention} "
             else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)

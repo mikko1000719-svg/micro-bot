@@ -21,7 +21,7 @@ class RouletteView(discord.ui.View):
         if self.current_chamber == self.bullet_chamber:
             button.disabled = True
             winner = self.player2 if self.current_player == self.player1 else self.player1
-            msg = f" ****\n{self.current_player.mention} \n[PARTY]  {winner.mention} "
+            msg = f" ****\n{self.current_player.mention} \n🎉  {winner.mention} "
             await interaction.response.edit_message(content=msg, view=self)
         else:
             self.current_chamber += 1

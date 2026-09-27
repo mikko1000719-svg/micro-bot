@@ -10,7 +10,7 @@ class ModServerUnlock(commands.Cog):
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_server_unlock(self, interaction: discord.Interaction):
-        await interaction.response.send_message("[UNLOCK] **ServerStart...**", ephemeral=True)
+        await interaction.response.send_message("🔓 **ServerStart...**", ephemeral=True)
         
         unlocked_count = 0
         for channel in interaction.guild.text_channels:
@@ -23,12 +23,12 @@ class ModServerUnlock(commands.Cog):
                 except discord.Forbidden:
                     continue
 
-        await interaction.followup.send(f"[OK] ServerComplete **{unlocked_count}** Channel")
+        await interaction.followup.send(f"✅ ServerComplete **{unlocked_count}** Channel")
 
     @mod_server_unlock.error
     async def mod_server_unlock_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] ManagePermissionServer", ephemeral=True)
+            await interaction.response.send_message("❌ ManagePermissionServer", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(ModServerUnlock(bot))

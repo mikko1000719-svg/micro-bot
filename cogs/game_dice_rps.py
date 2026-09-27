@@ -10,7 +10,7 @@ class DiceRPSView(discord.ui.View):
         self.player2 = player2
         self.results = {player1: None, player2: None}
 
-    @discord.ui.button(label="[DICE] ", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="🎲 ", style=discord.ButtonStyle.primary)
     async def roll_dice(self, interaction: discord.Interaction, button: discord.ui.Button):
         if interaction.user not in [self.player1, self.player2]:
             await interaction.response.send_message("", ephemeral=True)
@@ -28,9 +28,9 @@ class DiceRPSView(discord.ui.View):
             p1_v = self.results[self.player1]
             p2_v = self.results[self.player2]
             
-            res = f"[DICE] ****\n{self.player1.mention}**{p1_v}** \n{self.player2.mention}**{p2_v}** \n\n"
-            if p1_v > p2_v: res += f"[PARTY]  {self.player1.mention} "
-            elif p2_v > p1_v: res += f"[PARTY]  {self.player2.mention} "
+            res = f"🎲 ****\n{self.player1.mention}**{p1_v}** \n{self.player2.mention}**{p2_v}** \n\n"
+            if p1_v > p2_v: res += f"🎉  {self.player1.mention} "
+            elif p2_v > p1_v: res += f"🎉  {self.player2.mention} "
             else: res += "[HANDSHAKE] "
 
             await interaction.message.edit(content=res, view=self)
@@ -44,6 +44,6 @@ class GameDiceRPS(commands.Cog):
             await interaction.response.send_message("", ephemeral=True)
             return
         view = DiceRPSView(interaction.user, opponent)
-        await interaction.response.send_message(f"[DICE] ****\n{interaction.user.mention} VS {opponent.mention}\n", view=view)
+        await interaction.response.send_message(f"🎲 ****\n{interaction.user.mention} VS {opponent.mention}\n", view=view)
 
 async def setup(bot): await bot.add_cog(GameDiceRPS(bot))

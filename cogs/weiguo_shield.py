@@ -8,8 +8,8 @@ class WeiGuoSettingsSelect(discord.ui.Select):
         options = [
             discord.SelectOption(label="ChannelSettings", description="SettingsWarningChannel", emoji="Parameter description", value="wg_channel"),
             discord.SelectOption(label="DefenseSettings", description="Command description", emoji="[BOLT]", value="wg_mechanism"),
-            discord.SelectOption(label="Security", description="Defense", emoji="[SHIELD]", value="wg_whitelist"),
-            discord.SelectOption(label="SystemRun", description=" 5.0 Defense", emoji="[STAT]", value="wg_status")
+            discord.SelectOption(label="Security", description="Defense", emoji="🛡️", value="wg_whitelist"),
+            discord.SelectOption(label="SystemRun", description=" 5.0 Defense", emoji="📊", value="wg_status")
         ]
         super().__init__(placeholder="Bot 5.0SettingsClass...", min_values=1, max_values=1, options=options)
 
@@ -23,10 +23,10 @@ class WeiGuoSettingsSelect(discord.ui.Select):
             embed = discord.Embed(title="[BOLT]  5.0 - DefenseSettings", description="AutoAuto", color=discord.Color.orange())
             await interaction.response.send_message(embed=embed, ephemeral=True)
         elif selected == "wg_whitelist":
-            embed = discord.Embed(title="[SHIELD]  5.0 - Security", description="ManageSettingsLimit", color=discord.Color.green())
+            embed = discord.Embed(title="🛡️  5.0 - Security", description="ManageSettingsLimit", color=discord.Color.green())
             await interaction.response.send_message(embed=embed, ephemeral=True)
         elif selected == "wg_status":
-            embed = discord.Embed(title="[STAT]  5.0 - SystemRun", description="DefenseRun[: [OK] Start]", color=discord.Color.purple())
+            embed = discord.Embed(title="📊  5.0 - SystemRun", description="DefenseRun[: ✅ Start]", color=discord.Color.purple())
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
 # 2. Interface View
@@ -44,7 +44,7 @@ class WeiGuoShield(commands.Cog):
     @app_commands.checks.has_permissions(manage_guild=True)
     async def weiguosetup(self, interaction: discord.Interaction):
         embed = discord.Embed(
-            title="[SHIELD] Bot 5.0 | SecurityDefense",
+            title="🛡️ Bot 5.0 | SecurityDefense",
             description=(
                 "** 5.0 **\n"
                 "1. DefenseDefault **OFF** \n"
@@ -63,7 +63,7 @@ class WeiGuoShield(commands.Cog):
     @weiguosetup.error
     async def weiguosetup_error(self, interaction: discord.Interaction, error):
         if isinstance(error, app_commands.errors.MissingPermissions):
-            await interaction.response.send_message("[ERROR] PermissionManageServerPermission 5.0 Defense", ephemeral=True)
+            await interaction.response.send_message("❌ PermissionManageServerPermission 5.0 Defense", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(WeiGuoShield(bot))

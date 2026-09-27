@@ -22,7 +22,7 @@ class CloudCheck(commands.Cog):
         if is_render:
             status_msg = " **** Render ServerExecute"
         else:
-            status_msg = "[COMPUTER] ****Execute"
+            status_msg = "💻 ****Execute"
 
         #  3
         try:
