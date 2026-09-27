@@ -44,15 +44,15 @@ class RPSView(discord.ui.View):
             
         await interaction.message.edit(content=result_text, view=self)
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Parameter description", style=discord.ButtonStyle.primary)
     async def btn_scissors(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.handle_choice(interaction, "")
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Parameter description", style=discord.ButtonStyle.primary)
     async def btn_rock(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.handle_choice(interaction, "")
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.primary)
+    @discord.ui.button(label="Parameter description", style=discord.ButtonStyle.primary)
     async def btn_paper(self, interaction: discord.Interaction, button: discord.ui.Button):
         await self.handle_choice(interaction, "")
 
@@ -60,7 +60,7 @@ class GameRPS(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="play_rps", description="")
+    @app_commands.command(name="play_rps", description="Command description")
     async def play_rps(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
             await interaction.response.send_message("", ephemeral=True)

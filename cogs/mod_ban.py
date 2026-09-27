@@ -7,7 +7,7 @@ class ModBan(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="mod_ban", description="Permanent (Ban)")
-    @app_commands.describe(member="", reason=" ()")
+    @app_commands.describe(member="Parameter description", reason=" ()")
     @app_commands.default_permissions(administrator=True) # HiddenCommand
     @app_commands.checks.has_permissions(administrator=True) # ManagePermission
     async def mod_ban(self, interaction: discord.Interaction, member: discord.Member, reason: str = ""):

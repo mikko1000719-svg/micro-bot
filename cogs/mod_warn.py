@@ -14,7 +14,7 @@ class ModWarn(commands.Cog):
         try:
             embed = discord.Embed(title="[WARNING] ServerWarning", color=discord.Color.orange())
             embed.description = f"Server **{interaction.guild.name}** ManageWarning"
-            embed.add_field(name="", value=reason)
+            embed.add_field(name="Parameter description", value=reason)
             await member.send(embed=embed)
             dm_status = "[OK] Success"
         except discord.Forbidden:

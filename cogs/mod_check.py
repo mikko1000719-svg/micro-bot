@@ -15,9 +15,9 @@ class ModCheck(commands.Cog):
         
         embed = discord.Embed(title=f"[SHIELD] PermissionCheck{member.display_name}", color=discord.Color.blue())
         embed.add_field(name="SendMessage", value="[OK] " if permissions.send_messages else "[ERROR] ", inline=True)
-        embed.add_field(name="", value="[OK] " if permissions.embed_links else "[ERROR] ", inline=True)
+        embed.add_field(name="Parameter description", value="[OK] " if permissions.embed_links else "[ERROR] ", inline=True)
         embed.add_field(name="AdditionalFile", value="[OK] " if permissions.attach_files else "[ERROR] ", inline=True)
-        embed.add_field(name="", value="[OK] " if permissions.add_reactions else "[ERROR] ", inline=True)
+        embed.add_field(name="Parameter description", value="[OK] " if permissions.add_reactions else "[ERROR] ", inline=True)
         
         await interaction.response.send_message(embed=embed, ephemeral=True)
 

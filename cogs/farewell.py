@@ -46,7 +46,7 @@ class Farewell(commands.Cog):
     # --------------------------------------------------
     # 2. CommandManual
     # --------------------------------------------------
-    @app_commands.command(name="", description="ServerSpecific")
+    @app_commands.command(name="Parameter description", description="ServerSpecific")
     async def bye(self, interaction: discord.Interaction, member: discord.Member = None):
         """
         Parameter

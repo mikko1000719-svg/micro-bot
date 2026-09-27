@@ -8,18 +8,18 @@ class Broadcast(commands.Cog):
         # Save ID 
         self.opt_out_users = set()
 
-    @app_commands.command(name="optout", description="[ 5.0] Bot")
+    @app_commands.command(name="optout", description="[WeiGuo 5.0] Opt out of receiving bot broadcasts")
     async def optout(self, interaction: discord.Interaction):
         user_id = interaction.user.id
         if user_id in self.opt_out_users:
             self.opt_out_users.remove(user_id)
-            await interaction.response.send_message("[OK] **Cancel**Receive", ephemeral=True)
+            await interaction.response.send_message("[OK] You will now receive bot broadcasts", ephemeral=True)
         else:
             self.opt_out_users.add(user_id)
-            await interaction.response.send_message(" Success****ReceiveBot", ephemeral=True)
+            await interaction.response.send_message("[SUCCESS] You will no longer receive bot broadcasts", ephemeral=True)
 
     @app_commands.command(name="broadcast", description="[ 5.0] SendServerAuto")
-    @app_commands.describe(message="")
+    @app_commands.describe(message="Parameter description")
     @app_commands.checks.has_permissions(administrator=True)
     async def broadcast(self, interaction: discord.Interaction, message: str):
         await interaction.response.defer(ephemeral=True)

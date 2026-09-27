@@ -7,16 +7,16 @@ class CloudCheck(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="", description="CheckBotRun")
+    @app_commands.command(name="env_check", description="Check bot environment")
     async def env_check(self, interaction: discord.Interaction):
-        #  1Send 3 
+        # Send response
         try:
             await interaction.response.defer(thinking=True)
         except discord.errors.NotFound:
             return
 
-        #  2Variable
-        # Render DefaultAuto "RENDER" Variable
+        # Check environment variables
+        # Render automatically sets "RENDER" variable
         is_render = os.environ.get("RENDER") is not None
         
         if is_render:

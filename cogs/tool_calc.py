@@ -34,8 +34,8 @@ class ToolCalc(commands.Cog):
             result = eval_expr(node.body)
             
             embed = discord.Embed(title=" ", color=discord.Color.blue())
-            embed.add_field(name="", value=f"`{expression}`", inline=False)
-            embed.add_field(name="", value=f"**{result}**", inline=False)
+            embed.add_field(name="Parameter description", value=f"`{expression}`", inline=False)
+            embed.add_field(name="Parameter description", value=f"**{result}**", inline=False)
             await interaction.response.send_message(embed=embed)
         except Exception:
             await interaction.response.send_message("[ERROR] FailedConfirmFormatNumber", ephemeral=True)

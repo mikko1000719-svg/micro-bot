@@ -38,7 +38,7 @@ class DestinyWheelView(discord.ui.View):
 class GameDestinyWheel(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_destinywheel", description="")
+    @app_commands.command(name="play_destinywheel", description="Command description")
     async def play_destinywheel(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
             await interaction.response.send_message("", ephemeral=True)

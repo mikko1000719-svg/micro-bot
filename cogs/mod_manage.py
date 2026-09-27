@@ -7,8 +7,8 @@ class ModManage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mute", description="")
-    @app_commands.describe(member="", minutes="", reason="")
+    @app_commands.command(name="mute", description="Command description")
+    @app_commands.describe(member="Parameter description", minutes="Parameter description", reason="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mute(self, interaction: discord.Interaction, member: discord.Member, minutes: int, reason: str = ""):
@@ -29,13 +29,13 @@ class ModManage(commands.Cog):
         except Exception as e:
             await interaction.followup.send(f"[ERROR] ExecuteFailed{e}", ephemeral=True)
 
-    @app_commands.command(name="unmute", description="")
-    @app_commands.describe(member="")
+    @app_commands.command(name="unmute", description="Command description")
+    @app_commands.describe(member="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def unmute(self, interaction: discord.Interaction, member: discord.Member):
         try:
-            await member.timeout(None, reason="")
+            await member.timeout(None, reason="Parameter description")
             embed = discord.Embed(
                 title=" ",
                 description=f"Success {member.mention} Limit",

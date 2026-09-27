@@ -8,7 +8,7 @@ class ToolRemind(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="remind", description="SettingsBot")
-    @app_commands.describe(minutes="", content="")
+    @app_commands.describe(minutes="Parameter description", content="Parameter description")
     async def remind(self, interaction: discord.Interaction, minutes: int, content: str):
         if minutes < 1 or minutes > 1440:
             await interaction.response.send_message("[ERROR]  1  1440 24", ephemeral=True)

@@ -23,11 +23,11 @@ class Info(commands.Cog):
             embed.set_thumbnail(url=guild.icon.url)
 
         embed.add_field(name="Server ID", value=f"`{guild.id}`", inline=True)
-        embed.add_field(name="", value=f"{guild.owner.mention if guild.owner else ''}", inline=True)
-        embed.add_field(name="", value=f"{guild.member_count} ", inline=True)
+        embed.add_field(name="Parameter description", value=f"{guild.owner.mention if guild.owner else ''}", inline=True)
+        embed.add_field(name="Parameter description", value=f"{guild.member_count} ", inline=True)
         embed.add_field(name="Channel", value=f"{len(guild.text_channels)} ", inline=True)
         embed.add_field(name="Channel", value=f"{len(guild.voice_channels)} ", inline=True)
-        embed.add_field(name="", value=guild.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=False)
+        embed.add_field(name="Parameter description", value=guild.created_at.strftime("%Y-%m-%d %H:%M:%S"), inline=False)
 
         await interaction.response.send_message(embed=embed)
 

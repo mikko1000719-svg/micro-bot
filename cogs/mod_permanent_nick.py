@@ -38,7 +38,7 @@ class PermanentNick(commands.Cog):
             print(f"[jOSeSystem] SaveFailed: {e}")
 
     @app_commands.command(name="setpermanentnick", description="[jOSeSystem] SettingsPermanent")
-    @app_commands.describe(member="", nickname="Permanent")
+    @app_commands.describe(member="Parameter description", nickname="Permanent")
     @app_commands.default_permissions(administrator=True) # HiddenCommand
     @is_guild_owner() # LimitExecute
     async def setpermanentnick(self, interaction: discord.Interaction, member: discord.Member, nickname: str):

@@ -2,9 +2,9 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-class PollReasonModal(discord.ui.Modal, title=""):
+class PollReasonModal(discord.ui.Modal, title="Parameter description"):
     reason_input = discord.ui.TextInput(
-        label="",
+        label="Parameter description",
         style=discord.TextStyle.paragraph,
         placeholder="...",
         required=False,
@@ -46,15 +46,15 @@ class PollView(discord.ui.View):
         self.disagree_count = sum(1 for data in self.user_votes.values() if data["choice"] == "")
         self.abstain_count = sum(1 for data in self.user_votes.values() if data["choice"] == "")
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.green, custom_id="poll_agree")
+    @discord.ui.button(label="Parameter description", style=discord.ButtonStyle.green, custom_id="poll_agree")
     async def vote_agree(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(PollReasonModal("", self))
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.red, custom_id="poll_disagree")
+    @discord.ui.button(label="Parameter description", style=discord.ButtonStyle.red, custom_id="poll_disagree")
     async def vote_disagree(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(PollReasonModal("", self))
 
-    @discord.ui.button(label="", style=discord.ButtonStyle.grey, custom_id="poll_abstain")
+    @discord.ui.button(label="Parameter description", style=discord.ButtonStyle.grey, custom_id="poll_abstain")
     async def vote_abstain(self, interaction: discord.Interaction, button: discord.ui.Button):
         await interaction.response.send_modal(PollReasonModal("", self))
 
@@ -83,7 +83,7 @@ class Poll(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="poll", description="")
+    @app_commands.command(name="poll", description="Command description")
     @app_commands.describe(question="/")
     async def poll(self, interaction: discord.Interaction, question: str):
         view = PollView(question=question)

@@ -7,7 +7,7 @@ class ModVCMove(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="mod_vcmove", description="ChannelChannel")
-    @app_commands.describe(member="", target_channel="Channel")
+    @app_commands.describe(member="Parameter description", target_channel="Channel")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vcmove(self, interaction: discord.Interaction, member: discord.Member, target_channel: discord.VoiceChannel):

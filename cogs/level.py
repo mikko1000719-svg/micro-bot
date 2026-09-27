@@ -45,7 +45,7 @@ class Leveling(commands.Cog):
         if xp % 25 == 0:
             await message.channel.send(f"[PARTY]  {message.author.mention} {level} (: {xp})")
 
-    @app_commands.command(name="rank", description="")
+    @app_commands.command(name="rank", description="Command description")
     async def rank(self, interaction: discord.Interaction):
         user_id = str(interaction.user.id)
         xp = self.xp_data.get(user_id, 0)

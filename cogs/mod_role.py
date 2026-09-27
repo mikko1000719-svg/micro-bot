@@ -6,8 +6,8 @@ class ModRole(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="role_add", description="")
-    @app_commands.describe(member="", role="")
+    @app_commands.command(name="role_add", description="Command description")
+    @app_commands.describe(member="Parameter description", role="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def role_add(self, interaction: discord.Interaction, member: discord.Member, role: discord.Role):
@@ -21,8 +21,8 @@ class ModRole(commands.Cog):
         except Exception as e:
             await interaction.response.send_message(f"[ERROR] Failed{e}", ephemeral=True)
 
-    @app_commands.command(name="role_remove", description="")
-    @app_commands.describe(member="", role="")
+    @app_commands.command(name="role_remove", description="Command description")
+    @app_commands.describe(member="Parameter description", role="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def role_remove(self, interaction: discord.Interaction, member: discord.Member, role: discord.Role):

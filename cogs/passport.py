@@ -6,7 +6,7 @@ class Passport(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="passport", description="")
+    @app_commands.command(name="passport", description="Command description")
     async def passport(self, interaction: discord.Interaction):
         user = interaction.user
         guild = interaction.guild
@@ -17,15 +17,15 @@ class Passport(commands.Cog):
 
         embed = discord.Embed(
             title="[NETWORK]  (Federal Passport)",
-            description="",
+            description="Command description",
             color=discord.Color.gold()
         )
         embed.set_thumbnail(url=user.display_avatar.url)
-        embed.add_field(name="", value=f"**{user.display_name}**", inline=True)
-        embed.add_field(name="", value=f"`{passport_no}`", inline=True)
+        embed.add_field(name="Parameter description", value=f"**{user.display_name}**", inline=True)
+        embed.add_field(name="Parameter description", value=f"`{passport_no}`", inline=True)
         embed.add_field(name="/Server", value=f"{guild.name if guild else ''}", inline=False)
         embed.add_field(name=" ()", value=f"`{join_date}`", inline=True)
-        embed.add_field(name="", value="[OK] Verify", inline=True)
+        embed.add_field(name="Parameter description", value="[OK] Verify", inline=True)
         embed.set_footer(text="EdgeManage ")
 
         await interaction.response.send_message(embed=embed)

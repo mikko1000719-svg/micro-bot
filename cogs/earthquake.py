@@ -15,7 +15,7 @@ class Earthquake(commands.Cog):
         else:
             print("[WARNING] [Module]  CWA_API_KEY Variable")
 
-    @app_commands.command(name="", description="")
+    @app_commands.command(name="Parameter description", description="Command description")
     async def earthquake_report(self, interaction: discord.Interaction):
         # 1.  Discord  3 
         try:
@@ -59,7 +59,7 @@ class Earthquake(commands.Cog):
                         embed.add_field(name="[LOCATION] ", value=info.get("Epicenter", {}).get("Location", ""), inline=True)
                         embed.add_field(name=" ", value=f"M_L {info.get('EarthquakeMagnitude', {}).get('MagnitudeValue', '')}", inline=True)
                         embed.add_field(name=" ", value=f"{info.get('Depth', {}).get('Value', '')} ", inline=True)
-                        embed.set_footer(text="")
+                        embed.set_footer(text="Parameter description")
 
                         await interaction.followup.send(embed=embed)
                     else:

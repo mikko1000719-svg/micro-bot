@@ -7,7 +7,7 @@ class ModCreateRole(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="mod_create_role", description="Server")
-    @app_commands.describe(name="")
+    @app_commands.describe(name="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_create_role(self, interaction: discord.Interaction, name: str):

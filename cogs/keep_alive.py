@@ -63,8 +63,8 @@ class KeepAlive(commands.Cog):
             title="[SHIELD] Bot 24/7 Anti-Sleep Diagnosis",
             color=discord.Color.green() if is_running else discord.Color.red()
         )
-        embed.add_field(name="", value=status_text, inline=False)
-        embed.add_field(name="", value=f"`{self.site_url}`", inline=False)
+        embed.add_field(name="Parameter description", value=status_text, inline=False)
+        embed.add_field(name="Parameter description", value=f"`{self.site_url}`", inline=False)
         embed.add_field(name="Real-timeTest", value=f"`{http_status}`", inline=True)
         embed.add_field(name="WebSocket ", value=f"`{latency} ms`", inline=True)
 

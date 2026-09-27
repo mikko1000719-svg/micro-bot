@@ -7,7 +7,7 @@ class ModVCMute(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="mod_vcmute", description="SettingsServer")
-    @app_commands.describe(member="", mute="True  / False ")
+    @app_commands.describe(member="Parameter description", mute="True  / False ")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vcmute(self, interaction: discord.Interaction, member: discord.Member, mute: bool):

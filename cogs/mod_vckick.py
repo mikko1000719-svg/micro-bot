@@ -7,7 +7,7 @@ class ModVCKick(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="mod_vckick", description="Channel")
-    @app_commands.describe(member="")
+    @app_commands.describe(member="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_vckick(self, interaction: discord.Interaction, member: discord.Member):

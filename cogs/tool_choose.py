@@ -17,8 +17,8 @@ class ToolChoose(commands.Cog):
             return
         selected = random.choice(choices)
         embed = discord.Embed(title="[DICE] ", color=discord.Color.purple())
-        embed.add_field(name="Option", value="".join(choices), inline=False)
-        embed.add_field(name="", value=f"[TARGET] **{selected}**", inline=False)
+        embed.add_field(name="Option", value="Parameter description".join(choices), inline=False)
+        embed.add_field(name="Parameter description", value=f"[TARGET] **{selected}**", inline=False)
         await interaction.response.send_message(embed=embed)
 
 async def setup(bot):

@@ -88,8 +88,8 @@ class GameTicTacToe(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="play_tictactoe", description="")
-    @app_commands.describe(opponent="")
+    @app_commands.command(name="play_tictactoe", description="Command description")
+    @app_commands.describe(opponent="Parameter description")
     async def play_tictactoe(self, interaction: discord.Interaction, opponent: discord.Member):
         # 
         if opponent.bot:

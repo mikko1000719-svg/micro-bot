@@ -6,8 +6,8 @@ from discord import app_commands
 class WeiGuoSettingsSelect(discord.ui.Select):
     def __init__(self):
         options = [
-            discord.SelectOption(label="ChannelSettings", description="SettingsWarningChannel", emoji="", value="wg_channel"),
-            discord.SelectOption(label="DefenseSettings", description="", emoji="[BOLT]", value="wg_mechanism"),
+            discord.SelectOption(label="ChannelSettings", description="SettingsWarningChannel", emoji="Parameter description", value="wg_channel"),
+            discord.SelectOption(label="DefenseSettings", description="Command description", emoji="[BOLT]", value="wg_mechanism"),
             discord.SelectOption(label="Security", description="Defense", emoji="[SHIELD]", value="wg_whitelist"),
             discord.SelectOption(label="SystemRun", description=" 5.0 Defense", emoji="[STAT]", value="wg_status")
         ]

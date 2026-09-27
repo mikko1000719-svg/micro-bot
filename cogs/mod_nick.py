@@ -7,7 +7,7 @@ class ModNick(commands.Cog):
         self.bot = bot
 
     @app_commands.command(name="mod_nick", description="ServerDisplay")
-    @app_commands.describe(member="", nickname=" (Custom)")
+    @app_commands.describe(member="Parameter description", nickname=" (Custom)")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_nick(self, interaction: discord.Interaction, member: discord.Member, nickname: str = None):
