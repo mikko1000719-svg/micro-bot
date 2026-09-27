@@ -11,13 +11,13 @@ class Earthquake(commands.Cog):
         self.cwa_key = os.getenv("CWA_API_KEY")
 
         if self.cwa_key:
-            print("✅ [Module]  API SettingsComplete")
+            print("[OK] [Module] CWA API Settings Complete")
         else:
-            print("[WARNING] [Module]  CWA_API_KEY Variable")
+            print("[WARNING] [Module] CWA_API_KEY Variable not found")
 
-    @app_commands.command(name="Parameter description", description="Command description")
+    @app_commands.command(name="earthquake", description="Get earthquake report")
     async def earthquake_report(self, interaction: discord.Interaction):
-        # 1.  Discord  3 
+        # 1. Send defer response to avoid Discord timeout
         try:
             await interaction.response.defer(thinking=True)
         except discord.errors.NotFound:
@@ -48,22 +48,22 @@ class Earthquake(commands.Cog):
                         report_content = eq.get("ReportContent", "")
                         web_url = eq.get("Web", "https://www.cwa.gov.tw")
 
-                        #  Discord  (Embed)
+                        # Send Discord response (Embed)
                         embed = discord.Embed(
-                            title=f" {eq.get('ReportTitle', '')}",
+                            title=f"🌋 {eq.get('ReportTitle', '')}",
                             description=report_content,
                             color=discord.Color.red(),
                             url=web_url
                         )
-                        embed.add_field(name=" ", value=info.get("OriginTime", ""), inline=False)
-                        embed.add_field(name="📍 ", value=info.get("Epicenter", {}).get("Location", ""), inline=True)
-                        embed.add_field(name=" ", value=f"M_L {info.get('EarthquakeMagnitude', {}).get('MagnitudeValue', '')}", inline=True)
-                        embed.add_field(name=" ", value=f"{info.get('Depth', {}).get('Value', '')} ", inline=True)
-                        embed.set_footer(text="Parameter description")
+                        embed.add_field(name="⏰ Time", value=info.get("OriginTime", ""), inline=False)
+                        embed.add_field(name="📍 Location", value=info.get("Epicenter", {}).get("Location", ""), inline=True)
+                        embed.add_field(name="💪 Magnitude", value=f"M_L {info.get('EarthquakeMagnitude', {}).get('MagnitudeValue', '')}", inline=True)
+                        embed.add_field(name="📏 Depth", value=f"{info.get('Depth', {}).get('Value', '')} km", inline=True)
+                        embed.set_footer(text="Taiwan Earthquake Report")
 
                         await interaction.followup.send(embed=embed)
                     else:
-                        await interaction.followup.send(f"❌  API Failed (HTTP : {resp.status})")
+                        await interaction.followup.send(f"❌ API Failed (HTTP Status: {resp.status})")
         except Exception as e:
             await interaction.followup.send(f"❌ Error: {e}")
 

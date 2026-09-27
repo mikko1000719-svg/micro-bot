@@ -35,14 +35,14 @@ class AIMentionChat(commands.Cog):
                 try:
                     client = genai.Client(api_key=api_key)
                     self.clients.append((name, client))
-                    print(f"✅ [Multi-Key System] Successfully loaded {name}", flush=True)
+                    print(f"[OK] [Multi-Key System] Successfully loaded {name}", flush=True)
                 except Exception as e:
-                    print(f"❌ [Multi-Key System] {name} initialization failed: {e}", flush=True)
+                    print(f"[ERROR] [Multi-Key System] {name} initialization failed: {e}", flush=True)
             else:
                 print(f"[WARNING] [Multi-Key System] Environment variable {name} not found", flush=True)
 
         if not self.clients:
-            print("❌ [Multi-Key System] Warning: No API Keys successfully loaded!", flush=True)
+            print("[ERROR] [Multi-Key System] Warning: No API Keys successfully loaded!", flush=True)
 
         print("✅ [Multi-Key System] Initialization complete", flush=True)
 
