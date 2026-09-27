@@ -121,6 +121,8 @@ if __name__ == "__main__":
                     raise
             except Exception as e:
                 print(f"[ERROR] Unexpected error: {e}")
+                import traceback
+                traceback.print_exc()
                 raise
     else:
         print("[ERROR] DISCORD_TOKEN environment variable not found!")

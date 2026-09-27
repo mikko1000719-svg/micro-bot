@@ -31,8 +31,8 @@ class AIChat(commands.Cog):
             print(f"[ERROR] [AI System] Initialization failed: {e}", flush=True)
             traceback.print_exc()
 
-    @app_commands.command(name="ai", description="Chat with AI")
-    @app_commands.describe(prompt="What you want to say to AI")
+    @app_commands.command(name="ai", description="與 AI 進行對話")
+    @app_commands.describe(prompt="你想對 AI 說的話")
     async def ai_chat(self, interaction: discord.Interaction, prompt: str):
         # Immediately defer response to avoid Discord timeout error
         await interaction.response.defer(thinking=True)

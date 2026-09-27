@@ -110,8 +110,8 @@ class Games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="gomoku", description="Play Gomoku (5x5 Connect 4)")
-    @app_commands.describe(opponent="Choose your opponent")
+    @app_commands.command(name="gomoku", description="玩五子棋 (5x5 連四子)")
+    @app_commands.describe(opponent="選擇你的對手")
     async def gomoku(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot:
             await interaction.response.send_message("❌ Cannot play against bots!", ephemeral=True)
