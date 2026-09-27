@@ -98,31 +98,12 @@ if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
     if TOKEN:
         import time
-        from discord.errors import HTTPException
 
         # Add delay to avoid rate limiting
         print("[System] Waiting 30 seconds before Discord login to avoid rate limiting...")
         time.sleep(30)
 
-        max_retries = 3
-        retry_delay = 120  # 2 minutes between retries
-
-        for attempt in range(max_retries):
-            try:
-                bot.run(TOKEN)
-                break
-            except HTTPException as e:
-                if e.status == 429:
-                    print(f"[WARNING] Rate limited by Discord. Attempt {attempt + 1}/{max_retries}. Waiting {retry_delay} seconds...")
-                    time.sleep(retry_delay)
-                    retry_delay *= 2  # Exponential backoff
-                else:
-                    print(f"[ERROR] Discord login error: {e}")
-                    raise
-            except Exception as e:
-                print(f"[ERROR] Unexpected error: {e}")
-                import traceback
-                traceback.print_exc()
-                raise
+        # Let Discord.py handle reconnection and retry logic
+        bot.run(TOKEN)
     else:
         print("[ERROR] DISCORD_TOKEN environment variable not found!")
