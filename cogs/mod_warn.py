@@ -6,7 +6,7 @@ class ModWarn(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_warn", description="SendWarning")
+    @app_commands.command(name="mod_warn", description="發送")
     @app_commands.describe(member="Warning", reason="Warning")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

@@ -21,7 +21,7 @@ class Welcome(commands.Cog):
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(self.channels, f, indent=4)
 
-    @app_commands.command(name="set_welcome", description="SettingsAutoMessageSendChannel")
+    @app_commands.command(name="set_welcome", description="設置")
     @app_commands.checks.has_permissions(administrator=True)
     async def set_welcome(self, interaction: discord.Interaction, channel: discord.TextChannel):
         guild_id = str(interaction.guild.id)

@@ -21,7 +21,7 @@ class Stock(commands.Cog):
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(self.stocks, f, indent=4)
 
-    @app_commands.command(name="add_stock", description="Add a company to stock market")
+    @app_commands.command(name="add_stock", description="添加")
     @app_commands.describe(code="Stock code (e.g., AAPL)", name="Company name", initial_price="Initial stock price")
     @app_commands.checks.has_permissions(administrator=True)
     async def add_company(self, interaction: discord.Interaction, code: str, name: str, initial_price: float):
@@ -30,7 +30,7 @@ class Stock(commands.Cog):
         self.save_data()
         await interaction.response.send_message(f"✅ Added `{code}` ({name}): ${initial_price}", ephemeral=True)
 
-    @app_commands.command(name="remove_stock", description="Remove a company from stock market")
+    @app_commands.command(name="remove_stock", description="移除")
     @app_commands.describe(code="Stock code to remove")
     @app_commands.checks.has_permissions(administrator=True)
     async def remove_company(self, interaction: discord.Interaction, code: str):
@@ -42,7 +42,7 @@ class Stock(commands.Cog):
         else:
             await interaction.response.send_message(f"❌ Stock `{code}` not found", ephemeral=True)
 
-    @app_commands.command(name="stock_market", description="View stock market")
+    @app_commands.command(name="stock_market", description="查看")
     @app_commands.describe(code="Stock code (optional)", change_percent="Price change percentage (admin only)")
     async def stock_market(self, interaction: discord.Interaction, code: str = None, change_percent: float = None):
         if not code:

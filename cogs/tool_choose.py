@@ -7,7 +7,7 @@ class ToolChoose(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="choose", description="Option")
+    @app_commands.command(name="choose", description="選項")
     @app_commands.describe(options="Option")
     async def choose(self, interaction: discord.Interaction, options: str):
         raw_list = options.replace("", ",").replace(" ", ",")

@@ -6,7 +6,7 @@ class ModVCKick(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_vckick", description="Channel")
+    @app_commands.command(name="mod_vckick", description="頻道")
     @app_commands.describe(member="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

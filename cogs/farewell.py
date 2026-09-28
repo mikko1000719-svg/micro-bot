@@ -28,7 +28,7 @@ class Farewell(commands.Cog):
     # --------------------------------------------------
     # 1. CommandSettingsChannel (Manage)
     # --------------------------------------------------
-    @app_commands.command(name="set_farewell", description="Set farewell channel")
+    @app_commands.command(name="set_farewell", description="設置")
     @app_commands.checks.has_permissions(administrator=True)
     async def set_farewell(self, interaction: discord.Interaction, channel: discord.TextChannel):
         """

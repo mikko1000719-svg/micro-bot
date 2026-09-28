@@ -6,7 +6,7 @@ from discord import app_commands
 class WeiGuoSettingsSelect(discord.ui.Select):
     def __init__(self):
         options = [
-            discord.SelectOption(label="ChannelSettings", description="SettingsWarningChannel", emoji="Parameter description", value="wg_channel"),
+            discord.SelectOption(label="ChannelSettings", description="設置", emoji="Parameter description", value="wg_channel"),
             discord.SelectOption(label="DefenseSettings", description="Command description", emoji="[BOLT]", value="wg_mechanism"),
             discord.SelectOption(label="Security", description="Defense", emoji="🛡️", value="wg_whitelist"),
             discord.SelectOption(label="SystemRun", description=" 5.0 Defense", emoji="📊", value="wg_status")
@@ -23,7 +23,7 @@ class WeiGuoSettingsSelect(discord.ui.Select):
             embed = discord.Embed(title="[BOLT]  5.0 - DefenseSettings", description="AutoAuto", color=discord.Color.orange())
             await interaction.response.send_message(embed=embed, ephemeral=True)
         elif selected == "wg_whitelist":
-            embed = discord.Embed(title="🛡️  5.0 - Security", description="ManageSettingsLimit", color=discord.Color.green())
+            embed = discord.Embed(title="🛡️  5.0 - Security", description="管理", color=discord.Color.green())
             await interaction.response.send_message(embed=embed, ephemeral=True)
         elif selected == "wg_status":
             embed = discord.Embed(title="📊  5.0 - SystemRun", description="DefenseRun[: ✅ Start]", color=discord.Color.purple())

@@ -23,7 +23,7 @@ class TicketSystem(commands.Cog):
             except Exception as e:
                 print(f"[TicketSystem]  Owner Failed: {e}")
 
-    @app_commands.command(name="report", description="Error (Channel)")
+    @app_commands.command(name="report", description="錯誤")
     async def report(self, interaction: discord.Interaction, reason: str):
         guild = interaction.guild
         user = interaction.user
@@ -54,7 +54,7 @@ class TicketSystem(commands.Cog):
         # 
         await self.notify_owner(guild, user, reason, ticket_channel)
 
-    @app_commands.command(name="close_ticket", description="Channel")
+    @app_commands.command(name="close_ticket", description="頻道")
     async def close_ticket(self, interaction: discord.Interaction):
         if "ticket-" in interaction.channel.name:
             await interaction.response.send_message("🔒 Channel 5 Delete...")

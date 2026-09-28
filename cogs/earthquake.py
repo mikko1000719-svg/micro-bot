@@ -15,7 +15,7 @@ class Earthquake(commands.Cog):
         else:
             print("[WARNING] [Module] CWA_API_KEY Variable not found")
 
-    @app_commands.command(name="earthquake", description="Get earthquake report")
+    @app_commands.command(name="earthquake", description="獲取")
     async def earthquake_report(self, interaction: discord.Interaction):
         # 1. Send defer response to avoid Discord timeout
         try:

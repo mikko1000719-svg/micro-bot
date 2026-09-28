@@ -38,7 +38,7 @@ class GameTemplate(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="play_custom", description="Custom/")
+    @app_commands.command(name="play_custom", description="自定義")
     async def play_custom(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
             await interaction.response.send_message("", ephemeral=True)

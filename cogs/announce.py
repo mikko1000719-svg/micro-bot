@@ -6,7 +6,7 @@ class Announce(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="announce", description="SendChannel")
+    @app_commands.command(name="announce", description="發送")
     @app_commands.checks.has_permissions(administrator=True)
     async def announce(
         self, 

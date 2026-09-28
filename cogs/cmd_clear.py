@@ -6,7 +6,7 @@ class CmdClear(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="clear", description="ChannelMessage")
+    @app_commands.command(name="clear", description="頻道")
     @app_commands.describe(amount="Message (1  100 )")
     @app_commands.checks.has_permissions(manage_messages=True)
     async def clear(self, interaction: discord.Interaction, amount: int):

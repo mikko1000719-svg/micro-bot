@@ -6,7 +6,7 @@ class ModLock(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_lock", description="Channel")
+    @app_commands.command(name="mod_lock", description="頻道")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_lock(self, interaction: discord.Interaction):

@@ -6,7 +6,7 @@ class ModChannel(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_setchannel", description="ChannelSettingsServerDedicatedChannel")
+    @app_commands.command(name="mod_setchannel", description="頻道")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
     async def mod_setchannel(self, interaction: discord.Interaction, channel: discord.TextChannel = None):
