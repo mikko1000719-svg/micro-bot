@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微國機器人 5.0 - 官方網站</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">🤖</span>
+                <span class="logo-text">微國機器人 5.0</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">首頁</a></li>
+                <li><a href="#features">功能</a></li>
+                <li><a href="#commands">指令</a></li>
+                <li><a href="#panel">管理面板</a></li>
+                <li><a href="https://discord.com/oauth2/authorize?client_id=1534901582057963560&permissions=8&scope=bot%20applications.commands" class="invite-btn" target="_blank">邀請機器人</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">微國機器人 5.0</h1>
+                <p class="hero-subtitle">新一代智能 Discord 機器人</p>
+                <p class="hero-description">多功能、AI 對手、跨服聊天、遊戲娛樂 - 一個機器人滿足所有需求</p>
+                <div class="hero-buttons">
+                    <a href="#invite" class="btn-primary">立即邀請</a>
+                    <a href="#features" class="btn-secondary">了解更多</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="bot-avatar">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar-image">🤖</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-particles"></div>
+    </section>
+
+    <!-- Bot Info Section -->
+    <section class="bot-info">
+        <div class="info-container">
+            <div class="info-card">
+                <div class="info-icon">📊</div>
+                <h3>統計數據</h3>
+                <p>服務伺服器：<span class="highlight">2+</span></p>
+                <p>用戶數量：<span class="highlight">1,000+</span></p>
+                <p>指令數量：<span class="highlight">89+</span></p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">⚡</div>
+                <h3>核心功能</h3>
+                <p>✅ AI 智能對話</p>
+                <p>✅ 跨伺服器聊天</p>
+                <p>✅ 25+ 小遊戲</p>
+                <p>✅ 完整管理系統</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🛡️</div>
+                <h3>安全防護</h3>
+                <p>✅ 防詐群系統</p>
+                <p>✅ 自動管理</p>
+                <p>✅ 權限控制</p>
+                <p>✅ 24/7 運行</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">✨ 主要功能</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI 智能對話</h3>
+                    <p>使用最新 AI 技術，提供智能對話體驗，支持多種 Gemini API 負載平衡</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>跨伺服器聊天</h3>
+                    <p>支持 10 個跨服群組，自動 Webhook 同步，訊息、圖片、附件全部同步</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎮</div>
+                    <h3>豐富遊戲</h3>
+                    <p>25+ 種小遊戲，包括五子棋、硬幣拋擲、輪盤、抽卡等</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3>音樂播放</h3>
+                    <p>支持高音質音樂播放、播放列表管理、音量控制等功能</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>防詐群系統</h3>
+                    <p>智能偵測和防護，自動處理惡意用戶，保護伺服器安全</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>完整管理</h3>
+                    <p>封禁、踢出、禁言、角色管理等全方位管理功能</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section id="commands" class="commands">
+        <div class="container">
+            <h2 class="section-title">📚 指令列表</h2>
+            <div class="command-search">
+                <input type="text" id="commandSearch" placeholder="搜索指令...">
+            </div>
+            <div class="commands-grid">
+                <!-- AI Commands -->
+                <div class="command-category">
+                    <h3>🤖 AI 功能</h3>
+                    <div class="command-item">
+                        <code>/ai</code>
+                        <span>與 AI 進行對話</span>
+                    </div>
+                </div>
+
+                <!-- Game Commands -->
+                <div class="command-category">
+                    <h3>🎮 遊戲功能</h3>
+                    <div class="command-item">
+                        <code>/gomoku</code>
+                        <span>玩五子棋</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/play_balloon</code>
+                        <span>玩氣球遊戲</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/play_coinflip</code>
+                        <span>拋硬幣</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/play_dice</code>
+                        <span>擲骰子</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/play_roulette</code>
+                        <span>輪盤遊戲</span>
+                    </div>
+                </div>
+
+                <!-- Management Commands -->
+                <div class="command-category">
+                    <h3>⚙️ 管理功能</h3>
+                    <div class="command-item">
+                        <code>/mod_ban</code>
+                        <span>封禁用戶</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/mod_kick</code>
+                        <span>踢出用戶</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/mod_mute</code>
+                        <span>禁言用戶</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/mod_unban</code>
+                        <span>解封用戶</span>
+                    </div>
+                </div>
+
+                <!-- Cross-Server Commands -->
+                <div class="command-category">
+                    <h3>🌐 跨服功能</h3>
+                    <div class="command-item">
+                        <code>/linkgroup</code>
+                        <span>加入跨服群組</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/unlinkgroup</code>
+                        <span>退出跨服群組</span>
+                    </div>
+                </div>
+
+                <!-- Music Commands -->
+                <div class="command-category">
+                    <h3>🎵 音樂功能</h3>
+                    <div class="command-item">
+                        <code>/play</code>
+                        <span>播放音樂</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/pause</code>
+                        <span>暫停音樂</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/skip</code>
+                        <span>跳過當前歌曲</span>
+                    </div>
+                    <div class="command-item">
+                        <code>/stop</code>
+                        <span>停止音樂</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Panel Section -->
+    <section id="panel" class="admin-panel">
+        <div class="container">
+            <h2 class="section-title">🔧 管理面板</h2>
+            <div class="panel-info">
+                <div class="panel-notice">
+                    <h3>⚠️ 重要說明</h3>
+                    <p>管理面板僅供伺服器管理員使用，每個伺服器只能調整該伺服器的設定，無法干擾其他伺服器。</p>
+                    <p><strong>注意：</strong> 由於這是靜態網站（GitHub Pages），管理面板功能需要後端支持。如需完整功能，請部署到 Render 等雲端平台。</p>
+                </div>
+                <div class="panel-login">
+                    <h3>🔐 登入管理面板</h3>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>伺服器 ID</label>
+                            <input type="text" id="serverId" placeholder="輸入你的伺服器 ID" required>
+                        </div>
+                        <div class="form-group">
+                            <label>管理員驗證碼</label>
+                            <input type="password" id="adminCode" placeholder="輸入驗證碼" required>
+                        </div>
+                        <button type="submit" class="btn-login">登入</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Invite Section -->
+    <section id="invite" class="invite">
+        <div class="container">
+            <h2 class="section-title">🚀 邀請機器人</h2>
+            <div class="invite-content">
+                <div class="invite-info">
+                    <h3>立即邀請微國機器人 5.0 到你的伺服器</h3>
+                    <p>享受完整功能：AI 對手、跨服聊天、遊戲娛樂、音樂播放等</p>
+                    <div class="invite-links">
+                        <a href="https://discord.com/oauth2/authorize?client_id=1534901582057963560&permissions=8&scope=bot%20applications.commands" class="btn-invite" target="_blank">
+                            點擊邀請機器人
+                        </a>
+                        <a href="https://discord.gg/" class="btn-join" target="_blank">
+                            加入支援伺服器
+                        </a>
+                    </div>
+                </div>
+                <div class="invite-features">
+                    <div class="invite-feature">
+                        <span class="checkmark">✓</span>
+                        <span>89+ 個實用指令</span>
+                    </div>
+                    <div class="invite-feature">
+                        <span class="checkmark">✓</span>
+                        <span>AI 智能對話</span>
+                    </div>
+                    <div class="invite-feature">
+                        <span class="checkmark">✓</span>
+                        <span>跨伺服器聊天</span>
+                    </div>
+                    <div class="invite-feature">
+                        <span class="checkmark">✓</span>
+                        <span>25+ 個小遊戲</span>
+                    </div>
+                    <div class="invite-feature">
+                        <span class="checkmark">✓</span>
+                        <span>防詐群保護</span>
+                    </div>
+                    <div class="invite-feature">
+                        <span class="checkmark">✓</span>
+                        <span>24/7 穩定運行</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>微國機器人 5.0</h4>
+                    <p>新一代智能 Discord 機器人</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速連結</h4>
+                    <ul>
+                        <li><a href="#home">首頁</a></li>
+                        <li><a href="#features">功能</a></li>
+                        <li><a href="#commands">指令</a></li>
+                        <li><a href="#panel">管理面板</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>支援</h4>
+                    <ul>
+                        <li><a href="#">文檔</a></li>
+                        <li><a href="#">支援伺服器</a></li>
+                        <li><a href="#">問題回報</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 微國機器人 5.0. 版權所有。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
