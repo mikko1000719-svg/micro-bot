@@ -20,3 +20,5 @@ __pycache__/
 .env
 *.pem
 *.key
+admin_auth.json
+bot_owner.json
