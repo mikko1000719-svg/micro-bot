@@ -4,6 +4,7 @@ from discord.ext import commands
 import aiohttp
 import re
 from datetime import datetime
+from discord import app_commands
 
 class CPBL(commands.Cog):
     def __init__(self, bot):
@@ -14,6 +15,65 @@ class CPBL(commands.Cog):
     async def on_ready(self):
         print("[OK] CPBL module loaded")
 
+    # 斜線指令版本
+    @app_commands.command(name="cpbl", description="查看中職比賽資訊")
+    async def cpbl_slash(self, interaction: discord.Interaction):
+        """查看中職比賽資訊（斜線指令版本）"""
+        try:
+            await interaction.response.defer(thinking=True)
+
+            async with aiohttp.ClientSession() as session:
+                async with session.get(self.ptt_url) as response:
+                    if response.status == 200:
+                        html = await response.text()
+
+                        match = re.search(r'(中職|CPBL|中信|富邦|統一|樂天|味全)', html, re.IGNORECASE)
+
+                        if match:
+                            embed = discord.Embed(
+                                title="🏟️ 中職比賽資訊",
+                                description="來自 PTP 棒球版",
+                                color=discord.Color.blue()
+                            )
+                            embed.add_field(
+                                name="📝 資訊來源",
+                                value="PTP 棒球版 (https://www.ptt.cc/bbs/Baseball/)",
+                                inline=False
+                            )
+                            embed.add_field(
+                                name="⚠️ 注意",
+                                value="此功能為簡化版本，如需詳細資訊請查看 PTP 棒球版",
+                                inline=False
+                            )
+                            embed.set_footer(text="資料更新時間: " + datetime.now().strftime("%Y-%m-%d %H:%M"))
+
+                            await interaction.followup.send(embed=embed)
+                        else:
+                            await interaction.followup.send("📊 目前暫無中職相關資訊")
+                    else:
+                        await interaction.followup.send("❌ 無法連接到 PTP")
+        except Exception as e:
+            await interaction.followup.send(f"❌ 獲取資訊失敗: {e}")
+
+    @app_commands.command(name="ptt", description="PTP 棒球版連結")
+    async def ptt_slash(self, interaction: discord.Interaction):
+        """PTP 棒球版連結（斜線指令版本）"""
+        embed = discord.Embed(
+            title="🏟️ PTP 棒球版",
+            description="點擊下方連結前往 PTP 棒球版",
+            color=discord.Color.blue(),
+            url="https://www.ptt.cc/bbs/Baseball/"
+        )
+        embed.add_field(
+            name="🔗 連結",
+            value="[PTP 棒球版](https://www.ptt.cc/bbs/Baseball/)",
+            inline=False
+        )
+        embed.set_footer(text="點擊標題直接前往")
+
+        await interaction.response.send_message(embed=embed)
+
+    # 傳統指令版本（prefix 指令）
     @commands.command(name='cpbl', aliases=['中職', '中職棒'])
     async def cpbl_scores(self, ctx):
         """查看中職比賽資訊"""
