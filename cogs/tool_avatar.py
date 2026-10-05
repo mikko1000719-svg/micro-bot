@@ -6,7 +6,7 @@ class ToolAvatar(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="avatar", description="Command description")
+    @app_commands.command(name="avatar", description="指令說明")
     @app_commands.describe(member=" ()")
     async def avatar(self, interaction: discord.Interaction, member: discord.Member = None):
         target = member or interaction.user

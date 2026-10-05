@@ -6,7 +6,7 @@ class ModVCMove(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_vcmove", description="頻道")
+    @app_commands.command(name="mod_vcmove", description="頻道管理")
     @app_commands.describe(member="Parameter description", target_channel="Channel")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

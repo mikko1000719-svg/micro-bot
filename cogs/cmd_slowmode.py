@@ -6,7 +6,7 @@ class CmdSlowmode(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="slowmode", description="設置")
+    @app_commands.command(name="slowmode", description="設置功能")
     @app_commands.describe(seconds=" ( 0  21600 )")
     @app_commands.checks.has_permissions(manage_channels=True)
     async def slowmode(self, interaction: discord.Interaction, seconds: int):
@@ -17,7 +17,7 @@ class CmdSlowmode(commands.Cog):
         await interaction.channel.edit(slowmode_delay=seconds, reason=f"Manage {interaction.user} ")
         
         if seconds == 0:
-            embed = discord.Embed(title="⏱ ", description="頻道", color=discord.Color.green())
+            embed = discord.Embed(title="⏱ ", description="頻道管理", color=discord.Color.green())
         else:
             embed = discord.Embed(title="⏱ Start", description=f"Settings **{seconds} **", color=discord.Color.orange())
             

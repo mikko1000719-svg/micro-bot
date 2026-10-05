@@ -12,12 +12,12 @@ class UtilityTools(commands.Cog):
 
     # 2. CommandGroup
     #  @app_commands.command  @utility_group.command
-    @utility_group.command(name="ping", description="Command description")
+    @utility_group.command(name="ping", description="指令說明")
     async def ping_command(self, interaction: discord.Interaction):
         latency = round(self.bot.latency * 1000)
         await interaction.response.send_message(f" {latency}ms")
 
-    @utility_group.command(name="dice", description="Command description")
+    @utility_group.command(name="dice", description="指令說明")
     async def dice_command(self, interaction: discord.Interaction):
         import random
         result = random.randint(1, 6)

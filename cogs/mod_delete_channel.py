@@ -6,7 +6,7 @@ class ModDeleteChannel(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_delete_channel", description="刪除")
+    @app_commands.command(name="mod_delete_channel", description="刪除功能")
     @app_commands.describe(channel="DeleteChannel (DeleteChannel)")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

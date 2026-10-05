@@ -7,7 +7,7 @@ class ToolRemind(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="remind", description="設置")
+    @app_commands.command(name="remind", description="設置功能")
     @app_commands.describe(minutes="Parameter description", content="Parameter description")
     async def remind(self, interaction: discord.Interaction, minutes: int, content: str):
         if minutes < 1 or minutes > 1440:

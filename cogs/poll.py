@@ -83,7 +83,7 @@ class Poll(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="poll", description="Command description")
+    @app_commands.command(name="poll", description="指令說明")
     @app_commands.describe(question="/")
     async def poll(self, interaction: discord.Interaction, question: str):
         view = PollView(question=question)

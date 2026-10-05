@@ -6,7 +6,7 @@ class ModCheck(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_check", description="檢查")
+    @app_commands.command(name="mod_check", description="檢查狀態")
     @app_commands.describe(member="Check")
     @app_commands.checks.has_permissions(manage_roles=True)
     async def mod_check(self, interaction: discord.Interaction, member: discord.Member):

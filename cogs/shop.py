@@ -21,7 +21,7 @@ class Shop(commands.Cog):
         with open(DATA_FILE, "w", encoding="utf-8") as f:
             json.dump(self.shop_data, f, indent=4)
 
-    @app_commands.command(name="add_shop_item", description="添加")
+    @app_commands.command(name="add_shop_item", description="添加功能")
     @app_commands.checks.has_permissions(administrator=True)
     async def add_item(self, interaction: discord.Interaction, name: str, price: int, image_url: str = None):
         self.shop_data["items"][name] = {"price": price, "image": image_url}

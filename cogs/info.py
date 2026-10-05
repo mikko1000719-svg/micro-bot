@@ -6,7 +6,7 @@ class Info(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="serverinfo", description="伺服器")
+    @app_commands.command(name="serverinfo", description="伺服器資訊")
     async def serverinfo(self, interaction: discord.Interaction):
         guild = interaction.guild
         if not guild:

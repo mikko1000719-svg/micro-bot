@@ -40,7 +40,7 @@ class KeepAlive(commands.Cog):
         # BotCompleteLogin
         await self.bot.wait_until_ready()
 
-    @app_commands.command(name="keepalive", description="檢查")
+    @app_commands.command(name="keepalive", description="檢查狀態")
     async def keepalive(self, interaction: discord.Interaction):
         # 1.  3 
         await interaction.response.defer(thinking=True)

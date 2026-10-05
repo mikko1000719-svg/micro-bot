@@ -6,7 +6,7 @@ class ModVCMute(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_vcmute", description="設置")
+    @app_commands.command(name="mod_vcmute", description="設置功能")
     @app_commands.describe(member="Parameter description", mute="True  / False ")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

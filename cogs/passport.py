@@ -6,7 +6,7 @@ class Passport(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="passport", description="Command description")
+    @app_commands.command(name="passport", description="指令說明")
     async def passport(self, interaction: discord.Interaction):
         user = interaction.user
         guild = interaction.guild
@@ -17,7 +17,7 @@ class Passport(commands.Cog):
 
         embed = discord.Embed(
             title="🌐  (Federal Passport)",
-            description="Command description",
+            description="指令說明",
             color=discord.Color.gold()
         )
         embed.set_thumbnail(url=user.display_avatar.url)

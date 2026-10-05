@@ -12,7 +12,7 @@ class ModNuke(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_nuke", description="頻道")
+    @app_commands.command(name="mod_nuke", description="頻道管理")
     @app_commands.default_permissions(administrator=True) # HiddenCommand
     @is_guild_owner() # LimitExecute
     async def mod_nuke(self, interaction: discord.Interaction):

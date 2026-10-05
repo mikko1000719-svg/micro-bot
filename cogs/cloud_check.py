@@ -7,7 +7,7 @@ class CloudCheck(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="env_check", description="檢查")
+    @app_commands.command(name="env_check", description="檢查狀態")
     async def env_check(self, interaction: discord.Interaction):
         # Send response
         try:

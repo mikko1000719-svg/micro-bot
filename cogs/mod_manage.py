@@ -7,7 +7,7 @@ class ModManage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mute", description="Command description")
+    @app_commands.command(name="mute", description="指令說明")
     @app_commands.describe(member="Parameter description", minutes="Parameter description", reason="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
@@ -29,7 +29,7 @@ class ModManage(commands.Cog):
         except Exception as e:
             await interaction.followup.send(f"❌ ExecuteFailed{e}", ephemeral=True)
 
-    @app_commands.command(name="unmute", description="Command description")
+    @app_commands.command(name="unmute", description="指令說明")
     @app_commands.describe(member="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

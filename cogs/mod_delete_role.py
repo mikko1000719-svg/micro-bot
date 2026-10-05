@@ -6,7 +6,7 @@ class ModDeleteRole(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_delete_role", description="刪除")
+    @app_commands.command(name="mod_delete_role", description="刪除功能")
     @app_commands.describe(role="Delete")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

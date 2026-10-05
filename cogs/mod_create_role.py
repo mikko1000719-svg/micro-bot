@@ -6,7 +6,7 @@ class ModCreateRole(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="mod_create_role", description="伺服器")
+    @app_commands.command(name="mod_create_role", description="伺服器資訊")
     @app_commands.describe(name="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)

@@ -42,7 +42,7 @@ class GachaView(discord.ui.View):
 class GameGacha(commands.Cog):
     def __init__(self, bot): self.bot = bot
 
-    @app_commands.command(name="play_gacha", description="Command description")
+    @app_commands.command(name="play_gacha", description="指令說明")
     async def play_gacha(self, interaction: discord.Interaction, opponent: discord.Member):
         if opponent.bot or opponent == interaction.user:
             await interaction.response.send_message("", ephemeral=True)

@@ -6,7 +6,7 @@ class CmdEmbed(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="embed", description="創建")
+    @app_commands.command(name="embed", description="創建功能")
     @app_commands.describe(title="Embed title", description="嵌入訊息", color="Embed color (red, blue, green)")
     @app_commands.checks.has_permissions(manage_messages=True)
     async def custom_embed(self, interaction: discord.Interaction, title: str, description: str, color: str = "blue"):

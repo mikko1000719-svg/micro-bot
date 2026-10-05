@@ -6,7 +6,7 @@ class ModRole(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="role_add", description="Command description")
+    @app_commands.command(name="role_add", description="指令說明")
     @app_commands.describe(member="Parameter description", role="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
@@ -21,7 +21,7 @@ class ModRole(commands.Cog):
         except Exception as e:
             await interaction.response.send_message(f"❌ Failed{e}", ephemeral=True)
 
-    @app_commands.command(name="role_remove", description="Command description")
+    @app_commands.command(name="role_remove", description="指令說明")
     @app_commands.describe(member="Parameter description", role="Parameter description")
     @app_commands.default_permissions(administrator=True)
     @app_commands.checks.has_permissions(administrator=True)
