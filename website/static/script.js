@@ -33,21 +33,48 @@ if (commandSearch) {
 // Login form handling
 const loginForm = document.getElementById('loginForm');
 if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
         e.preventDefault();
-        
+
         const serverId = document.getElementById('serverId').value;
         const adminCode = document.getElementById('adminCode').value;
-        
-        // Here you would typically send this to your backend
-        // For now, we'll show a success message
-        alert('登入功能需要後端支持\n伺服器 ID: ' + serverId + '\n驗證碼: ' + adminCode);
-        
-        // In a real implementation, you would:
-        // 1. Send serverId and adminCode to your backend
-        // 2. Verify the user is an admin in that server
-        // 3. Generate a session token
-        // 4. Redirect to the dashboard
+        const loginMessage = document.getElementById('loginMessage');
+
+        // Show loading state
+        loginMessage.style.display = 'block';
+        loginMessage.className = 'login-message';
+        loginMessage.textContent = '登入中...';
+
+        try {
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    guild_id: serverId,
+                    code: adminCode
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                loginMessage.className = 'login-message success';
+                loginMessage.textContent = '✅ ' + data.message;
+
+                // Redirect to dashboard after successful login
+                setTimeout(() => {
+                    alert('登入成功！\n伺服器 ID: ' + data.guild_id + '\n\n管理面板功能開發中...');
+                }, 1000);
+            } else {
+                loginMessage.className = 'login-message error';
+                loginMessage.textContent = '❌ ' + data.message;
+            }
+        } catch (error) {
+            loginMessage.className = 'login-message error';
+            loginMessage.textContent = '❌ 登入失敗：無法連接到服務器\n請確保網站已部署到後端服務器';
+        }
     });
 }
 

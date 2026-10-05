@@ -570,6 +570,59 @@ body {
     box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
 }
 
+.login-instructions {
+    background: rgba(79, 172, 254, 0.1);
+    border: 1px solid rgba(79, 172, 254, 0.3);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.login-instructions p {
+    color: #4facfe;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.login-instructions ol {
+    color: #e0e0e0;
+    margin-left: 1.5rem;
+}
+
+.login-instructions li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+}
+
+.login-instructions code {
+    background: rgba(79, 172, 254, 0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-family: 'Orbitron', monospace;
+    color: #00f2fe;
+}
+
+.login-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 500;
+    display: none;
+}
+
+.login-message.success {
+    background: rgba(0, 242, 254, 0.1);
+    border: 1px solid rgba(0, 242, 254, 0.3);
+    color: #00f2fe;
+}
+
+.login-message.error {
+    background: rgba(255, 0, 0, 0.1);
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    color: #ff6b6b;
+}
+
 /* Invite Section */
 .invite {
     padding: 5rem 0;

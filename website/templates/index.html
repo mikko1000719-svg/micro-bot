@@ -226,17 +226,27 @@
                 </div>
                 <div class="panel-login">
                     <h3>🔐 登入管理面板</h3>
+                    <div class="login-instructions">
+                        <p>📝 使用說明：</p>
+                        <ol>
+                            <li>在 Discord 中使用 <code>/generate_admin_code</code> 指令</li>
+                            <li>機器人會發送驗證碼到你的私訊</li>
+                            <li>在下方輸入伺服器 ID 和驗證碼</li>
+                            <li>驗證碼 5 分鐘內有效</li>
+                        </ol>
+                    </div>
                     <form id="loginForm">
                         <div class="form-group">
                             <label>伺服器 ID</label>
                             <input type="text" id="serverId" placeholder="輸入你的伺服器 ID" required>
                         </div>
                         <div class="form-group">
-                            <label>管理員驗證碼</label>
-                            <input type="password" id="adminCode" placeholder="輸入驗證碼" required>
+                            <label>驗證碼</label>
+                            <input type="text" id="adminCode" placeholder="輸入驗證碼（大寫字母+數字）" required>
                         </div>
                         <button type="submit" class="btn-login">登入</button>
                     </form>
+                    <div id="loginMessage" class="login-message"></div>
                 </div>
             </div>
         </div>

@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session
 import os
 import json
 import sqlite3
+import time
 from functools import wraps
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
+app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-here')
 
 # Database file path
 DB_FILE = "guild_settings.json"
+AUTH_FILE = "../admin_auth.json"
 
 def load_settings():
     """Load guild settings from JSON file"""
@@ -24,6 +27,35 @@ def save_settings(data):
     """Save guild settings to JSON file"""
     with open(DB_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+def load_auth_data():
+    """Load auth codes from file"""
+    try:
+        if os.path.exists(AUTH_FILE):
+            with open(AUTH_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+    except:
+        return {}
+    return {}
+
+def verify_auth_code(guild_id, code):
+    """Verify admin auth code"""
+    data = load_auth_data()
+    guild_data = data.get(str(guild_id))
+
+    if not guild_data:
+        return False, "驗證碼不存在"
+
+    # Check if code matches
+    if guild_data['code'] != code:
+        return False, "驗證碼錯誤"
+
+    # Check if code is expired (5 minutes)
+    current_time = time.time()
+    if current_time - guild_data['timestamp'] > 300:
+        return False, "驗證碼已過期"
+
+    return True, "驗證成功"
 
 def get_guild_config(guild_id):
     """Get configuration for a specific guild"""
@@ -115,6 +147,54 @@ def list_commands():
     return jsonify({
         "success": True,
         "commands": commands
+    })
+
+@app.route('/api/admin/login', methods=['POST'])
+def admin_login():
+    """API endpoint for admin login with verification code"""
+    try:
+        data = request.json
+        guild_id = data.get('guild_id')
+        code = data.get('code')
+
+        if not guild_id or not code:
+            return jsonify({
+                "success": False,
+                "message": "請提供伺服器 ID 和驗證碼"
+            }), 400
+
+        # Verify the auth code
+        is_valid, message = verify_auth_code(guild_id, code)
+
+        if is_valid:
+            # Store guild_id in session
+            session['guild_id'] = guild_id
+            session['authenticated'] = True
+
+            return jsonify({
+                "success": True,
+                "message": "登入成功",
+                "guild_id": guild_id
+            })
+        else:
+            return jsonify({
+                "success": False,
+                "message": message
+            }), 401
+
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "message": f"登入失敗: {str(e)}"
+        }), 500
+
+@app.route('/api/admin/logout', methods=['POST'])
+def admin_logout():
+    """API endpoint for admin logout"""
+    session.clear()
+    return jsonify({
+        "success": True,
+        "message": "已登出"
     })
 
 if __name__ == '__main__':
