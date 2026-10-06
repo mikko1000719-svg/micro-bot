@@ -11,7 +11,7 @@ app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-here')
 
 # Database file path
 DB_FILE = "guild_settings.json"
-AUTH_FILE = "../admin_auth.json"
+AUTH_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "admin_auth.json")
 
 def load_settings():
     """Load guild settings from JSON file"""
