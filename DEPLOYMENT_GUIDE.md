@@ -15,13 +15,11 @@
 3. **配置設置**
    - **Name**: `micro-bot-website`
    - **Root Directory**: `website`
-   - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `python app.py`
    - **Plan**: Free
+   - Build Command 和 Start Command：留空（Render 會自動檢測）
 
 4. **環境變量**
-   - 添加 `SECRET_KEY`：點擊 "Generate" 生成隨機密鑰
-   - 添加 `PYTHON_VERSION`: `3.9.0`
+   - `SECRET_KEY`：點擊 "Generate" 生成隨機密鑰（已自動配置）
 
 5. **部署**
    - 點擊 "Create Web Service"
