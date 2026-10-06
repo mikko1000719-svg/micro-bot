@@ -35,7 +35,7 @@ class AdminAuth(commands.Cog):
     def _generate_code(self, length=8):
         """生成隨機驗證碼"""
         chars = string.ascii_uppercase + string.digits
-        return ''.join(random.choice(chars) for _ in range(length))
+        return ''.join(random.choice(chars) for _ in range(length)).upper()
 
     def _cleanup_expired_codes(self, data):
         """清理過期的驗證碼"""
@@ -57,34 +57,38 @@ class AdminAuth(commands.Cog):
     @commands.has_permissions(administrator=True)
     async def generate_admin_code(self, ctx):
         """生成管理面板登入驗證碼"""
-        # 清理過期驗證碼
-        data = self._load_auth_data()
-        data = self._cleanup_expired_codes(data)
+        try:
+            # 清理過期驗證碼
+            data = self._load_auth_data()
+            data = self._cleanup_expired_codes(data)
 
-        # 生成新驗證碼
-        guild_id = str(ctx.guild.id)
-        code = self._generate_code()
+            # 生成新驗證碼
+            guild_id = str(ctx.guild.id)
+            code = self._generate_code()
 
-        data[guild_id] = {
-            'code': code,
-            'timestamp': time.time(),
-            'user_id': str(ctx.author.id)
-        }
+            data[guild_id] = {
+                'code': code,
+                'timestamp': time.time(),
+                'user_id': str(ctx.author.id)
+            }
 
-        self._save_auth_data(data)
+            self._save_auth_data(data)
 
-        # 發送驗證碼給管理員
-        embed = discord.Embed(
-            title="🔐 管理面板驗證碼",
-            description=f"你的驗證碼是：**{code}**\n\n此驗證碼將在 5 分鐘後過期。\n請在管理面板中輸入此驗證碼。",
-            color=discord.Color.blue()
-        )
-        embed.add_field(name="伺服器 ID", value=guild_id, inline=False)
-        embed.add_field(name="有效時間", value="5 分鐘", inline=False)
-        embed.set_footer(text="請勿將此驗證碼分享給他人")
+            # 發送驗證碼給管理員
+            embed = discord.Embed(
+                title="🔐 管理面板驗證碼",
+                description=f"你的驗證碼是：**{code}**\n\n此驗證碼將在 5 分鐘後過期。\n請在管理面板中輸入此驗證碼。\n\n⚠️ 注意：驗證碼必須完全匹配，包括大小寫！",
+                color=discord.Color.blue()
+            )
+            embed.add_field(name="伺服器 ID", value=guild_id, inline=False)
+            embed.add_field(name="有效時間", value="5 分鐘", inline=False)
+            embed.add_field(name="驗證碼格式", value="8 位大寫字母 + 數字", inline=False)
+            embed.set_footer(text="請勿將此驗證碼分享給他人")
 
-        await ctx.author.send(embed=embed)
-        await ctx.send("✅ 驗證碼已發送到你的私訊中！")
+            await ctx.author.send(embed=embed)
+            await ctx.send("✅ 驗證碼已發送到你的私訊中！")
+        except Exception as e:
+            await ctx.send(f"❌ 生成驗證碼失敗：{e}")
 
     @generate_admin_code.error
     async def generate_admin_code_error(self, ctx, error):

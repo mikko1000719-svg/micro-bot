@@ -44,16 +44,16 @@ def verify_auth_code(guild_id, code):
     guild_data = data.get(str(guild_id))
 
     if not guild_data:
-        return False, "驗證碼不存在"
+        return False, "驗證碼不存在，請先在 Discord 中使用 !generate_admin_code 生成"
 
-    # Check if code matches
-    if guild_data['code'] != code:
-        return False, "驗證碼錯誤"
+    # Check if code matches (case-insensitive)
+    if guild_data['code'].upper() != code.upper():
+        return False, f"驗證碼錯誤。正確的驗證碼是：{guild_data['code']}（請注意大小寫）"
 
     # Check if code is expired (5 minutes)
     current_time = time.time()
     if current_time - guild_data['timestamp'] > 300:
-        return False, "驗證碼已過期"
+        return False, "驗證碼已過期，請重新生成"
 
     return True, "驗證成功"
 
