@@ -248,6 +248,40 @@
                     </form>
                     <div id="loginMessage" class="login-message"></div>
                 </div>
+
+                <div class="panel-dashboard" id="dashboard" style="display: none;">
+                    <h3>⚙️ 管理面板</h3>
+                    <div class="dashboard-content">
+                        <div class="server-info">
+                            <h4>🖥️ 伺服器資訊</h4>
+                            <p>伺服器 ID: <span id="dashboardServerId"></span></p>
+                            <p><button id="loadSettings" class="btn-load">載入設定</button></p>
+                        </div>
+                        <div class="settings-section">
+                            <h4>🛡️ 防詐群設定</h4>
+                            <form id="antiSpamForm">
+                                <div class="form-group">
+                                    <label>啟用防詐群</label>
+                                    <input type="checkbox" id="antiSpamEnabled" checked>
+                                </div>
+                                <div class="form-group">
+                                    <label>時間窗口（秒）</label>
+                                    <input type="number" id="timeWindow" value="10" min="1" max="60">
+                                </div>
+                                <div class="form-group">
+                                    <label>最大訊息數</label>
+                                    <input type="number" id="maxMessages" value="6" min="1" max="20">
+                                </div>
+                                <div class="form-group">
+                                    <label>禁言時長（小時）</label>
+                                    <input type="number" id="muteHours" value="3" min="1" max="24">
+                                </div>
+                                <button type="submit" class="btn-save">保存設定</button>
+                            </form>
+                            <div id="saveMessage" class="save-message"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

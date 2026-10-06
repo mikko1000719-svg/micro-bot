@@ -31,30 +31,46 @@ def save_settings(data):
 def load_auth_data():
     """Load auth codes from file"""
     try:
+        print(f"[DEBUG] Trying to load auth file from: {AUTH_FILE}")
+        print(f"[DEBUG] File exists: {os.path.exists(AUTH_FILE)}")
         if os.path.exists(AUTH_FILE):
             with open(AUTH_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-    except:
+                data = json.load(f)
+                print(f"[DEBUG] Loaded auth data: {data}")
+                return data
+        else:
+            print(f"[DEBUG] Auth file not found!")
+    except Exception as e:
+        print(f"[DEBUG] Error loading auth file: {e}")
         return {}
     return {}
 
 def verify_auth_code(guild_id, code):
     """Verify admin auth code"""
+    print(f"[DEBUG] Verifying auth code for guild: {guild_id}, code: {code}")
     data = load_auth_data()
+    print(f"[DEBUG] Available guilds in auth data: {list(data.keys())}")
     guild_data = data.get(str(guild_id))
 
     if not guild_data:
+        print(f"[DEBUG] Guild data not found for: {guild_id}")
         return False, "驗證碼不存在，請先在 Discord 中使用 !generate_admin_code 生成"
 
+    print(f"[DEBUG] Stored code: {guild_data['code']}, Input code: {code}")
     # Check if code matches (case-insensitive)
     if guild_data['code'].upper() != code.upper():
+        print(f"[DEBUG] Code mismatch!")
         return False, f"驗證碼錯誤。正確的驗證碼是：{guild_data['code']}（請注意大小寫）"
 
     # Check if code is expired (5 minutes)
     current_time = time.time()
-    if current_time - guild_data['timestamp'] > 300:
+    age = current_time - guild_data['timestamp']
+    print(f"[DEBUG] Code age: {age} seconds")
+    if age > 300:
+        print(f"[DEBUG] Code expired!")
         return False, "驗證碼已過期，請重新生成"
 
+    print(f"[DEBUG] Verification successful!")
     return True, "驗證成功"
 
 def get_guild_config(guild_id):

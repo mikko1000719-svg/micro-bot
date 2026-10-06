@@ -63,9 +63,11 @@ if (loginForm) {
                 loginMessage.className = 'login-message success';
                 loginMessage.textContent = '✅ ' + data.message;
 
-                // Redirect to dashboard after successful login
+                // Show dashboard after successful login
                 setTimeout(() => {
-                    alert('登入成功！\n伺服器 ID: ' + data.guild_id + '\n\n管理面板功能開發中...');
+                    document.getElementById('loginForm').style.display = 'none';
+                    document.getElementById('dashboard').style.display = 'block';
+                    document.getElementById('dashboardServerId').textContent = data.guild_id;
                 }, 1000);
             } else {
                 loginMessage.className = 'login-message error';
@@ -74,6 +76,86 @@ if (loginForm) {
         } catch (error) {
             loginMessage.className = 'login-message error';
             loginMessage.textContent = '❌ 登入失敗：無法連接到服務器\n請確保網站已部署到後端服務器';
+        }
+    });
+}
+
+// Load settings button
+const loadSettingsBtn = document.getElementById('loadSettings');
+if (loadSettingsBtn) {
+    loadSettingsBtn.addEventListener('click', async function() {
+        const guildId = document.getElementById('dashboardServerId').textContent;
+        const saveMessage = document.getElementById('saveMessage');
+
+        saveMessage.style.display = 'block';
+        saveMessage.className = 'save-message';
+        saveMessage.textContent = '載入中...';
+
+        try {
+            const response = await fetch(`/api/guild/${guildId}`);
+            const data = await response.json();
+
+            if (data.success) {
+                const config = data.config;
+                document.getElementById('antiSpamEnabled').checked = config.anti_spam_enabled;
+                document.getElementById('timeWindow').value = config.time_window;
+                document.getElementById('maxMessages').value = config.max_messages;
+                document.getElementById('muteHours').value = config.mute_hours;
+
+                saveMessage.className = 'save-message success';
+                saveMessage.textContent = '✅ 設定載入成功';
+            } else {
+                saveMessage.className = 'save-message error';
+                saveMessage.textContent = '❌ 載入失敗：' + data.message;
+            }
+        } catch (error) {
+            saveMessage.className = 'save-message error';
+            saveMessage.textContent = '❌ 載入失敗：無法連接到服務器';
+        }
+    });
+}
+
+// Anti-spam form handling
+const antiSpamForm = document.getElementById('antiSpamForm');
+if (antiSpamForm) {
+    antiSpamForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const guildId = document.getElementById('dashboardServerId').textContent;
+        const saveMessage = document.getElementById('saveMessage');
+
+        const newConfig = {
+            anti_spam_enabled: document.getElementById('antiSpamEnabled').checked,
+            time_window: parseFloat(document.getElementById('timeWindow').value),
+            max_messages: parseInt(document.getElementById('maxMessages').value),
+            mute_hours: parseInt(document.getElementById('muteHours').value)
+        };
+
+        saveMessage.style.display = 'block';
+        saveMessage.className = 'save-message';
+        saveMessage.textContent = '保存中...';
+
+        try {
+            const response = await fetch(`/api/guild/${guildId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newConfig)
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                saveMessage.className = 'save-message success';
+                saveMessage.textContent = '✅ 設定保存成功';
+            } else {
+                saveMessage.className = 'save-message error';
+                saveMessage.textContent = '❌ 保存失敗：' + data.message;
+            }
+        } catch (error) {
+            saveMessage.className = 'save-message error';
+            saveMessage.textContent = '❌ 保存失敗：無法連接到服務器';
         }
     });
 }
