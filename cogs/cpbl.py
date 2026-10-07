@@ -16,9 +16,9 @@ class CPBL(commands.Cog):
         print("[OK] CPBL module loaded")
 
     # 斜線指令版本
-    @app_commands.command(name="cpbl", description="查看中職比賽資訊")
+    @app_commands.command(name="cpbl", description="查看中職比賽比分")
     async def cpbl_slash(self, interaction: discord.Interaction):
-        """查看中職比賽資訊（斜線指令版本）"""
+        """查看中職比賽比分（斜線指令版本）"""
         try:
             await interaction.response.defer(thinking=True)
 
@@ -27,22 +27,44 @@ class CPBL(commands.Cog):
                     if response.status == 200:
                         html = await response.text()
 
+                        # 搜索中職相關標題
                         match = re.search(r'(中職|CPBL|中信|富邦|統一|樂天|味全)', html, re.IGNORECASE)
 
                         if match:
+                            # 創建記分板風格的 Embed
                             embed = discord.Embed(
-                                title="🏟️ 中職比賽資訊",
-                                description="來自 PTP 棒球版",
+                                title="🏟️ 中職記分板",
+                                description="中華職業棒球大聯盟",
                                 color=discord.Color.blue()
                             )
+
+                            # 添加模擬比賽信息（實際應該從 API 獲取）
+                            embed.add_field(
+                                name="📅 比賽日期",
+                                value=datetime.now().strftime("%Y-%m-%d"),
+                                inline=True
+                            )
+                            embed.add_field(
+                                name="⏰ 更新時間",
+                                value=datetime.now().strftime("%H:%M"),
+                                inline=True
+                            )
+
+                            # 模擬比賽記分板
+                            embed.add_field(
+                                name="🎯 今日賽程",
+                                value="```\n隊伍        1 2 3 4 5 6 7 8 9  R  H  E\n統一獅      0 0 0 0 0 0 0 0 0  0  0  0\n樂天桃猿    0 0 0 0 0 0 0 0 0  0  0  0\n\n中信兄弟    0 0 0 0 0 0 0 0 0  0  0  0\n富邦悍將    0 0 0 0 0 0 0 0 0  0  0  0\n```",
+                                inline=False
+                            )
+
                             embed.add_field(
                                 name="📝 資訊來源",
-                                value="PTP 棒球版 (https://www.ptt.cc/bbs/Baseball/)",
+                                value="[PTP 棒球版](https://www.ptt.cc/bbs/Baseball/)",
                                 inline=False
                             )
                             embed.add_field(
                                 name="⚠️ 注意",
-                                value="此功能為簡化版本，如需詳細資訊請查看 PTP 棒球版",
+                                value="此為示範數據，實時比分請查看官方網站",
                                 inline=False
                             )
                             embed.set_footer(text="資料更新時間: " + datetime.now().strftime("%Y-%m-%d %H:%M"))
@@ -76,33 +98,53 @@ class CPBL(commands.Cog):
     # 傳統指令版本（prefix 指令）
     @commands.command(name='cpbl', aliases=['中職', '中職棒'])
     async def cpbl_scores(self, ctx):
-        """查看中職比賽資訊"""
+        """查看中職比賽比分"""
         try:
-            await ctx.send("📊 正在獲取中職比賽資訊...")
+            await ctx.send("📊 正在獲取中職比賽比分...")
 
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.ptt_url) as response:
                     if response.status == 200:
                         html = await response.text()
 
-                        # 簡單解析 PTP 棒球版內容
-                        # 查找比賽相關的標題
+                        # 搜索中職相關標題
                         match = re.search(r'(中職|CPBL|中信|富邦|統一|樂天|味全)', html, re.IGNORECASE)
 
                         if match:
+                            # 創建記分板風格的 Embed
                             embed = discord.Embed(
-                                title="🏟️ 中職比賽資訊",
-                                description="來自 PTP 棒球版",
+                                title="🏟️ 中職記分板",
+                                description="中華職業棒球大聯盟",
                                 color=discord.Color.blue()
                             )
+
+                            # 添加模擬比賽信息
                             embed.add_field(
-                                name="📝 資訊來源",
-                                value="PTP 棒球版 (https://www.ptt.cc/bbs/Baseball/)",
+                                name="� 比賽日期",
+                                value=datetime.now().strftime("%Y-%m-%d"),
+                                inline=True
+                            )
+                            embed.add_field(
+                                name="⏰ 更新時間",
+                                value=datetime.now().strftime("%H:%M"),
+                                inline=True
+                            )
+
+                            # 模擬比賽記分板
+                            embed.add_field(
+                                name="🎯 今日賽程",
+                                value="```\n隊伍        1 2 3 4 5 6 7 8 9  R  H  E\n統一獅      0 0 0 0 0 0 0 0 0  0  0  0\n樂天桃猿    0 0 0 0 0 0 0 0 0  0  0  0\n\n中信兄弟    0 0 0 0 0 0 0 0 0  0  0  0\n富邦悍將    0 0 0 0 0 0 0 0 0  0  0  0\n```",
+                                inline=False
+                            )
+
+                            embed.add_field(
+                                name="�📝 資訊來源",
+                                value="[PTP 棒球版](https://www.ptt.cc/bbs/Baseball/)",
                                 inline=False
                             )
                             embed.add_field(
                                 name="⚠️ 注意",
-                                value="此功能為簡化版本，如需詳細資訊請查看 PTP 棒球版",
+                                value="此為示範數據，實時比分請查看官方網站",
                                 inline=False
                             )
                             embed.set_footer(text="資料更新時間: " + datetime.now().strftime("%Y-%m-%d %H:%M"))
