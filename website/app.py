@@ -127,22 +127,64 @@ def list_guilds():
 def list_commands():
     """API endpoint to list all commands"""
     # This would normally be fetched from the bot dynamically
-    # For now, return a static list
+    # For now, return a comprehensive list
     commands = [
+        # AI 功能
         {"name": "ai", "description": "與 AI 進行對話", "category": "AI"},
+
+        # 遊戲
         {"name": "gomoku", "description": "玩五子棋", "category": "遊戲"},
         {"name": "play_balloon", "description": "玩氣球遊戲", "category": "遊戲"},
         {"name": "play_coinflip", "description": "拋硬幣", "category": "遊戲"},
         {"name": "play_dice", "description": "擲骰子", "category": "遊戲"},
+        {"name": "play_card_duel", "description": "卡牌決鬥", "category": "遊戲"},
+        {"name": "play_destiny_wheel", "description": "命運輪盤", "category": "遊戲"},
+        {"name": "play_draw", "description": "抽卡", "category": "遊戲"},
+        {"name": "play_fist_wheel", "description": "拳頭輪盤", "category": "遊戲"},
+        {"name": "play_fortune", "description": "占卜", "category": "遊戲"},
+        {"name": "play_gacha", "description": "扭蛋", "category": "遊戲"},
+        {"name": "play_ghost_card", "description": "鬼牌", "category": "遊戲"},
+        {"name": "play_lottery", "description": "彩票", "category": "遊戲"},
+        {"name": "play_lucky", "description": "幸運抽獎", "category": "遊戲"},
+        {"name": "play_number_war", "description": "數字戰爭", "category": "遊戲"},
+        {"name": "play_password", "description": "密碼遊戲", "category": "遊戲"},
+        {"name": "play_poke", "description": "戳戳樂", "category": "遊戲"},
+        {"name": "play_range_guess", "description": "範圍猜測", "category": "遊戲"},
+        {"name": "play_reaction", "description": "反應遊戲", "category": "遊戲"},
+        {"name": "play_roulette", "description": "輪盤賭", "category": "遊戲"},
+        {"name": "play_rps", "description": "猜拳", "category": "遊戲"},
+        {"name": "play_super_wheel", "description": "超級輪盤", "category": "遊戲"},
+        {"name": "play_tictactoe", "description": "井字棋", "category": "遊戲"},
+        {"name": "play_vault", "description": "保險箱", "category": "遊戲"},
+        {"name": "play_wheel", "description": "輪盤", "category": "遊戲"},
+
+        # 跨服
         {"name": "linkgroup", "description": "加入跨服群組", "category": "跨服"},
         {"name": "unlinkgroup", "description": "退出跨服群組", "category": "跨服"},
-        {"name": "mod_ban", "description": "封禁用戶", "category": "管理"},
-        {"name": "mod_kick", "description": "踢出用戶", "category": "管理"},
-        {"name": "mod_mute", "description": "禁言用戶", "category": "管理"},
+
+        # 管理
+        {"name": "ban", "description": "封禁用戶", "category": "管理"},
+        {"name": "vckick", "description": "踢出語音頻道", "category": "管理"},
+        {"name": "modlog", "description": "查看管理日誌", "category": "管理"},
+        {"name": "whitelist_add", "description": "添加白名單", "category": "管理"},
+        {"name": "whitelist_remove", "description": "移除白名單", "category": "管理"},
+        {"name": "whitelist_list", "description": "查看白名單", "category": "管理"},
+
+        # 音樂
         {"name": "play", "description": "播放音樂", "category": "音樂"},
         {"name": "pause", "description": "暫停音樂", "category": "音樂"},
         {"name": "skip", "description": "跳過當前歌曲", "category": "音樂"},
         {"name": "stop", "description": "停止音樂", "category": "音樂"},
+
+        # 中職
+        {"name": "cpbl", "description": "查看中職比賽比分", "category": "中職"},
+        {"name": "ptt", "description": "PTP 棒球版連結", "category": "中職"},
+
+        # 其他
+        {"name": "cpbl", "description": "查看中職比賽比分", "category": "資訊"},
+        {"name": "announce", "description": "發送公告", "category": "資訊"},
+        {"name": "stock_market", "description": "股票市場", "category": "資訊"},
+        {"name": "serverinfo", "description": "伺服器資訊", "category": "資訊"},
     ]
     return jsonify({
         "success": True,
