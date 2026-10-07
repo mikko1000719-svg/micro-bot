@@ -22,3 +22,5 @@ __pycache__/
 *.key
 admin_auth.json
 bot_owner.json
+moderation_log.json
+whitelist.json
