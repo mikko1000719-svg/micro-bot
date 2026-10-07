@@ -160,6 +160,117 @@ if (antiSpamForm) {
     });
 }
 
+// User management buttons
+document.getElementById('btnBan')?.addEventListener('click', async function() {
+    const userId = document.getElementById('userId').value;
+    const reason = document.getElementById('actionReason').value;
+    const actionMessage = document.getElementById('actionMessage');
+
+    actionMessage.style.display = 'block';
+    actionMessage.className = 'action-message';
+    actionMessage.textContent = '封禁功能需要後端集成...';
+
+    // TODO: Integrate with Discord API
+    setTimeout(() => {
+        actionMessage.className = 'action-message error';
+        actionMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /ban 指令';
+    }, 1000);
+});
+
+document.getElementById('btnKick')?.addEventListener('click', async function() {
+    const userId = document.getElementById('userId').value;
+    const reason = document.getElementById('actionReason').value;
+    const actionMessage = document.getElementById('actionMessage');
+
+    actionMessage.style.display = 'block';
+    actionMessage.className = 'action-message';
+    actionMessage.textContent = '踢出功能需要後端集成...';
+
+    // TODO: Integrate with Discord API
+    setTimeout(() => {
+        actionMessage.className = 'action-message error';
+        actionMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /vckick 指令';
+    }, 1000);
+});
+
+document.getElementById('btnMute')?.addEventListener('click', async function() {
+    const userId = document.getElementById('userId').value;
+    const reason = document.getElementById('actionReason').value;
+    const actionMessage = document.getElementById('actionMessage');
+
+    actionMessage.style.display = 'block';
+    actionMessage.className = 'action-message';
+    actionMessage.textContent = '禁言功能需要後端集成...';
+
+    // TODO: Integrate with Discord API
+    setTimeout(() => {
+        actionMessage.className = 'action-message error';
+        actionMessage.textContent = '⚠️ 此功能需要機器人後端集成';
+    }, 1000);
+});
+
+// Whitelist management buttons
+document.getElementById('btnAddWhitelist')?.addEventListener('click', async function() {
+    const userId = document.getElementById('whitelistUserId').value;
+    const reason = document.getElementById('whitelistReason').value;
+    const whitelistMessage = document.getElementById('whitelistMessage');
+
+    whitelistMessage.style.display = 'block';
+    whitelistMessage.className = 'action-message';
+    whitelistMessage.textContent = '添加白名單功能需要後端集成...';
+
+    // TODO: Integrate with bot backend
+    setTimeout(() => {
+        whitelistMessage.className = 'action-message error';
+        whitelistMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /whitelist_add 指令';
+    }, 1000);
+});
+
+document.getElementById('btnRemoveWhitelist')?.addEventListener('click', async function() {
+    const userId = document.getElementById('whitelistUserId').value;
+    const whitelistMessage = document.getElementById('whitelistMessage');
+
+    whitelistMessage.style.display = 'block';
+    whitelistMessage.className = 'action-message';
+    whitelistMessage.textContent = '移除白名單功能需要後端集成...';
+
+    // TODO: Integrate with bot backend
+    setTimeout(() => {
+        whitelistMessage.className = 'action-message error';
+        whitelistMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /whitelist_remove 指令';
+    }, 1000);
+});
+
+document.getElementById('btnListWhitelist')?.addEventListener('click', async function() {
+    const whitelistMessage = document.getElementById('whitelistMessage');
+
+    whitelistMessage.style.display = 'block';
+    whitelistMessage.className = 'action-message';
+    whitelistMessage.textContent = '查看白名單功能需要後端集成...';
+
+    // TODO: Integrate with bot backend
+    setTimeout(() => {
+        whitelistMessage.className = 'action-message error';
+        whitelistMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /whitelist_list 指令';
+    }, 1000);
+});
+
+// Log viewing button
+document.getElementById('btnViewLogs')?.addEventListener('click', async function() {
+    const limit = document.getElementById('logLimit').value;
+    const logMessage = document.getElementById('logMessage');
+
+    logMessage.style.display = 'block';
+    logMessage.className = 'action-message';
+    logMessage.textContent = '查看日誌功能需要後端集成...';
+
+    // TODO: Integrate with bot backend
+    setTimeout(() => {
+        logMessage.className = 'action-message error';
+        logMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /modlog 指令';
+    }, 1000);
+});
+
 // Add scroll effect to navbar
 window.addEventListener('scroll', function() {
     const navbar = document.querySelector('.navbar');

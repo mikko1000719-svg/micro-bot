@@ -97,8 +97,16 @@ keep_alive.keep_alive()
 if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
     if TOKEN:
+        print(f"[INFO] DISCORD_TOKEN found (length: {len(TOKEN)})")
+        print(f"[INFO] Token prefix: {TOKEN[:10]}...")
+
         # Let Discord.py handle reconnection and retry logic
         # Removed delay to avoid triggering rate limits further
-        bot.run(TOKEN)
+        try:
+            bot.run(TOKEN)
+        except Exception as e:
+            print(f"[ERROR] Bot failed to start: {e}")
+            import traceback
+            traceback.print_exc()
     else:
         print("[ERROR] DISCORD_TOKEN environment variable not found!")
