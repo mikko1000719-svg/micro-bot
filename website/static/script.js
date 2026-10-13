@@ -164,111 +164,292 @@ if (antiSpamForm) {
 document.getElementById('btnBan')?.addEventListener('click', async function() {
     const userId = document.getElementById('userId').value;
     const reason = document.getElementById('actionReason').value;
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const actionMessage = document.getElementById('actionMessage');
+
+    if (!userId || !guildId) {
+        actionMessage.style.display = 'block';
+        actionMessage.className = 'action-message error';
+        actionMessage.textContent = '❌ 請輸入用戶 ID';
+        return;
+    }
 
     actionMessage.style.display = 'block';
     actionMessage.className = 'action-message';
-    actionMessage.textContent = '封禁功能需要後端集成...';
+    actionMessage.textContent = '正在封禁...';
 
-    // TODO: Integrate with Discord API
-    setTimeout(() => {
+    try {
+        const response = await fetch('/api/discord/ban', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                reason: reason,
+                guild_id: guildId
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            actionMessage.className = 'action-message success';
+            actionMessage.textContent = '✅ ' + data.message;
+        } else {
+            actionMessage.className = 'action-message error';
+            actionMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         actionMessage.className = 'action-message error';
-        actionMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /ban 指令';
-    }, 1000);
+        actionMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 document.getElementById('btnKick')?.addEventListener('click', async function() {
     const userId = document.getElementById('userId').value;
     const reason = document.getElementById('actionReason').value;
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const actionMessage = document.getElementById('actionMessage');
+
+    if (!userId || !guildId) {
+        actionMessage.style.display = 'block';
+        actionMessage.className = 'action-message error';
+        actionMessage.textContent = '❌ 請輸入用戶 ID';
+        return;
+    }
 
     actionMessage.style.display = 'block';
     actionMessage.className = 'action-message';
-    actionMessage.textContent = '踢出功能需要後端集成...';
+    actionMessage.textContent = '正在踢出...';
 
-    // TODO: Integrate with Discord API
-    setTimeout(() => {
+    try {
+        const response = await fetch('/api/discord/kick', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                reason: reason,
+                guild_id: guildId
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            actionMessage.className = 'action-message success';
+            actionMessage.textContent = '✅ ' + data.message;
+        } else {
+            actionMessage.className = 'action-message error';
+            actionMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         actionMessage.className = 'action-message error';
-        actionMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /vckick 指令';
-    }, 1000);
+        actionMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 document.getElementById('btnMute')?.addEventListener('click', async function() {
     const userId = document.getElementById('userId').value;
     const reason = document.getElementById('actionReason').value;
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const actionMessage = document.getElementById('actionMessage');
+
+    if (!userId || !guildId) {
+        actionMessage.style.display = 'block';
+        actionMessage.className = 'action-message error';
+        actionMessage.textContent = '❌ 請輸入用戶 ID';
+        return;
+    }
 
     actionMessage.style.display = 'block';
     actionMessage.className = 'action-message';
-    actionMessage.textContent = '禁言功能需要後端集成...';
+    actionMessage.textContent = '正在禁言...';
 
-    // TODO: Integrate with Discord API
-    setTimeout(() => {
+    try {
+        const response = await fetch('/api/discord/mute', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                reason: reason,
+                guild_id: guildId,
+                duration: 3600  // 1 hour
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            actionMessage.className = 'action-message success';
+            actionMessage.textContent = '✅ ' + data.message;
+        } else {
+            actionMessage.className = 'action-message error';
+            actionMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         actionMessage.className = 'action-message error';
-        actionMessage.textContent = '⚠️ 此功能需要機器人後端集成';
-    }, 1000);
+        actionMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 // Whitelist management buttons
 document.getElementById('btnAddWhitelist')?.addEventListener('click', async function() {
     const userId = document.getElementById('whitelistUserId').value;
     const reason = document.getElementById('whitelistReason').value;
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const whitelistMessage = document.getElementById('whitelistMessage');
+
+    if (!userId || !guildId) {
+        whitelistMessage.style.display = 'block';
+        whitelistMessage.className = 'action-message error';
+        whitelistMessage.textContent = '❌ 請輸入用戶 ID';
+        return;
+    }
 
     whitelistMessage.style.display = 'block';
     whitelistMessage.className = 'action-message';
-    whitelistMessage.textContent = '添加白名單功能需要後端集成...';
+    whitelistMessage.textContent = '正在添加...';
 
-    // TODO: Integrate with bot backend
-    setTimeout(() => {
+    try {
+        const response = await fetch('/api/discord/whitelist_add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                reason: reason,
+                guild_id: guildId
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            whitelistMessage.className = 'action-message success';
+            whitelistMessage.textContent = '✅ ' + data.message;
+        } else {
+            whitelistMessage.className = 'action-message error';
+            whitelistMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         whitelistMessage.className = 'action-message error';
-        whitelistMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /whitelist_add 指令';
-    }, 1000);
+        whitelistMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 document.getElementById('btnRemoveWhitelist')?.addEventListener('click', async function() {
     const userId = document.getElementById('whitelistUserId').value;
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const whitelistMessage = document.getElementById('whitelistMessage');
+
+    if (!userId || !guildId) {
+        whitelistMessage.style.display = 'block';
+        whitelistMessage.className = 'action-message error';
+        whitelistMessage.textContent = '❌ 請輸入用戶 ID';
+        return;
+    }
 
     whitelistMessage.style.display = 'block';
     whitelistMessage.className = 'action-message';
-    whitelistMessage.textContent = '移除白名單功能需要後端集成...';
+    whitelistMessage.textContent = '正在移除...';
 
-    // TODO: Integrate with bot backend
-    setTimeout(() => {
+    try {
+        const response = await fetch('/api/discord/whitelist_remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                guild_id: guildId
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            whitelistMessage.className = 'action-message success';
+            whitelistMessage.textContent = '✅ ' + data.message;
+        } else {
+            whitelistMessage.className = 'action-message error';
+            whitelistMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         whitelistMessage.className = 'action-message error';
-        whitelistMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /whitelist_remove 指令';
-    }, 1000);
+        whitelistMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 document.getElementById('btnListWhitelist')?.addEventListener('click', async function() {
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const whitelistMessage = document.getElementById('whitelistMessage');
+
+    if (!guildId) {
+        whitelistMessage.style.display = 'block';
+        whitelistMessage.className = 'action-message error';
+        whitelistMessage.textContent = '❌ 未登入';
+        return;
+    }
 
     whitelistMessage.style.display = 'block';
     whitelistMessage.className = 'action-message';
-    whitelistMessage.textContent = '查看白名單功能需要後端集成...';
+    whitelistMessage.textContent = '正在載入...';
 
-    // TODO: Integrate with bot backend
-    setTimeout(() => {
+    try {
+        const response = await fetch(`/api/discord/whitelist_list?guild_id=${guildId}`);
+        const data = await response.json();
+
+        if (data.success) {
+            whitelistMessage.className = 'action-message success';
+            whitelistMessage.textContent = '✅ ' + data.message;
+        } else {
+            whitelistMessage.className = 'action-message error';
+            whitelistMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         whitelistMessage.className = 'action-message error';
-        whitelistMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /whitelist_list 指令';
-    }, 1000);
+        whitelistMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 // Log viewing button
 document.getElementById('btnViewLogs')?.addEventListener('click', async function() {
     const limit = document.getElementById('logLimit').value;
+    const guildId = document.getElementById('dashboardServerId').textContent;
     const logMessage = document.getElementById('logMessage');
+
+    if (!guildId) {
+        logMessage.style.display = 'block';
+        logMessage.className = 'action-message error';
+        logMessage.textContent = '❌ 未登入';
+        return;
+    }
 
     logMessage.style.display = 'block';
     logMessage.className = 'action-message';
-    logMessage.textContent = '查看日誌功能需要後端集成...';
+    logMessage.textContent = '正在載入日誌...';
 
-    // TODO: Integrate with bot backend
-    setTimeout(() => {
+    try {
+        const response = await fetch(`/api/discord/logs?guild_id=${guildId}&limit=${limit}`);
+        const data = await response.json();
+
+        if (data.success) {
+            logMessage.className = 'action-message success';
+            logMessage.textContent = '✅ ' + data.message;
+        } else {
+            logMessage.className = 'action-message error';
+            logMessage.textContent = '❌ ' + data.message;
+        }
+    } catch (error) {
         logMessage.className = 'action-message error';
-        logMessage.textContent = '⚠️ 此功能需要機器人後端集成，目前僅支持在 Discord 中使用 /modlog 指令';
-    }, 1000);
+        logMessage.textContent = '❌ 請求失敗: ' + error.message;
+    }
 });
 
 // Add scroll effect to navbar

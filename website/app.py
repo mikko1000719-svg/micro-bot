@@ -4,6 +4,9 @@ import os
 import json
 import sqlite3
 import time
+import asyncio
+import aiohttp
+from datetime import datetime, timedelta
 from functools import wraps
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
@@ -12,6 +15,17 @@ app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-here')
 # Database file path
 DB_FILE = "guild_settings.json"
 AUTH_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "admin_auth.json")
+
+# Discord API integration
+DISCORD_TOKEN = os.environ.get('DISCORD_TOKEN')
+if DISCORD_TOKEN:
+    # Initialize Discord client for API calls
+    intents = discord.Intents.default()
+    intents.guilds = True
+    intents.members = True
+    discord_client = discord.Client(intents=intents)
+else:
+    discord_client = None
 
 def load_settings():
     """Load guild settings from JSON file"""
@@ -237,6 +251,193 @@ def admin_logout():
     return jsonify({
         "success": True,
         "message": "已登出"
+    })
+
+# Discord API integration endpoints
+@app.route('/api/discord/ban', methods=['POST'])
+async def discord_ban():
+    """Ban a user via Discord API"""
+    if not DISCORD_TOKEN:
+        return jsonify({
+            "success": False,
+            "message": "未設置 DISCORD_TOKEN 環境變量"
+        })
+
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        reason = data.get('reason', '')
+        guild_id = data.get('guild_id')
+
+        if not user_id or not guild_id:
+            return jsonify({
+                "success": False,
+                "message": "缺少 user_id 或 guild_id"
+            })
+
+        # Use Discord REST API to ban user
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                'Authorization': f'Bot {DISCORD_TOKEN}',
+                'Content-Type': 'application/json'
+            }
+
+            url = f'https://discord.com/api/v10/guilds/{guild_id}/bans/{user_id}'
+            payload = {'reason': reason}
+
+            async with session.put(url, json=payload, headers=headers) as response:
+                if response.status == 204:
+                    return jsonify({
+                        "success": True,
+                        "message": f"已封禁用戶 {user_id}"
+                    })
+                else:
+                    error_text = await response.text()
+                    return jsonify({
+                        "success": False,
+                        "message": f"封禁失敗: {error_text}"
+                    })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "message": f"錯誤: {str(e)}"
+        })
+
+@app.route('/api/discord/kick', methods=['POST'])
+async def discord_kick():
+    """Kick a user via Discord API"""
+    if not DISCORD_TOKEN:
+        return jsonify({
+            "success": False,
+            "message": "未設置 DISCORD_TOKEN 環境變量"
+        })
+
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        reason = data.get('reason', '')
+        guild_id = data.get('guild_id')
+
+        if not user_id or not guild_id:
+            return jsonify({
+                "success": False,
+                "message": "缺少 user_id 或 guild_id"
+            })
+
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                'Authorization': f'Bot {DISCORD_TOKEN}',
+                'Content-Type': 'application/json'
+            }
+
+            url = f'https://discord.com/api/v10/guilds/{guild_id}/members/{user_id}'
+            payload = {'reason': reason}
+
+            async with session.delete(url, json=payload, headers=headers) as response:
+                if response.status == 204:
+                    return jsonify({
+                        "success": True,
+                        "message": f"已踢出用戶 {user_id}"
+                    })
+                else:
+                    error_text = await response.text()
+                    return jsonify({
+                        "success": False,
+                        "message": f"踢出失敗: {error_text}"
+                    })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "message": f"錯誤: {str(e)}"
+        })
+
+@app.route('/api/discord/mute', methods=['POST'])
+async def discord_mute():
+    """Mute a user via Discord API"""
+    if not DISCORD_TOKEN:
+        return jsonify({
+            "success": False,
+            "message": "未設置 DISCORD_TOKEN 環境變量"
+        })
+
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        reason = data.get('reason', '')
+        guild_id = data.get('guild_id')
+        mute_duration = data.get('duration', 3600)  # Default 1 hour
+
+        if not user_id or not guild_id:
+            return jsonify({
+                "success": False,
+                "message": "缺少 user_id 或 guild_id"
+            })
+
+        async with aiohttp.ClientSession() as session:
+            headers = {
+                'Authorization': f'Bot {DISCORD_TOKEN}',
+                'Content-Type': 'application/json'
+            }
+
+            # Get current timeout and add duration
+            url = f'https://discord.com/api/v10/guilds/{guild_id}/members/{user_id}'
+            payload = {
+                'communication_disabled_until': str(datetime.utcnow() + timedelta(seconds=mute_duration))
+            }
+
+            async with session.patch(url, json=payload, headers=headers) as response:
+                if response.status == 200:
+                    return jsonify({
+                        "success": True,
+                        "message": f"已禁言用戶 {user_id}"
+                    })
+                else:
+                    error_text = await response.text()
+                    return jsonify({
+                        "success": False,
+                        "message": f"禁言失敗: {error_text}"
+                    })
+    except Exception as e:
+        return jsonify({
+            "success": False,
+            "message": f"錯誤: {str(e)}"
+        })
+
+@app.route('/api/discord/whitelist_add', methods=['POST'])
+def discord_whitelist_add():
+    """Add user to whitelist"""
+    # This can use the local whitelist file
+    data = request.json
+    # TODO: Implement whitelist management
+    return jsonify({
+        "success": False,
+        "message": "此功能需要完整實現。"
+    })
+
+@app.route('/api/discord/whitelist_remove', methods=['POST'])
+def discord_whitelist_remove():
+    """Remove user from whitelist"""
+    return jsonify({
+        "success": False,
+        "message": "此功能需要完整實現。"
+    })
+
+@app.route('/api/discord/whitelist_list', methods=['GET'])
+def discord_whitelist_list():
+    """List whitelist users"""
+    return jsonify({
+        "success": False,
+        "message": "此功能需要完整實現。"
+    })
+
+@app.route('/api/discord/logs', methods=['GET'])
+def discord_logs():
+    """Get moderation logs"""
+    # This can use the local log file
+    # TODO: Implement log reading
+    return jsonify({
+        "success": False,
+        "message": "此功能需要完整實現。"
     })
 
 if __name__ == '__main__':
