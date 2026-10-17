@@ -92,7 +92,8 @@ class MicroBot(commands.Bot):
 bot = MicroBot()
 
 # Start background Web Server to prevent sleep on Render platform
-keep_alive.keep_alive()
+# TEMPORARILY DISABLED to avoid Cloudflare rate limiting
+# keep_alive.keep_alive()
 
 if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
