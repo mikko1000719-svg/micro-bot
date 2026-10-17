@@ -3,5 +3,3 @@ services:
     name: weiguo-bot
     env: python
     plan: free
-    buildCommand: pip install --break-system-packages -r requirements.txt
-    startCommand: python main.py
