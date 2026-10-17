@@ -1,1 +1,1 @@
-web: pip install --break-system-packages -r requirements.txt && python main.py
+web: python3 -m pip install --break-system-packages -r requirements.txt && python3 main.py
