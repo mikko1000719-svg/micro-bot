@@ -92,8 +92,7 @@ class MicroBot(commands.Bot):
 bot = MicroBot()
 
 # Start background Web Server to prevent sleep on Render platform
-# TEMPORARILY DISABLED to avoid Cloudflare rate limiting
-# keep_alive.keep_alive()
+keep_alive.keep_alive()
 
 if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
@@ -101,8 +100,12 @@ if __name__ == "__main__":
         print(f"[INFO] DISCORD_TOKEN found (length: {len(TOKEN)})")
         print(f"[INFO] Token prefix: {TOKEN[:10]}...")
 
+        # Add delay to avoid rate limiting on startup
+        import time
+        print("[INFO] Waiting 5 seconds before connecting to avoid rate limiting...")
+        time.sleep(5)
+
         # Let Discord.py handle reconnection and retry logic
-        # Removed delay to avoid triggering rate limits further
         try:
             bot.run(TOKEN)
         except Exception as e:
