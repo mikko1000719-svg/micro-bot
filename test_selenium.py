@@ -1,26 +1,26 @@
 # -*- coding: utf-8 -*-
 """
 測試 Selenium 自動化瀏覽器
+使用 undetected-chromedriver 避免被 Google 檢測
 """
 
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
+import undetected_chromedriver as uc
 import time
 
 def test_browser():
     """Test browser automation"""
-    print("Testing Selenium browser automation...")
-
-    # Chrome options
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
+    print("Testing Selenium browser automation with undetected-chromedriver...")
 
     try:
-        # Start Chrome
-        driver = webdriver.Chrome(options=chrome_options)
+        # 使用 undetected-chromedriver
+        options = uc.ChromeOptions()
+        options.add_argument("--headless")  # 如需看到瀏覽器，移除此行
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
+        # 創建 driver
+        driver = uc.Chrome(options=options, version_main=None)  # 自動檢測 Chrome 版本
+
         print("Chrome browser started successfully")
 
         # Test visiting website
