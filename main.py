@@ -2,7 +2,6 @@
 import os
 import discord
 from discord.ext import commands
-import keep_alive  # Import background keep-alive mechanism
 from dotenv import load_dotenv  # Import dotenv to load .env file
 
 # Load .env file
@@ -90,9 +89,6 @@ class MicroBot(commands.Bot):
 
 # Create Bot instance
 bot = MicroBot()
-
-# Start background Web Server to prevent sleep on Render platform
-keep_alive.keep_alive()
 
 if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
