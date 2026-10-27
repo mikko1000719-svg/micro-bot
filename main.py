@@ -91,26 +91,33 @@ class MicroBot(commands.Bot):
 # Create Bot instance
 bot = MicroBot()
 
-# Start background Web Server to prevent sleep on Render platform
-keep_alive.keep_alive()
-
 if __name__ == "__main__":
     TOKEN = os.getenv("DISCORD_TOKEN")
     if TOKEN:
         print(f"[INFO] DISCORD_TOKEN found (length: {len(TOKEN)})")
         print(f"[INFO] Token prefix: {TOKEN[:10]}...")
 
-        # Add delay to avoid rate limiting on startup
-        import time
-        print("[INFO] Waiting 5 seconds before connecting to avoid rate limiting...")
-        time.sleep(5)
+        # Start Discord bot in a separate thread
+        import threading
+        def run_bot():
+            # Add delay to avoid rate limiting on startup
+            import time
+            print("[INFO] Waiting 5 seconds before connecting to avoid rate limiting...")
+            time.sleep(5)
 
-        # Let Discord.py handle reconnection and retry logic
-        try:
-            bot.run(TOKEN)
-        except Exception as e:
-            print(f"[ERROR] Bot failed to start: {e}")
-            import traceback
-            traceback.print_exc()
+            # Let Discord.py handle reconnection and retry logic
+            try:
+                bot.run(TOKEN)
+            except Exception as e:
+                print(f"[ERROR] Bot failed to start: {e}")
+                import traceback
+                traceback.print_exc()
+
+        bot_thread = threading.Thread(target=run_bot, daemon=False)
+        bot_thread.start()
+
+        # Start Flask web server in main process to keep the service alive
+        print("[INFO] Starting Flask web server in main process...")
+        keep_alive.run()
     else:
         print("[ERROR] DISCORD_TOKEN environment variable not found!")
